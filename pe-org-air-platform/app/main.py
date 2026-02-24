@@ -18,6 +18,8 @@ from app.routers import chunk
 # CS3 router
 from app.routers.scoring import router as scoring_router
 
+from app.routers.search import router as search_router
+from app.routers.justifications import router as justifications_router
 
 app = FastAPI(title=settings.app_name)
 
@@ -38,3 +40,6 @@ app.include_router(chunk.router, prefix=settings.api_prefix, tags=["chunks"])
 
 # CS3 scoring endpoints
 app.include_router(scoring_router, tags=["scoring"])
+
+app.include_router(search_router)
+app.include_router(justifications_router)
