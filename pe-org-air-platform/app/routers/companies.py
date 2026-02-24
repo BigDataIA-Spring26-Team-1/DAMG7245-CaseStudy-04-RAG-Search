@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from typing import Any
 from uuid import uuid4
  
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Response
  
 from app.config import settings
 from app.models.company import CompanyCreate, CompanyOut, CompanyUpdate, IndustryOut
@@ -325,8 +325,8 @@ def update_company(company_id: str, payload: CompanyUpdate) -> CompanyOut:
         conn.close()
  
  
-@router.delete("/{company_id}", status_code=204)
-def delete_company(company_id: str) -> None:
+@router.delete("/{company_id}", status_code=204, response_class=Response)
+def delete_company(company_id: str) -> Response:
     conn = get_snowflake_connection()
     cur = conn.cursor()
     try:
@@ -342,7 +342,7 @@ def delete_company(company_id: str) -> None:
             raise HTTPException(status_code=404, detail="Company not found")
         cache_delete(f"company:{company_id}")
         cache_delete_pattern("companies:list:*")
-        return None
+        return Response(status_code=204)
     finally:
         cur.close()
         conn.close()
