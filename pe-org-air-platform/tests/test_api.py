@@ -413,3 +413,42 @@ def test_signal_summaries_compute_duplicate_companies_returns_409(client, fake_s
     fake_sf._all_queue = [[("id-1",), ("id-2",)]]
     r = client.post("/api/v1/signal-summaries/compute?ticker=CAT")
     assert r.status_code == 409
+
+
+def test_search_combines_multiple_filters_with_and(client, monkeypatch):
+    seen = {}
+
+    class _Store:
+        def query(self, query_text, top_k=5, where=None):
+            seen["query_text"] = query_text
+            seen["top_k"] = top_k
+            seen["where"] = where
+            return []
+
+    monkeypatch.setattr("app.routers.search.get_vector_store", lambda: _Store())
+    r = client.get(
+        "/api/v1/search?q=human%20capital&top_k=5&company_id=company-1&dimension=talent_skills"
+    )
+    assert r.status_code == 200
+    assert seen["query_text"] == "human capital"
+    assert seen["top_k"] == 5
+    assert seen["where"] == {
+        "$and": [
+            {"company_id": "company-1"},
+            {"dimension": "talent_skills"},
+        ]
+    }
+
+
+def test_search_uses_single_filter_without_and(client, monkeypatch):
+    seen = {}
+
+    class _Store:
+        def query(self, query_text, top_k=5, where=None):
+            seen["where"] = where
+            return []
+
+    monkeypatch.setattr("app.routers.search.get_vector_store", lambda: _Store())
+    r = client.get("/api/v1/search?q=leadership&company_id=company-1")
+    assert r.status_code == 200
+    assert seen["where"] == {"company_id": "company-1"}
