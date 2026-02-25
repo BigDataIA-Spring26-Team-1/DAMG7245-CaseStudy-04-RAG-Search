@@ -29,17 +29,23 @@ def search(
     """
     Semantic search over evidence chunks with optional metadata filters.
     """
-    where: Dict[str, Any] = {}
+    filter_clauses = []
 
     if company_id:
-        where["company_id"] = company_id
+        filter_clauses.append({"company_id": company_id})
     if dimension:
-        where["dimension"] = dimension
+        filter_clauses.append({"dimension": dimension})
 
     if min_confidence is not None:
-        where["confidence"] = {"$gte": float(min_confidence)}
+        filter_clauses.append({"confidence": {"$gte": float(min_confidence)}})
 
-    hits = get_vector_store().query(query_text=q, top_k=top_k, where=where if where else None)
+    where: Optional[Dict[str, Any]] = None
+    if len(filter_clauses) == 1:
+        where = filter_clauses[0]
+    elif len(filter_clauses) > 1:
+        where = {"$and": filter_clauses}
+
+    hits = get_vector_store().query(query_text=q, top_k=top_k, where=where)
 
     return {
         "query": q,

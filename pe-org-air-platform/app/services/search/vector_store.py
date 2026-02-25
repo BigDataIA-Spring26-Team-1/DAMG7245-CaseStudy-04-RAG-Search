@@ -100,10 +100,13 @@ class VectorStore:
             return []
 
         q_embed = self._embed_texts([query_text])[0]
+        requested_k = max(1, top_k)
+        # Over-fetch to compensate for deduplication of near-identical chunks.
+        fetch_k = max(requested_k, requested_k * 5)
 
         res = self.collection.query(
             query_embeddings=[q_embed],
-            n_results=max(1, top_k),
+            n_results=fetch_k,
             where=where or None,
             include=["documents", "metadatas", "distances"],
         )
@@ -128,7 +131,19 @@ class VectorStore:
             )
 
         hits.sort(key=lambda h: h.score, reverse=True)
-        return hits
+        deduped_hits: List[SearchHit] = []
+        seen_text_keys = set()
+        for hit in hits:
+            text_key = " ".join(hit.text.split()).strip().lower()
+            if text_key and text_key in seen_text_keys:
+                continue
+            if text_key:
+                seen_text_keys.add(text_key)
+            deduped_hits.append(hit)
+            if len(deduped_hits) >= requested_k:
+                break
+
+        return deduped_hits
 
     def delete_by_filter(self, where: Dict[str, Any]) -> int:
         before = self.collection.count()
