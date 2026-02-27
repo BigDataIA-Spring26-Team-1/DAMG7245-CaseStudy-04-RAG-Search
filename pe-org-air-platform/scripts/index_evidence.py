@@ -14,7 +14,7 @@ def build_chunk_id(document_id: str, chunk_id: str) -> str:
 
 
 def row_to_docchunk(row) -> DocumentChunk:
-    dimension = map_dimension(row.source_type, row.signal_category)
+    dimension = map_dimension(row.source_type, row.signal_category, row.chunk_text)
 
     metadata: Dict[str, Any] = {
         "company_id": row.company_id,
