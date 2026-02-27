@@ -99,10 +99,14 @@ class VectorStore:
         if not query_text.strip():
             return []
 
+        count = self.collection.count()
+        if count == 0:
+            return []
+
         q_embed = self._embed_texts([query_text])[0]
         requested_k = max(1, top_k)
         # Over-fetch to compensate for deduplication of near-identical chunks.
-        fetch_k = max(requested_k, requested_k * 5)
+        fetch_k = min(max(requested_k, requested_k * 5), count)
 
         res = self.collection.query(
             query_embeddings=[q_embed],
