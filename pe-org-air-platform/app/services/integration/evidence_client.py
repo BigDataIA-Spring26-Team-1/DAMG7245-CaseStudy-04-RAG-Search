@@ -89,7 +89,7 @@ class EvidenceClient:
 
             d.company_id,
             'sec_filing' AS source_type,
-            NULL AS signal_category,
+            c.section AS signal_category,
             1.0 AS confidence,
             d.source_url,
             YEAR(d.filing_date) AS fiscal_year,
