@@ -1,186 +1,108 @@
 from __future__ import annotations
- 
+
 import re
-
 from dataclasses import dataclass
+from typing import List, Optional, Tuple
 
-from typing import List, Optional, Sequence, Tuple
- 
 from rank_bm25 import BM25Okapi
- 
+
 from app.services.integration.evidence_client import EvidenceClient
- 
- 
+
 _WORD_RE = re.compile(r"[A-Za-z0-9]+")
- 
- 
+
+
 def tokenize(text: str) -> List[str]:
-
     return _WORD_RE.findall((text or "").lower())
- 
- 
+
+
 @dataclass(frozen=True)
-
 class BM25Hit:
-
-    chunk_uid: str  # chroma id format: "{document_id}:{chunk_id}"
-
+    chunk_uid: str  # "{document_id}:{chunk_id}"
     score: float
-
     text: str
-
     document_id: str
-
     chunk_id: str
-
     chunk_index: int
- 
- 
+
+
 class BM25Store:
-
     """
-
     Build BM25 on-the-fly per company_id from Snowflake chunks.
- 
-    Review notes:
 
+    Notes:
     - Snowflake remains the system of record
-
     - BM25 is derived at query time (no persistent lexical index required)
-
-    - We keep only top_n candidates in memory for fusion
-
+    - We keep only top_k candidates in memory for fusion / response
     """
- 
+
     def __init__(self, schema: Optional[str] = None) -> None:
-
         self.client = EvidenceClient(schema=schema)
- 
+
     def search(
-
         self,
-
         company_id: str,
-
         query: str,
-
         top_k: int = 10,
-
         batch_size: int = 1000,
-
         max_chunks: int = 8000,
-
         min_confidence: Optional[float] = None,
-
         dimension: Optional[str] = None,
-
     ) -> List[BM25Hit]:
-
         """
+        Returns BM25 hits for a company.
 
-        Returns BM25 hits for a company. Optionally filters by dimension if your chunks
-
-        already store dimension metadata in Snowflake (if not, we keep dimension filter
-
-        for semantic side and fuse later).
-
+        Dimension filtering is a no-op unless your Snowflake chunks store dimension.
+        (Most teams tag dimension during vector indexing, not in Snowflake.)
         """
-
         query_tokens = tokenize(query)
-
         if not query_tokens:
-
             return []
- 
+
         texts: List[str] = []
+        meta: List[Tuple[str, str, int, str]] = []  # (doc_id, chunk_id, chunk_index, text)
 
-        meta: List[Tuple[str, str, int, str]] = []  # (document_id, chunk_id, chunk_index, chunk_text)
- 
         seen = 0
-
         for batch in self.client.iter_chunks_for_company(
-
             company_id=company_id,
-
             batch_size=batch_size,
-
             min_confidence=min_confidence,
-
         ):
-
             for r in batch:
-
                 if not (r.chunk_text or "").strip():
-
                     continue
- 
-                # Dimension filtering here only if you already store a dimension per chunk in Snowflake.
 
-                # Most teams don't; they tag dimension during indexing. So we keep this as a no-op unless
+                # dimension not stored in Snowflake by default; keep no-op for now
+                _ = dimension
 
-                # you later extend EvidenceClient to return 'dimension'.
-
-                if dimension is not None:
-
-                    # If you later add r.dimension, you can enable:
-
-                    # if r.dimension != dimension: continue
-
-                    pass
- 
                 texts.append(r.chunk_text)
-
                 meta.append((r.document_id, r.chunk_id, r.chunk_index, r.chunk_text))
-
                 seen += 1
-
                 if seen >= max_chunks:
-
                     break
-
             if seen >= max_chunks:
-
                 break
- 
+
         if not texts:
-
             return []
- 
+
         corpus_tokens = [tokenize(t) for t in texts]
-
         bm25 = BM25Okapi(corpus_tokens)
-
         scores = bm25.get_scores(query_tokens)
- 
-        # Select top_k indices by score
 
-        top_idx = sorted(range(len(scores)), key=lambda i: float(scores[i]), reverse=True)[: top_k]
- 
+        top_idx = sorted(range(len(scores)), key=lambda i: float(scores[i]), reverse=True)[:top_k]
+
         hits: List[BM25Hit] = []
-
         for i in top_idx:
-
             doc_id, chunk_id, chunk_index, chunk_text = meta[i]
-
             hits.append(
-
                 BM25Hit(
-
                     chunk_uid=f"{doc_id}:{chunk_id}",
-
                     score=float(scores[i]),
-
                     text=chunk_text,
-
                     document_id=doc_id,
-
                     chunk_id=chunk_id,
-
                     chunk_index=chunk_index,
-
                 )
-
             )
- 
+
         return hits
- 
