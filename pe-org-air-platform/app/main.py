@@ -41,5 +41,5 @@ app.include_router(chunk.router, prefix=settings.api_prefix, tags=["chunks"])
 # CS3 scoring endpoints
 app.include_router(scoring_router, tags=["scoring"])
 
-app.include_router(search_router)
-app.include_router(justifications_router)
+app.include_router(search_router, tags=["search"])
+app.include_router(justifications_router, tags=["justifications"])
