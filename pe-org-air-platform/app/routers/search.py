@@ -89,7 +89,7 @@ def search(
         }
 
     # ---------------------------
-    # Semantic-only path (current behavior)
+    # Semantic-only path
     # ---------------------------
     filter_clauses = []
 
@@ -113,8 +113,5 @@ def search(
         "mode": "semantic",
         "top_k": top_k,
         "filters": {"company_id": company_id, "dimension": dimension, "min_confidence": min_confidence},
-        "results": [
-            {"id": h.id, "score": h.score, "text": h.text, "metadata": h.metadata}
-            for h in hits
-        ],
+        "results": [{"id": h.id, "score": h.score, "text": h.text, "metadata": h.metadata} for h in hits],
     }

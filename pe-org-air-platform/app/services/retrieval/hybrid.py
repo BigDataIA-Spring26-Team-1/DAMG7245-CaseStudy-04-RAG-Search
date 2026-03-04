@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
 from app.services.integration.evidence_client import EvidenceClient
-from app.services.retrieval.bm25_store import BM25Store, BM25Hit
+from app.services.retrieval.bm25_store import BM25Hit, BM25Store
 from app.services.search.vector_store import SearchHit, VectorStore
 
 
@@ -26,10 +26,6 @@ def rrf_fuse(
     """
     Reciprocal Rank Fusion (RRF):
       score(doc) = Σ 1 / (k + rank_i(doc))
-
-    Notes for reviews:
-    - robust across different retrieval scoring scales
-    - no need to normalize BM25 vs cosine distances
     """
     fused: Dict[str, Dict[str, Any]] = {}
 
@@ -72,7 +68,7 @@ class HybridRetriever:
     """
     Hybrid retrieval = Semantic (Chroma) + Lexical (BM25 over Snowflake chunks), fused via RRF.
 
-    This version also enriches BM25-only hits with Snowflake metadata so citations work.
+    Enriches BM25-only hits with Snowflake metadata so citations work.
     """
 
     def __init__(self, schema: Optional[str] = None) -> None:
@@ -105,7 +101,7 @@ class HybridRetriever:
             where=where if where else None,
         )
 
-        # ---- BM25 (Option A) requires company_id ----
+        # ---- BM25 requires company_id ----
         bm25_hits: List[BM25Hit] = []
         if company_id:
             bm25_hits = self.bm25_store.search(
@@ -113,14 +109,12 @@ class HybridRetriever:
                 query=query,
                 top_k=bm25_k,
                 min_confidence=min_confidence,
-                # NOTE: BM25 is built from Snowflake and does not have dimension tags unless you store them in Snowflake.
-                # We keep dimension filtering primarily on the semantic side for now.
                 dimension=dimension,
             )
 
         fused = rrf_fuse(semantic_hits=semantic_hits, bm25_hits=bm25_hits)[:top_k]
 
-                # ---- ENRICH: BM25-only hits have empty metadata {} ----
+        # ---- ENRICH: BM25-only hits have empty metadata {} ----
         missing_uids = [h.id for h in fused if not h.metadata]
         if missing_uids:
             meta_map = self.evidence.get_chunk_metadata_by_uids(missing_uids)
@@ -147,7 +141,6 @@ class HybridRetriever:
                         bm25_score=h.bm25_score,
                     )
                 )
-
             fused = enriched
 
         return fused

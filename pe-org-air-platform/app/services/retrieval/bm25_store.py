@@ -8,7 +8,6 @@ from rank_bm25 import BM25Okapi
 
 from app.services.integration.evidence_client import EvidenceClient
 
-
 _WORD_RE = re.compile(r"[A-Za-z0-9]+")
 
 
@@ -27,6 +26,15 @@ class BM25Hit:
 
 
 class BM25Store:
+    """
+    Build BM25 on-the-fly per company_id from Snowflake chunks.
+
+    Notes:
+    - Snowflake remains the system of record
+    - BM25 is derived at query time (no persistent lexical index required)
+    - We keep only top_k candidates in memory for fusion / response
+    """
+
     def __init__(self, schema: Optional[str] = None) -> None:
         self.client = EvidenceClient(schema=schema)
 
@@ -40,6 +48,12 @@ class BM25Store:
         min_confidence: Optional[float] = None,
         dimension: Optional[str] = None,
     ) -> List[BM25Hit]:
+        """
+        Returns BM25 hits for a company.
+
+        Dimension filtering is a no-op unless your Snowflake chunks store dimension.
+        (Most teams tag dimension during vector indexing, not in Snowflake.)
+        """
         query_tokens = tokenize(query)
         if not query_tokens:
             return []
@@ -57,8 +71,7 @@ class BM25Store:
                 if not (r.chunk_text or "").strip():
                     continue
 
-                # dimension is not stored in Snowflake by default (unless you added it).
-                # keep as no-op for now.
+                # dimension not stored in Snowflake by default; keep no-op for now
                 _ = dimension
 
                 texts.append(r.chunk_text)
@@ -91,4 +104,5 @@ class BM25Store:
                     chunk_index=chunk_index,
                 )
             )
+
         return hits
