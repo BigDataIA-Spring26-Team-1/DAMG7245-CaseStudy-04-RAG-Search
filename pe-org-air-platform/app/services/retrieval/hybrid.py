@@ -76,6 +76,31 @@ class HybridRetriever:
         self.bm25_store = BM25Store(schema=schema)
         self.evidence = EvidenceClient(schema=schema)
 
+    def _build_chroma_where(
+        self,
+        company_id: Optional[str] = None,
+        dimension: Optional[str] = None,
+        min_confidence: Optional[float] = None,
+    ) -> Optional[Dict[str, Any]]:
+        filters: List[Dict[str, Any]] = []
+
+        if company_id:
+            filters.append({"company_id": company_id})
+
+        if dimension:
+            filters.append({"dimension": dimension})
+
+        if min_confidence is not None:
+            filters.append({"confidence": {"$gte": float(min_confidence)}})
+
+        if not filters:
+            return None
+
+        if len(filters) == 1:
+            return filters[0]
+
+        return {"$and": filters}
+
     def search(
         self,
         query: str,
@@ -87,18 +112,16 @@ class HybridRetriever:
         bm25_k: int = 10,
     ) -> List[HybridHit]:
         # ---- Semantic (Chroma) supports metadata filters ----
-        where: Dict[str, Any] = {}
-        if company_id:
-            where["company_id"] = company_id
-        if dimension:
-            where["dimension"] = dimension
-        if min_confidence is not None:
-            where["confidence"] = {"$gte": float(min_confidence)}
+        where = self._build_chroma_where(
+            company_id=company_id,
+            dimension=dimension,
+            min_confidence=min_confidence,
+        )
 
         semantic_hits = self.vector_store.query(
             query_text=query,
             top_k=semantic_k,
-            where=where if where else None,
+            where=where,
         )
 
         # ---- BM25 requires company_id ----
