@@ -35,6 +35,7 @@ def search(
     company_id: Optional[str] = Query(None),
     dimension: Optional[str] = Query(None),
     min_confidence: Optional[float] = Query(None, ge=0.0, le=1.0),
+    use_hyde: bool = Query(True, description="Enable HyDE query expansion for hybrid/bm25 search"),
 ) -> Dict[str, Any]:
     """
     Search over evidence chunks.
@@ -53,7 +54,12 @@ def search(
                 "query": q,
                 "mode": mode,
                 "top_k": top_k,
-                "filters": {"company_id": company_id, "dimension": dimension, "min_confidence": min_confidence},
+                "filters": {
+                    "company_id": company_id,
+                    "dimension": dimension,
+                    "min_confidence": min_confidence,
+                    "use_hyde": use_hyde,
+                },
                 "results": [],
                 "warning": "mode=bm25 requires company_id",
             }
@@ -64,9 +70,9 @@ def search(
             company_id=company_id,
             dimension=dimension,
             min_confidence=min_confidence,
+            use_hyde=use_hyde,
         )
 
-        # If user explicitly asks bm25-only, keep only those with bm25_score
         if mode == "bm25":
             hits = [h for h in hits if h.bm25_score is not None][:top_k]
 
@@ -74,7 +80,12 @@ def search(
             "query": q,
             "mode": mode,
             "top_k": top_k,
-            "filters": {"company_id": company_id, "dimension": dimension, "min_confidence": min_confidence},
+            "filters": {
+                "company_id": company_id,
+                "dimension": dimension,
+                "min_confidence": min_confidence,
+                "use_hyde": use_hyde,
+            },
             "results": [
                 {
                     "id": h.id,
@@ -112,6 +123,19 @@ def search(
         "query": q,
         "mode": "semantic",
         "top_k": top_k,
-        "filters": {"company_id": company_id, "dimension": dimension, "min_confidence": min_confidence},
-        "results": [{"id": h.id, "score": h.score, "text": h.text, "metadata": h.metadata} for h in hits],
+        "filters": {
+            "company_id": company_id,
+            "dimension": dimension,
+            "min_confidence": min_confidence,
+            "use_hyde": False,
+        },
+        "results": [
+            {
+                "id": h.id,
+                "score": h.score,
+                "text": h.text,
+                "metadata": h.metadata,
+            }
+            for h in hits
+        ],
     }

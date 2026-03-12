@@ -1,10 +1,14 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
+
 from app.services.integration.evidence_client import EvidenceClient
 from app.services.retrieval.bm25_store import BM25Hit, BM25Store
 from app.services.retrieval.hyde import HyDEGenerator
 from app.services.search.vector_store import SearchHit, VectorStore
+
+
 @dataclass(frozen=True)
 class HybridHit:
     id: str
@@ -13,6 +17,8 @@ class HybridHit:
     metadata: Dict[str, Any]
     semantic_score: Optional[float] = None
     bm25_score: Optional[float] = None
+
+
 def rrf_fuse(
     semantic_hits: List[SearchHit],
     bm25_hits: List[BM25Hit],
@@ -23,7 +29,7 @@ def rrf_fuse(
       score(doc) = Σ 1 / (k + rank_i(doc))
     """
     fused: Dict[str, Dict[str, Any]] = {}
-    # Semantic list
+
     for rank, h in enumerate(semantic_hits, start=1):
         entry = fused.setdefault(
             h.id,
@@ -31,7 +37,7 @@ def rrf_fuse(
         )
         entry["semantic_score"] = h.score
         entry["rrf"] = entry.get("rrf", 0.0) + 1.0 / (k + rank)
-    # BM25 list
+
     for rank, h in enumerate(bm25_hits, start=1):
         entry = fused.setdefault(
             h.chunk_uid,
@@ -39,6 +45,7 @@ def rrf_fuse(
         )
         entry["bm25_score"] = h.score
         entry["rrf"] = entry.get("rrf", 0.0) + 1.0 / (k + rank)
+
     results: List[HybridHit] = []
     for v in fused.values():
         results.append(
@@ -51,22 +58,27 @@ def rrf_fuse(
                 bm25_score=v.get("bm25_score"),
             )
         )
+
     results.sort(key=lambda x: x.score, reverse=True)
     return results
+
 
 class HybridRetriever:
     """
     Hybrid retrieval = Semantic (Chroma) + Lexical (BM25 over Snowflake chunks), fused via RRF.
-    HyDE integration:
-    - original query is retained for BM25
-    - HyDE-expanded query is used for semantic retrieval when enabled
-    Enriches BM25-only hits with Snowflake metadata so citations work.
+
+    Enhancements:
+    - Chroma-compatible metadata filtering
+    - Optional HyDE query expansion
+    - BM25-only hit enrichment from Snowflake metadata
     """
+
     def __init__(self, schema: Optional[str] = None) -> None:
         self.vector_store = VectorStore()
         self.bm25_store = BM25Store(schema=schema)
         self.evidence = EvidenceClient(schema=schema)
         self.hyde = HyDEGenerator()
+
     def _build_chroma_where(
         self,
         company_id: Optional[str] = None,
@@ -74,17 +86,24 @@ class HybridRetriever:
         min_confidence: Optional[float] = None,
     ) -> Optional[Dict[str, Any]]:
         filters: List[Dict[str, Any]] = []
+
         if company_id:
             filters.append({"company_id": company_id})
+
         if dimension:
             filters.append({"dimension": dimension})
+
         if min_confidence is not None:
             filters.append({"confidence": {"$gte": float(min_confidence)}})
+
         if not filters:
             return None
+
         if len(filters) == 1:
             return filters[0]
+
         return {"$and": filters}
+
     def search(
         self,
         query: str,
@@ -94,54 +113,57 @@ class HybridRetriever:
         min_confidence: Optional[float] = None,
         semantic_k: int = 10,
         bm25_k: int = 10,
-        use_hyde: bool = False,
+        use_hyde: bool = True,
     ) -> List[HybridHit]:
-        if not query or not query.strip():
-            raise ValueError("query is required")
-        original_query = query.strip()
-        semantic_query = original_query
+        effective_query = query
         if use_hyde:
             hyde_result = self.hyde.generate(
-                query=original_query,
+                query=query,
                 dimension=dimension,
                 company_id=company_id,
             )
-            semantic_query = hyde_result.expanded_query
-        # ---- Semantic (Chroma) supports metadata filters ----
+            effective_query = hyde_result.expanded_query
+
         where = self._build_chroma_where(
             company_id=company_id,
             dimension=dimension,
             min_confidence=min_confidence,
         )
+
         semantic_hits = self.vector_store.query(
-            query_text=semantic_query,
+            query_text=effective_query,
             top_k=semantic_k,
             where=where,
         )
-        # ---- BM25 uses original query ----
+
         bm25_hits: List[BM25Hit] = []
         if company_id:
             bm25_hits = self.bm25_store.search(
                 company_id=company_id,
-                query=original_query,
+                query=effective_query,
                 top_k=bm25_k,
                 min_confidence=min_confidence,
                 dimension=dimension,
             )
+
         fused = rrf_fuse(semantic_hits=semantic_hits, bm25_hits=bm25_hits)[:top_k]
-        # ---- ENRICH: BM25-only hits have empty metadata {} ----
+
         missing_uids = [h.id for h in fused if not h.metadata]
         if missing_uids:
             meta_map = self.evidence.get_chunk_metadata_by_uids(missing_uids)
+
             enriched: List[HybridHit] = []
             for h in fused:
                 if h.metadata:
                     enriched.append(h)
                     continue
+
                 md = meta_map.get(h.id, {}) or {}
                 chunk_text = md.get("_chunk_text", "")
+
                 md_clean = dict(md)
                 md_clean.pop("_chunk_text", None)
+
                 enriched.append(
                     HybridHit(
                         id=h.id,
@@ -153,5 +175,5 @@ class HybridRetriever:
                     )
                 )
             fused = enriched
+
         return fused
- 
