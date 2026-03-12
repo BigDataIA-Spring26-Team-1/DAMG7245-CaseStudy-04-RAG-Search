@@ -35,13 +35,6 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from app.services.integration.company_client import CompanyClient
-from app.services.integration.scoring_client import ScoringClient
-from app.services.justification.generator import JustificationGenerator
-from app.services.workflows.analyst_notes import AnalystNotesCollector
-from app.services.workflows.ic_prep import ICPrepWorkflow
-
-
 ARTIFACT_DIR = REPO_ROOT / "artifacts" / "airflow_runs"
 ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -76,6 +69,8 @@ if AIRFLOW_AVAILABLE:
     def cs4_pipeline_dag():
         @task
         def load_company() -> Dict[str, Any]:
+            from app.services.integration.company_client import CompanyClient
+
             ctx = get_current_context()
             company_id = ctx["params"]["company_id"]
 
@@ -86,6 +81,8 @@ if AIRFLOW_AVAILABLE:
 
         @task
         def load_scores() -> Dict[str, Any]:
+            from app.services.integration.scoring_client import ScoringClient
+
             ctx = get_current_context()
             company_id = ctx["params"]["company_id"]
 
@@ -96,6 +93,8 @@ if AIRFLOW_AVAILABLE:
 
         @task
         def generate_justification() -> Dict[str, Any]:
+            from app.services.justification.generator import JustificationGenerator
+
             ctx = get_current_context()
             company_id = ctx["params"]["company_id"]
             dimension = str(ctx["params"]["dimension"]).strip().lower().replace(" ", "_")
@@ -114,6 +113,8 @@ if AIRFLOW_AVAILABLE:
 
         @task
         def build_ic_prep() -> Dict[str, Any]:
+            from app.services.workflows.ic_prep import ICPrepWorkflow
+
             ctx = get_current_context()
             company_id = ctx["params"]["company_id"]
             top_k = int(ctx["params"]["top_k"])
@@ -130,6 +131,8 @@ if AIRFLOW_AVAILABLE:
 
         @task
         def build_analyst_note() -> Dict[str, Any]:
+            from app.services.workflows.analyst_notes import AnalystNotesCollector
+
             ctx = get_current_context()
             company_id = ctx["params"]["company_id"]
             dimension = str(ctx["params"]["dimension"]).strip().lower().replace(" ", "_")
