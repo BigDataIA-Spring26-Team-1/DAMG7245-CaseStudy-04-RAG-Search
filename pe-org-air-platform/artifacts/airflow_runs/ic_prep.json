@@ -1,0 +1,453 @@
+{
+  "company_id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+  "company_profile": {
+    "id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+    "name": "NVIDIA Corporation",
+    "ticker": "NVDA",
+    "industry_id": "550e8400-e29b-41d4-a716-446655440003",
+    "position_factor": 0.0,
+    "is_deleted": false,
+    "created_at": "2026-02-19 20:51:57.081000",
+    "updated_at": "2026-02-20 12:37:18.804000"
+  },
+  "overall_score": 87.08,
+  "overall_level": 5,
+  "overall_level_name": "Excellent",
+  "score_band": "Leading",
+  "dimensions": [
+    {
+      "dimension": "technology_stack",
+      "score": 50.0,
+      "level": 3,
+      "level_name": "Adequate",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 50.0/100 for Technology Stack (Level 3 - Adequate). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer ... | 10-Q: Item 1A. Risk Factors Other than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on.... Rubric interpretation: Technology Stack at Level 3 requires mixed evidence indicating partial adoption and developing maturity. Typical signals include: aws, azure, gcp, cloud, mlops. CS3 context: score_dimension=technology_stack, confidence=0.4, evidence_count=31. Key gaps to reach the next level: No strong evidence of 'azure' for next-level readiness; No strong evidence of 'gcp' for next-level readiness; No strong evidence of 'mlops' for next-level readiness",
+      "top_evidence": [
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0164,
+          "matched_keywords": [
+            "aws",
+            "cloud",
+            "deployment",
+            "streaming",
+            "api"
+          ],
+          "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings that are reshaping industry.\nO"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0161,
+          "matched_keywords": [
+            "aws",
+            "cloud",
+            "deployment",
+            "api"
+          ],
+          "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisc"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:4121653b-e82d-4f13-92a7-32c62b27ebbe",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0159,
+          "matched_keywords": [
+            "aws",
+            "cloud",
+            "deployment",
+            "api"
+          ],
+          "content": "Item 1A. Risk Factors\nOther than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025 and Item 1A of o"
+        }
+      ],
+      "gaps_identified": [
+        "No strong evidence of 'azure' for next-level readiness",
+        "No strong evidence of 'gcp' for next-level readiness",
+        "No strong evidence of 'mlops' for next-level readiness",
+        "No strong evidence of 'model registry' for next-level readiness",
+        "No strong evidence of 'experiment tracking' for next-level readiness"
+      ]
+    },
+    {
+      "dimension": "ai_governance",
+      "score": 100.0,
+      "level": 5,
+      "level_name": "Excellent",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 100.0/100 for Ai Governance (Level 5 - Excellent). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer ... | 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-Q: Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there ha.... Rubric interpretation: Ai Governance at Level 5 requires clear, repeated, high-confidence evidence of mature and scalable capability. Typical signals include: governance, audit trail, explainability, bias, ethics. CS3 context: score_dimension=ai_governance, confidence=0.4, evidence_count=43. Key gaps to reach the next level: No immediate next-level gaps identified from retrieved evidence.",
+      "top_evidence": [
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0156,
+          "matched_keywords": [
+            "governance",
+            "bias",
+            "risk",
+            "compliance",
+            "policy",
+            "controls"
+          ],
+          "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisc"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0164,
+          "matched_keywords": [
+            "governance",
+            "risk",
+            "compliance",
+            "policy",
+            "controls"
+          ],
+          "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings that are reshaping industry.\nO"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:d3448164-5b19-4126-b73c-7d60acbb4abf",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0154,
+          "matched_keywords": [
+            "risk",
+            "compliance",
+            "policy",
+            "controls"
+          ],
+          "content": "Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there have been no material changes to the foreign exchange rate risks describ"
+        }
+      ],
+      "gaps_identified": []
+    },
+    {
+      "dimension": "use_case_portfolio",
+      "score": 90.0,
+      "level": 5,
+      "level_name": "Excellent",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 90.0/100 for Use Case Portfolio (Level 5 - Excellent). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-Q: Item 1A. Risk Factors Other than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on... | 10-Q: Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there ha.... Rubric interpretation: Use Case Portfolio at Level 5 requires clear, repeated, high-confidence evidence of mature and scalable capability. Typical signals include: production ai, use case, roi, revenue impact, pilot. CS3 context: score_dimension=use_case_portfolio, confidence=0.4, evidence_count=72. Key gaps to reach the next level: No immediate next-level gaps identified from retrieved evidence.",
+      "top_evidence": [
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0156,
+          "matched_keywords": [
+            "use case",
+            "pilot",
+            "deployment",
+            "pipeline",
+            "initiative"
+          ],
+          "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings that are reshaping industry.\nO"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:4121653b-e82d-4f13-92a7-32c62b27ebbe",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0164,
+          "matched_keywords": [
+            "use case",
+            "revenue impact",
+            "deployment",
+            "initiative"
+          ],
+          "content": "Item 1A. Risk Factors\nOther than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025 and Item 1A of o"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:d3448164-5b19-4126-b73c-7d60acbb4abf",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0161,
+          "matched_keywords": [
+            "use case",
+            "revenue impact",
+            "deployment",
+            "initiative"
+          ],
+          "content": "Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there have been no material changes to the foreign exchange rate risks describ"
+        }
+      ],
+      "gaps_identified": []
+    },
+    {
+      "dimension": "leadership",
+      "score": 90.0,
+      "level": 5,
+      "level_name": "Excellent",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 90.0/100 for Leadership (Level 5 - Excellent). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer ... | 10-K: Item 7A. Quantitative and Qualitative Disclosures about Market Risk Investment and Interest Rate Risk We are exposed to interest rate risk related to our fixed-rate investment port.... Rubric interpretation: Leadership at Level 5 requires clear, repeated, high-confidence evidence of mature and scalable capability. Typical signals include: executive, budget, sponsor, vision, strategy. CS3 context: score_dimension=leadership_vision, confidence=0.4, evidence_count=52. Key gaps to reach the next level: No immediate next-level gaps identified from retrieved evidence.",
+      "top_evidence": [
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0161,
+          "matched_keywords": [
+            "executive",
+            "sponsor",
+            "vision",
+            "strategy",
+            "leadership",
+            "board",
+            "ownership"
+          ],
+          "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings that are reshaping industry.\nO"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0154,
+          "matched_keywords": [
+            "executive",
+            "vision",
+            "strategy",
+            "roadmap",
+            "board",
+            "ownership"
+          ],
+          "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisc"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:b43cbfa4-58ab-48ab-b4f5-065c469db507",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0159,
+          "matched_keywords": [
+            "executive",
+            "sponsor",
+            "vision",
+            "strategy",
+            "board"
+          ],
+          "content": "Item 7A. Quantitative and Qualitative Disclosures about Market Risk\nInvestment and Interest Rate Risk\nWe are exposed to interest rate risk related to our fixed-rate investment portfolio and outstanding debt. The investment portfolio is managed consis"
+        }
+      ],
+      "gaps_identified": []
+    },
+    {
+      "dimension": "culture",
+      "score": 25.0,
+      "level": 2,
+      "level_name": "Developing",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 25.0/100 for Culture (Level 2 - Developing). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer ... | 10-Q: Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there ha.... Rubric interpretation: Culture at Level 2 requires limited evidence, early-stage capability, and material gaps. Typical signals include: innovation, experimentation, adoption, change management, collaboration. CS3 context: score_dimension=culture_change, confidence=0.4, evidence_count=11. Key gaps to reach the next level: No strong evidence of 'experimentation' for next-level readiness; No strong evidence of 'ai literacy' for next-level readiness; No strong evidence of 'risk appetite' for next-level readiness",
+      "top_evidence": [
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0164,
+          "matched_keywords": [
+            "innovation",
+            "adoption",
+            "collaboration",
+            "culture",
+            "training"
+          ],
+          "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings that are reshaping industry.\nO"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0154,
+          "matched_keywords": [
+            "innovation",
+            "adoption",
+            "change management",
+            "collaboration",
+            "training"
+          ],
+          "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisc"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:d3448164-5b19-4126-b73c-7d60acbb4abf",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0152,
+          "matched_keywords": [
+            "adoption",
+            "change management",
+            "training"
+          ],
+          "content": "Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there have been no material changes to the foreign exchange rate risks describ"
+        }
+      ],
+      "gaps_identified": [
+        "No strong evidence of 'experimentation' for next-level readiness",
+        "No strong evidence of 'ai literacy' for next-level readiness",
+        "No strong evidence of 'risk appetite' for next-level readiness"
+      ]
+    },
+    {
+      "dimension": "talent",
+      "score": 25.0,
+      "level": 2,
+      "level_name": "Developing",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 25.0/100 for Talent (Level 2 - Developing). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer ... | 10-Q: Item 1A. Risk Factors Other than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on.... Rubric interpretation: Talent at Level 2 requires limited evidence, early-stage capability, and material gaps. Typical signals include: data engineer, ml engineer, analyst, hiring, retention. CS3 context: score_dimension=talent_skills, confidence=0.4, evidence_count=6. Key gaps to reach the next level: No strong evidence of 'data engineer' for next-level readiness; No strong evidence of 'ml engineer' for next-level readiness; No strong evidence of 'ai talent' for next-level readiness",
+      "top_evidence": [
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0164,
+          "matched_keywords": [
+            "hiring",
+            "retention",
+            "team",
+            "capability"
+          ],
+          "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings that are reshaping industry.\nO"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0161,
+          "matched_keywords": [
+            "analyst",
+            "hiring",
+            "retention",
+            "team"
+          ],
+          "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisc"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:4121653b-e82d-4f13-92a7-32c62b27ebbe",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0159,
+          "matched_keywords": [
+            "team"
+          ],
+          "content": "Item 1A. Risk Factors\nOther than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025 and Item 1A of o"
+        }
+      ],
+      "gaps_identified": [
+        "No strong evidence of 'data engineer' for next-level readiness",
+        "No strong evidence of 'ml engineer' for next-level readiness",
+        "No strong evidence of 'ai talent' for next-level readiness",
+        "No strong evidence of 'flight risk' for next-level readiness",
+        "No strong evidence of 'staffing' for next-level readiness"
+      ]
+    },
+    {
+      "dimension": "data_infrastructure",
+      "score": 75.0,
+      "level": 4,
+      "level_name": "Good",
+      "evidence_strength": "weak",
+      "summary": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 75.0/100 for Data Infrastructure (Level 4 - Good). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-Q: Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there ha... | 10-Q: Item 1A. Risk Factors Other than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on... | 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer .... Rubric interpretation: Data Infrastructure at Level 4 requires multiple credible signals showing solid capability with some gaps remaining. Typical signals include: data lake, warehouse, etl, pipeline, accessibility. CS3 context: score_dimension=data_infrastructure, confidence=0.4, evidence_count=95. Key gaps to reach the next level: No strong evidence of 'data lake' for next-level readiness; No strong evidence of 'etl' for next-level readiness; No strong evidence of 'accessibility' for next-level readiness",
+      "top_evidence": [
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:d3448164-5b19-4126-b73c-7d60acbb4abf",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0161,
+          "matched_keywords": [
+            "warehouse",
+            "api",
+            "integration"
+          ],
+          "content": "Item 7A, \u201cQuantitative and Qualitative Disclosures About Market Risk\u201d in our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025. As of\u00a0October\u00a026, 2025, there have been no material changes to the foreign exchange rate risks describ"
+        },
+        {
+          "evidence_id": "0b68d4dd-9585-4274-bb7e-c9ad9c614c91:4121653b-e82d-4f13-92a7-32c62b27ebbe",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+          "title": "10-Q",
+          "confidence": 1.0,
+          "relevance_score": 0.0159,
+          "matched_keywords": [
+            "warehouse",
+            "api",
+            "integration"
+          ],
+          "content": "Item 1A. Risk Factors\nOther than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on Form 10-K for the fiscal year ended January\u00a026, 2025 and Item 1A of o"
+        },
+        {
+          "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+          "source_type": "sec_filing",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+          "title": "10-K",
+          "confidence": 1.0,
+          "relevance_score": 0.0156,
+          "matched_keywords": [
+            "warehouse",
+            "api",
+            "integration"
+          ],
+          "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisc"
+        }
+      ],
+      "gaps_identified": [
+        "No strong evidence of 'data lake' for next-level readiness",
+        "No strong evidence of 'etl' for next-level readiness",
+        "No strong evidence of 'accessibility' for next-level readiness",
+        "No strong evidence of 'data quality' for next-level readiness",
+        "No strong evidence of 'source systems' for next-level readiness"
+      ]
+    }
+  ],
+  "strengths": [],
+  "risks": [
+    "Technology Stack shows execution risk: No strong evidence of 'azure' for next-level readiness",
+    "Ai Governance has limited supporting evidence and should be treated as a diligence risk",
+    "Use Case Portfolio has limited supporting evidence and should be treated as a diligence risk",
+    "Leadership has limited supporting evidence and should be treated as a diligence risk"
+  ],
+  "diligence_questions": [
+    "What concrete evidence can management provide to address the gap in technology stack: No strong evidence of 'azure' for next-level readiness?",
+    "What concrete evidence can management provide to address the gap in culture: No strong evidence of 'experimentation' for next-level readiness?",
+    "What concrete evidence can management provide to address the gap in talent: No strong evidence of 'data engineer' for next-level readiness?",
+    "What concrete evidence can management provide to address the gap in data infrastructure: No strong evidence of 'data lake' for next-level readiness?"
+  ],
+  "generated_by": "deterministic_ic_prep_workflow"
+}

@@ -1,0 +1,64 @@
+{
+  "company_id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+  "company_name": "NVIDIA Corporation",
+  "dimension": "leadership",
+  "note_title": "NVIDIA Corporation - Leadership Analyst Note",
+  "note_summary": "NVIDIA Corporation is currently assessed at 90.0/100 for Leadership (Level: Excellent). The evidence base is weak. f7a9f167-c3e7-4adc-899b-3c81fc4110ae is assessed at 90.0/100 for Leadership (Level 5 - Excellent). The evidence base is weak.  Company-level context: overall_score=87.08, score_band=Leading. The current level is supported by retrieved signals aligned to the rubric, including: 10-K: Item 1. Business Our Company NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure c... | 10-K: joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer ... | 10-K: (In millions) Due in one year $ \u2014\u00a0 Due in one to five years 2,250\u00a0 Due in five to ten years 2,750\u00a0 Due in greater than ten years 3,500\u00a0 Unamortized debt discount and issuance costs.... Rubric interpretation: Leadership at Level 5 requires clear, repeated, high-confidence evidence of mature and scalable capability. Typical signals include: executive, budget, sponsor, vision, strategy. CS3 context: score_dimension=leadership_vision, confidence=0.4, evidence_count=52. Key gaps to reach the next level: No immediate next-level gaps identified from retrieved evidence.",
+  "evidence_snapshot": [
+    {
+      "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:540f103c-a137-457b-8b16-6b01b228d34f",
+      "title": "10-K",
+      "source_type": "sec_filing",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+      "confidence": 1.0,
+      "relevance_score": 0.0161,
+      "matched_keywords": [
+        "executive",
+        "sponsor",
+        "vision",
+        "strategy",
+        "leadership",
+        "board",
+        "ownership"
+      ],
+      "content": "Item 1. Business\nOur Company\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a full-stack computing infrastructure company with data-center-scale offerings "
+    },
+    {
+      "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:e1db35df-77a7-4099-bedd-15f367e679a3",
+      "title": "10-K",
+      "source_type": "sec_filing",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+      "confidence": 1.0,
+      "relevance_score": 0.0154,
+      "matched_keywords": [
+        "executive",
+        "vision",
+        "strategy",
+        "roadmap",
+        "board",
+        "ownership"
+      ],
+      "content": "joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operation"
+    },
+    {
+      "evidence_id": "fa3ea3c6-06d1-4e4d-85f7-1c50873cb917:0c68b542-4562-4fee-b4f2-671b551c11fc",
+      "title": "10-K",
+      "source_type": "sec_filing",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000023/nvda-20250126.htm",
+      "confidence": 1.0,
+      "relevance_score": 0.0159,
+      "matched_keywords": [
+        "executive",
+        "sponsor",
+        "vision",
+        "strategy",
+        "board"
+      ],
+      "content": "(In millions)\nDue in one year\n$\n\u2014\u00a0\nDue in one to five years\n2,250\u00a0\nDue in five to ten years\n2,750\u00a0\nDue in greater than ten years\n3,500\u00a0\nUnamortized debt discount and issuance costs\n(37)\nNet long-term carrying amount\n$\n8,"
+    }
+  ],
+  "key_gaps": [],
+  "confidence_label": "low",
+  "created_at": "2026-03-12T19:07:58.498425+00:00",
+  "generated_by": "deterministic_analyst_notes_collector"
+}

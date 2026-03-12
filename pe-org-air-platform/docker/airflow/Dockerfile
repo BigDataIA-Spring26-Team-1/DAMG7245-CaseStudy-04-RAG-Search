@@ -9,3 +9,4 @@ RUN pip install --no-cache-dir poetry==1.8.3
 WORKDIR /opt/airflow/project
 COPY pyproject.toml poetry.lock /opt/airflow/project/
 RUN poetry config virtualenvs.create false && poetry install --no-root --no-interaction --no-ansi
+RUN pip install --no-cache-dir --force-reinstall "numpy==1.26.4" "pandas==2.1.4"
