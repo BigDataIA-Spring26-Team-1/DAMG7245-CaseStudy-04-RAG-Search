@@ -1,0 +1,269 @@
+{
+  "company_id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+  "assessment_id": "b5108257-45fc-4f4b-852f-01f6caa74e51",
+  "scoring_run_id": "c3002137-0500-4a38-8086-64cf56060e50",
+  "vr_score": 91.96,
+  "synergy_bonus": 72.35,
+  "talent_penalty": 0.0,
+  "sem_lower": 82.08,
+  "sem_upper": 92.08,
+  "composite_score": 87.08,
+  "score_band": "Leading",
+  "breakdown": {
+    "composite": {
+      "alpha": 0.6,
+      "beta": 0.12,
+      "composite_score": 87.08,
+      "score_band": "Leading"
+    },
+    "generated_at_utc": "2026-02-20T23:46:27+00:00",
+    "hr": {
+      "hr_base": 75,
+      "hr_score": 84.76865625
+    },
+    "position_factor": {
+      "market_cap_blend_weight": 0.85,
+      "market_cap_percentile": 0.8825000000000001,
+      "market_cap_percentile_seed": 0.5,
+      "position_factor": 0.868325,
+      "position_factor_blend_weight": 0.65,
+      "position_factor_formula": 0.8095
+    },
+    "sector": "Services",
+    "sem": {
+      "global_fit": {},
+      "lower": 82.08,
+      "method_used": "fallback_constant_band",
+      "model_fit_index": {},
+      "standard_error": 5,
+      "upper": 92.08
+    },
+    "synergy": {
+      "alignment": 0.9280744006249486,
+      "base_term": 77.95428723330559,
+      "formula_synergy_score": 72.34737840019517,
+      "hits": [
+        {
+          "activated": false,
+          "dim_a": "ai_governance",
+          "dim_b": "culture_change",
+          "magnitude": 3,
+          "reason": "needs both >= 60.0 (a=100.0, b=25.0)",
+          "threshold": 60,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "use_case_portfolio",
+          "dim_b": "ai_governance",
+          "magnitude": -3,
+          "reason": "needs a >= 60.0 & b < 60.0 (a=90.0, b=100.0)",
+          "threshold": 60,
+          "type": "negative"
+        },
+        {
+          "activated": false,
+          "dim_a": "data_infrastructure",
+          "dim_b": "technology_stack",
+          "magnitude": 3,
+          "reason": "needs both >= 60.0 (a=75.0, b=50.0)",
+          "threshold": 60,
+          "type": "positive"
+        },
+        {
+          "activated": true,
+          "dim_a": "leadership_vision",
+          "dim_b": "use_case_portfolio",
+          "magnitude": 2.5,
+          "reason": "both >= 60.0",
+          "threshold": 60,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "talent_skills",
+          "dim_b": "use_case_portfolio",
+          "magnitude": 2.5,
+          "reason": "needs both >= 60.0 (a=25.0, b=90.0)",
+          "threshold": 60,
+          "type": "positive"
+        }
+      ],
+      "rule_synergy_bonus": 2.5,
+      "timing_factor": 1
+    },
+    "talent_concentration": {
+      "job_analysis": {
+        "entry_ai_jobs": 0,
+        "mid_ai_jobs": 2,
+        "senior_ai_jobs": 0,
+        "total_ai_jobs": 2,
+        "unique_skills_count": 0
+      },
+      "talent_risk_adjustment": 1,
+      "tc": 0.14781,
+      "tc_blend_weight": 0.9,
+      "tc_measured": 0.3981
+    },
+    "version": "v1.0",
+    "vr": {
+      "cv": 0.4504154182839384,
+      "cv_penalty_factor": 0.8873961454290153,
+      "dimension_breakdown": [
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "technology_stack",
+          "evidence_count": 31,
+          "raw_score": 50,
+          "sector_weight": 0.13,
+          "weighted_conf": 0.052000000000000005,
+          "weighted_score": 2.6
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "ai_governance",
+          "evidence_count": 43,
+          "raw_score": 100,
+          "sector_weight": 0.12,
+          "weighted_conf": 0.048,
+          "weighted_score": 4.8
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "use_case_portfolio",
+          "evidence_count": 72,
+          "raw_score": 90,
+          "sector_weight": 0.16,
+          "weighted_conf": 0.064,
+          "weighted_score": 5.76
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "leadership_vision",
+          "evidence_count": 52,
+          "raw_score": 90,
+          "sector_weight": 0.14,
+          "weighted_conf": 0.05600000000000001,
+          "weighted_score": 5.040000000000001
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "culture_change",
+          "evidence_count": 11,
+          "raw_score": 25,
+          "sector_weight": 0.14,
+          "weighted_conf": 0.05600000000000001,
+          "weighted_score": 1.4000000000000001
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "talent_skills",
+          "evidence_count": 6,
+          "raw_score": 25,
+          "sector_weight": 0.16,
+          "weighted_conf": 0.064,
+          "weighted_score": 1.6
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "data_infrastructure",
+          "evidence_count": 95,
+          "raw_score": 75,
+          "sector_weight": 0.15,
+          "weighted_conf": 0.06,
+          "weighted_score": 4.5
+        }
+      ],
+      "vr_adjusted": 91.96121618750514,
+      "vr_raw": 64.25
+    }
+  },
+  "scored_at": "2026-02-20 15:46:26.907000",
+  "overall_score": 87.08,
+  "dimension_scores": [
+    {
+      "score_dimension": "technology_stack",
+      "dimension": "technology_stack",
+      "raw_score": 50.0,
+      "weighted_score": 2.6,
+      "sector_weight": 0.13,
+      "confidence": 0.4,
+      "evidence_count": 31,
+      "level": 3,
+      "level_name": "Adequate"
+    },
+    {
+      "score_dimension": "ai_governance",
+      "dimension": "ai_governance",
+      "raw_score": 100.0,
+      "weighted_score": 4.8,
+      "sector_weight": 0.12,
+      "confidence": 0.4,
+      "evidence_count": 43,
+      "level": 5,
+      "level_name": "Excellent"
+    },
+    {
+      "score_dimension": "use_case_portfolio",
+      "dimension": "use_case_portfolio",
+      "raw_score": 90.0,
+      "weighted_score": 5.76,
+      "sector_weight": 0.16,
+      "confidence": 0.4,
+      "evidence_count": 72,
+      "level": 5,
+      "level_name": "Excellent"
+    },
+    {
+      "score_dimension": "leadership_vision",
+      "dimension": "leadership",
+      "raw_score": 90.0,
+      "weighted_score": 5.040000000000001,
+      "sector_weight": 0.14,
+      "confidence": 0.4,
+      "evidence_count": 52,
+      "level": 5,
+      "level_name": "Excellent"
+    },
+    {
+      "score_dimension": "culture_change",
+      "dimension": "culture",
+      "raw_score": 25.0,
+      "weighted_score": 1.4000000000000001,
+      "sector_weight": 0.14,
+      "confidence": 0.4,
+      "evidence_count": 11,
+      "level": 2,
+      "level_name": "Developing"
+    },
+    {
+      "score_dimension": "talent_skills",
+      "dimension": "talent",
+      "raw_score": 25.0,
+      "weighted_score": 1.6,
+      "sector_weight": 0.16,
+      "confidence": 0.4,
+      "evidence_count": 6,
+      "level": 2,
+      "level_name": "Developing"
+    },
+    {
+      "score_dimension": "data_infrastructure",
+      "dimension": "data_infrastructure",
+      "raw_score": 75.0,
+      "weighted_score": 4.5,
+      "sector_weight": 0.15,
+      "confidence": 0.4,
+      "evidence_count": 95,
+      "level": 4,
+      "level_name": "Good"
+    }
+  ]
+}

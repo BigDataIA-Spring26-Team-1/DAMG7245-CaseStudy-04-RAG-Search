@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - airflow_postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -29,6 +29,8 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
       AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/pe-org-air-platform/dags
       PYTHONPATH: /opt/airflow/project/pe-org-air-platform
+    env_file:
+      - ../../.env
     volumes:
       - ../../../:/opt/airflow/project
       - airflow_logs:/opt/airflow/logs
@@ -57,6 +59,8 @@ services:
       AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
       AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/pe-org-air-platform/dags
       PYTHONPATH: /opt/airflow/project/pe-org-air-platform
+    env_file:
+      - ../../.env
     ports:
       - "8081:8080"
     volumes:
@@ -81,6 +85,8 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
       AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/pe-org-air-platform/dags
       PYTHONPATH: /opt/airflow/project/pe-org-air-platform
+    env_file:
+      - ../../.env
     volumes:
       - ../../../:/opt/airflow/project
       - airflow_logs:/opt/airflow/logs

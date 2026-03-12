@@ -36,6 +36,11 @@ if AIRFLOW_AVAILABLE:
         schedule="0 6 * * *",
         start_date=datetime(2026, 3, 1),
         catchup=False,
+        params={
+            "company_id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+            "scoring_version": "v1.0",
+            "reindex": True,
+        },
         tags=["cs4", "rag", "indexing", "org-air"],
     ) as dag:
 
@@ -48,7 +53,7 @@ if AIRFLOW_AVAILABLE:
             bash_command=f"""
             cd {APP_ROOT}
             {export_env}
-            poetry run python {SCRIPTS_DIR / "index_evidence.py"}
+            poetry run python {SCRIPTS_DIR / "index_evidence.py"} --company-id "{{{{ params.company_id }}}}" {{% if params.reindex %}} --reindex {{% endif %}}
             """,
         )
 
@@ -57,11 +62,7 @@ if AIRFLOW_AVAILABLE:
             bash_command=f"""
             cd {APP_ROOT}
             {export_env}
-            if [ -n "$COMPANY_ID" ]; then
-              poetry run python {SCRIPTS_DIR / "run_scoring_engine.py"} --company-id "$COMPANY_ID" --version v1.0
-            else
-              echo "COMPANY_ID not set; skipping scoring step"
-            fi
+            poetry run python {SCRIPTS_DIR / "run_scoring_engine.py"} --company-id "{{{{ params.company_id }}}}" --version "{{{{ params.scoring_version }}}}"
             """,
         )
 
