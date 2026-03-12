@@ -99,14 +99,24 @@ class VectorStore:
         if not query_text.strip():
             return []
 
-        count = self.collection.count()
-        if count == 0:
-            return []
+        count: Optional[int] = None
+        try:
+            count_fn = getattr(self.collection, "count", None)
+            if callable(count_fn):
+                count = int(count_fn())
+                if count == 0:
+                    return []
+        except Exception:
+            # Allow lightweight fake collections used in tests that do not expose count()
+            count = None
 
         q_embed = self._embed_texts([query_text])[0]
         requested_k = max(1, top_k)
-        # Over-fetch to compensate for deduplication of near-identical chunks.
-        fetch_k = min(max(requested_k, requested_k * 5), count)
+
+        if count is None:
+            fetch_k = max(requested_k, requested_k * 5)
+        else:
+            fetch_k = min(max(requested_k, requested_k * 5), count)
 
         res = self.collection.query(
             query_embeddings=[q_embed],
@@ -123,7 +133,7 @@ class VectorStore:
         hits: List[SearchHit] = []
         for i, doc_id in enumerate(ids):
             dist = float(dists[i]) if i < len(dists) else 1.0
-            score = max(0.0, 1.0 - dist)  # smaller dist => higher score
+            score = max(0.0, 1.0 - dist)
 
             hits.append(
                 SearchHit(
@@ -135,6 +145,7 @@ class VectorStore:
             )
 
         hits.sort(key=lambda h: h.score, reverse=True)
+
         deduped_hits: List[SearchHit] = []
         seen_text_keys = set()
         for hit in hits:
@@ -143,6 +154,7 @@ class VectorStore:
                 continue
             if text_key:
                 seen_text_keys.add(text_key)
+
             deduped_hits.append(hit)
             if len(deduped_hits) >= requested_k:
                 break
