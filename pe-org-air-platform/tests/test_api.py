@@ -74,6 +74,19 @@ def test_list_companies_empty(client, fake_sf):
     assert body["total_pages"] == 0
     assert body["items"] == []
 
+
+def test_list_companies_supports_query_filter(client, fake_sf):
+    fake_sf._one = (1,)
+    fake_sf._all = [
+        (COMPANY_ID, "NVIDIA Corporation", "NVDA", INDUSTRY_ID, 0.25, False, datetime.now(), datetime.now()),
+    ]
+    r = client.get("/api/v1/companies?page=1&page_size=20&q=nvda")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["total"] == 1
+    assert len(body["items"]) == 1
+    assert body["items"][0]["ticker"] == "NVDA"
+
 def test_create_company_invalid_industry(client, fake_sf):
     payload = {"name": "Test Co", "ticker": "TCO", "industry_id": INDUSTRY_ID, "position_factor": 0.25}
     fake_sf._one = None

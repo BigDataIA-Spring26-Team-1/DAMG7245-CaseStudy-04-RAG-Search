@@ -6,13 +6,26 @@ import os
 import shlex
 import subprocess
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
 import requests
 import streamlit as st
 
+# Ensure shared modules are imported from the repo root, not from this script's module name.
+STREAMLIT_DIR = Path(__file__).resolve().parent
+APP_ROOT_DIR = STREAMLIT_DIR.parents[0]
+if str(APP_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(APP_ROOT_DIR))
+
+from app.ui_presenters import (
+    compact_recommendation,
+    display_evidence_count,
+    extract_orgair_score,
+    humanize_source_type,
+    sanitize_generated_summary,
+)
 
 # ============================================================
 # Config
@@ -21,6 +34,10 @@ import streamlit as st
 DEFAULT_API_BASE = os.getenv("API_BASE_URL", "http://localhost:8000")
 DEFAULT_API_PREFIX = os.getenv("API_PREFIX", "/api/v1")
 DEFAULT_SCORING_PREFIX = os.getenv("SCORING_PREFIX", "/api/v1/scoring")
+DEFAULT_CLOUD_RUN_API_BASE = os.getenv(
+    "CLOUD_RUN_API_BASE",
+    "https://org-air-api-334893558229.us-central1.run.app",
+)
 
 ASSESSMENT_TYPES = ["screening", "due_diligence", "quarterly", "exit_prep"]
 ASSESSMENT_STATUSES = ["draft", "in_progress", "submitted", "approved", "superseded"]
@@ -34,8 +51,20 @@ DIMENSIONS = [
     "culture_change",
 ]
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
+ROOT_DIR = APP_ROOT_DIR
 SCRIPTS_DIR = ROOT_DIR / "scripts"
+RESULTS_DIR = ROOT_DIR / "results"
+PORTFOLIO_TICKERS = ["NVDA", "JPM", "WMT", "GE", "DG"]
+RESULT_CATEGORIES = [
+    "cs4",
+    "evidence",
+    "signals",
+    "signal_scores",
+    "signal_summaries",
+    "scoring",
+    "retrieval",
+    "validation",
+]
 
 
 # ============================================================
@@ -166,6 +195,7 @@ def _inject_ui_theme() -> None:
     --ui-muted: #9eb3cc;
     --ui-accent: #2c8bff;
     --ui-accent-soft: #31c6e6;
+    --ui-gold: #f7b955;
     --ui-border: #2a3d57;
     --ui-card: rgba(14, 24, 38, 0.88);
 }
@@ -188,6 +218,7 @@ html, body, [class*="css"] {
 
 .block-container {
     padding-top: 1rem;
+    padding-bottom: 3rem;
 }
 
 section[data-testid="stSidebar"] {
@@ -288,6 +319,143 @@ div[data-testid="stMetric"] {
     box-shadow: 0 8px 20px rgba(0, 8, 18, 0.4);
 }
 
+.hero-shell {
+    position: relative;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(90, 132, 182, 0.35);
+    border-radius: 24px;
+    overflow: hidden;
+    background:
+        radial-gradient(700px 280px at 8% 0%, rgba(49, 198, 230, 0.16), transparent 58%),
+        radial-gradient(820px 320px at 100% 0%, rgba(44, 139, 255, 0.18), transparent 62%),
+        linear-gradient(135deg, rgba(7, 16, 29, 0.96), rgba(15, 28, 46, 0.9));
+    box-shadow: 0 26px 58px rgba(1, 9, 20, 0.42);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 0.95fr;
+    gap: 1rem;
+    padding: 1.35rem;
+}
+
+.hero-title {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+}
+
+.hero-copy {
+    margin: 0.75rem 0 0;
+    max-width: 55rem;
+    color: #bfd1e6;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.hero-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1rem;
+}
+
+.hero-chip {
+    padding: 0.42rem 0.72rem;
+    border-radius: 999px;
+    border: 1px solid rgba(125, 167, 219, 0.28);
+    background: rgba(255, 255, 255, 0.05);
+    color: #dbe7f6;
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.hero-panel {
+    border: 1px solid rgba(90, 132, 182, 0.28);
+    border-radius: 18px;
+    padding: 1rem;
+    background: rgba(8, 16, 28, 0.62);
+    backdrop-filter: blur(10px);
+}
+
+.hero-panel h4 {
+    margin: 0 0 0.65rem;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8fb7de;
+}
+
+.hero-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.hero-stat {
+    padding: 0.85rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(125, 167, 219, 0.16);
+}
+
+.hero-stat-label {
+    color: var(--ui-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.hero-stat-value {
+    margin-top: 0.35rem;
+    font-size: 1.35rem;
+    font-weight: 800;
+}
+
+.insight-card {
+    border: 1px solid rgba(90, 132, 182, 0.24);
+    border-radius: 18px;
+    padding: 1rem 1.05rem;
+    background: linear-gradient(180deg, rgba(12, 22, 37, 0.88), rgba(10, 18, 31, 0.82));
+    min-height: 100%;
+}
+
+.insight-kicker {
+    color: #7ebeff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.insight-title {
+    margin: 0.35rem 0 0.45rem;
+    font-size: 1.02rem;
+    font-weight: 800;
+}
+
+.insight-copy {
+    margin: 0;
+    color: #bdd1e7;
+    line-height: 1.55;
+}
+
+.section-callout {
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(247, 185, 85, 0.3);
+    background: linear-gradient(90deg, rgba(247, 185, 85, 0.1), rgba(255, 255, 255, 0.03));
+}
+
+@media (max-width: 980px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 div.stTextInput > div > div > input,
 div.stNumberInput > div > div > input,
 div.stTextArea textarea {
@@ -385,6 +553,703 @@ def _vega_common_config() -> dict[str, Any]:
             },
         },
     }
+
+
+def _result_json(path: Path) -> dict[str, Any] | None:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _collect_result_summary() -> dict[str, Any]:
+    tickers = [ticker for ticker in PORTFOLIO_TICKERS if (RESULTS_DIR / ticker).exists()]
+    portfolio_dir = RESULTS_DIR / "PORTFOLIO"
+    local_files = list(RESULTS_DIR.rglob("*")) if RESULTS_DIR.exists() else []
+    local_file_count = sum(1 for path in local_files if path.is_file())
+
+    latest_scores: list[dict[str, Any]] = []
+    for ticker in tickers:
+        score_path = RESULTS_DIR / ticker / "scoring" / "latest_org_air_score.json"
+        payload = _result_json(score_path)
+        if isinstance(payload, dict):
+            latest_scores.append(
+                {
+                    "ticker": ticker,
+                    "score": extract_orgair_score(payload),
+                    "score_band": str(payload.get("score_band", "unknown")),
+                }
+            )
+
+    latest_scores.sort(key=lambda item: item["score"], reverse=True)
+
+    validation_path = portfolio_dir / "validation" / "latest_portfolio_validation.json"
+    validation_payload = _result_json(validation_path)
+    validation_rows = validation_payload.get("results", []) if isinstance(validation_payload, dict) else []
+    passing = sum(1 for item in validation_rows if isinstance(item, dict) and item.get("status") == "PASS")
+
+    return {
+        "tickers": tickers,
+        "portfolio_exists": portfolio_dir.exists(),
+        "local_file_count": local_file_count,
+        "latest_scores": latest_scores,
+        "validation_rows": validation_rows,
+        "validation_pass_count": passing,
+        "validation_total": len(validation_rows),
+    }
+
+
+def _render_hero(summary: dict[str, Any], api_base: str, api_prefix: str, scoring_prefix: str) -> None:
+    top_company = summary["latest_scores"][0] if summary["latest_scores"] else None
+    top_label = (
+        f"{top_company['ticker']} {top_company['score']:.2f}"
+        if isinstance(top_company, dict)
+        else "Awaiting scored portfolio"
+    )
+    pass_rate = (
+        f"{summary['validation_pass_count']}/{summary['validation_total']}"
+        if summary["validation_total"]
+        else "No validation file yet"
+    )
+    st.markdown(
+        f"""
+        <section class="hero-shell">
+          <div class="hero-grid">
+            <div>
+              <div class="hero-chip-row">
+                <span class="hero-chip">Case Study 4 RAG Search</span>
+                <span class="hero-chip">Snowflake + S3 + Chroma</span>
+                <span class="hero-chip">Portfolio: {", ".join(PORTFOLIO_TICKERS)}</span>
+              </div>
+              <h1 class="hero-title">PE OrgAIR Control Center</h1>
+              <p class="hero-copy">
+                A polished operations console for collection, retrieval, scoring, justification, and artifact review.
+                All existing endpoints remain available below; this layer surfaces portfolio readiness, stored outputs,
+                and the current submission-critical evidence trail first.
+              </p>
+            </div>
+            <div class="hero-panel">
+              <h4>Run Snapshot</h4>
+              <div class="hero-stat-grid">
+                <div class="hero-stat">
+                  <div class="hero-stat-label">Portfolio Companies</div>
+                  <div class="hero-stat-value">{len(summary["tickers"])}</div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-label">Local Result Files</div>
+                  <div class="hero-stat-value">{summary["local_file_count"]}</div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-label">Top OrgAIR Score</div>
+                  <div class="hero-stat-value">{top_label}</div>
+                </div>
+                <div class="hero-stat">
+                  <div class="hero-stat-label">Validation Passes</div>
+                  <div class="hero-stat-value">{pass_rate}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    callout_col, conn_col = st.columns([1.5, 1.0])
+    with callout_col:
+        st.markdown(
+            """
+            <div class="section-callout">
+              <strong>Design rule:</strong> visual improvements are additive only. The API console,
+              script runner, scoring dashboard, evidence review, and all submission-critical workflows remain intact below.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with conn_col:
+        st.caption("Active routes")
+        st.write(f"`API` {api_base}{api_prefix}")
+        st.write(f"`Scoring` {api_base}{scoring_prefix}")
+
+
+def _render_overview(summary: dict[str, Any]) -> None:
+    score_rows = summary["latest_scores"]
+    top_score = score_rows[0]["score"] if score_rows else 0.0
+    avg_score = (
+        sum(item["score"] for item in score_rows) / len(score_rows)
+        if score_rows else 0.0
+    )
+    weakest = score_rows[-1] if score_rows else None
+
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Portfolio Coverage", f"{len(summary['tickers'])}/5")
+    m2.metric("Average OrgAIR", f"{avg_score:.2f}" if score_rows else "n/a")
+    m3.metric("Top OrgAIR", f"{top_score:.2f}" if score_rows else "n/a")
+    m4.metric(
+        "Weakest Company",
+        f"{weakest['ticker']} {weakest['score']:.2f}" if isinstance(weakest, dict) else "n/a",
+    )
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown(
+            """
+            <div class="insight-card">
+              <div class="insight-kicker">Submission Readiness</div>
+              <div class="insight-title">All core workflows are reachable from one surface</div>
+              <p class="insight-copy">
+                Health, CS1, CS2, CS3, search, justification, script execution, and raw API access remain available.
+                This tab adds faster operational awareness rather than replacing any requirement-facing controls.
+              </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with col2:
+        validation = f"{summary['validation_pass_count']} of {summary['validation_total']}" if summary["validation_total"] else "No validation captured"
+        st.markdown(
+            f"""
+            <div class="insight-card">
+              <div class="insight-kicker">Portfolio Validation</div>
+              <div class="insight-title">{validation}</div>
+              <p class="insight-copy">
+                Latest portfolio validation is mirrored into the local results tree and can be inspected directly in the
+                Results Explorer tab together with scoring outputs and CS4 artifacts.
+              </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with col3:
+        top_label = ", ".join(item["ticker"] for item in score_rows[:3]) if score_rows else "Awaiting scores"
+        st.markdown(
+            f"""
+            <div class="insight-card">
+              <div class="insight-kicker">Top Companies</div>
+              <div class="insight-title">{top_label}</div>
+              <p class="insight-copy">
+                Current leaders are based on the mirrored `latest_org_air_score.json` artifacts in the local portfolio results folder.
+              </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    if score_rows:
+        st.divider()
+        st.vega_lite_chart(
+            score_rows,
+            {
+                **_vega_common_config(),
+                "mark": {"type": "line", "point": {"filled": True, "size": 90}, "strokeWidth": 3},
+                "encoding": {
+                    "x": {"field": "ticker", "type": "nominal", "title": "Ticker"},
+                    "y": {"field": "score", "type": "quantitative", "title": "OrgAIR Score"},
+                    "color": {
+                        "field": "score_band",
+                        "type": "nominal",
+                        "scale": {"range": ["#31c6e6", "#2c8bff", "#5c8eff", "#f7b955", "#f08a5d"]},
+                        "title": "Score Band",
+                    },
+                    "tooltip": [
+                        {"field": "ticker", "type": "nominal"},
+                        {"field": "score", "type": "quantitative", "format": ".2f"},
+                        {"field": "score_band", "type": "nominal"},
+                    ],
+                },
+            },
+            use_container_width=True,
+        )
+        st.caption("Portfolio Leaderboard From Local Result Artifacts")
+        st.dataframe(score_rows, use_container_width=True)
+
+
+def _render_results_explorer() -> None:
+    st.caption("Browse locally mirrored pipeline outputs without leaving the UI.")
+    available_entities = [path.name for path in RESULTS_DIR.iterdir() if path.is_dir()] if RESULTS_DIR.exists() else []
+    if not available_entities:
+        st.info("No local results folder found yet.")
+        return
+
+    entity = st.selectbox("Entity", sorted(available_entities), key="results_entity")
+    entity_dir = RESULTS_DIR / entity
+    available_categories = [path.name for path in entity_dir.iterdir() if path.is_dir()]
+    if not available_categories:
+        st.info("No result categories found for this entity.")
+        return
+
+    preferred_order = [name for name in RESULT_CATEGORIES if name in available_categories]
+    category = st.selectbox(
+        "Category",
+        preferred_order + [name for name in available_categories if name not in preferred_order],
+        key="results_category",
+    )
+    category_dir = entity_dir / category
+    files = sorted([path for path in category_dir.rglob("*") if path.is_file()])
+    if not files:
+        st.info("No files found in this category.")
+        return
+
+    selected_path = st.selectbox(
+        "Artifact",
+        files,
+        key="results_file",
+        format_func=lambda path: str(path.relative_to(entity_dir)),
+    )
+    preview_col, meta_col = st.columns([1.4, 0.8])
+    with meta_col:
+        st.write(f"`{selected_path.name}`")
+        st.write(f"Size: `{selected_path.stat().st_size:,}` bytes")
+        st.write(f"Modified: `{datetime.fromtimestamp(selected_path.stat().st_mtime).isoformat(timespec='seconds')}`")
+        st.download_button(
+            "Download Artifact",
+            data=selected_path.read_bytes(),
+            file_name=selected_path.name,
+            mime="application/octet-stream",
+            use_container_width=True,
+        )
+
+    with preview_col:
+        suffix = selected_path.suffix.lower()
+        if suffix == ".json":
+            payload = _result_json(selected_path)
+            if payload is None:
+                st.code(selected_path.read_text(encoding="utf-8", errors="replace"))
+            else:
+                _show_payload(payload)
+        else:
+            text = selected_path.read_text(encoding="utf-8", errors="replace")
+            st.code(text[:12000] if len(text) > 12000 else text)
+
+
+def _load_company_artifacts(ticker: str) -> dict[str, Any]:
+    ticker_dir = RESULTS_DIR / ticker
+    return {
+        "scoring": _result_json(ticker_dir / "scoring" / "latest_org_air_score.json"),
+        "cs4": _result_json(ticker_dir / "cs4" / "complete_pipeline_latest.json"),
+        "signal_summary": _result_json(ticker_dir / "signal_summaries" / "latest_company_signal_summary.json"),
+        "signal_scores": _result_json(ticker_dir / "signal_scores" / "latest_signal_scores.json"),
+    }
+
+
+def _portfolio_company_lookup(summary: dict[str, Any]) -> dict[str, dict[str, str]]:
+    lookup: dict[str, dict[str, str]] = {}
+    for ticker in summary.get("tickers", []):
+        cs4_payload = _load_company_artifacts(ticker).get("cs4") or {}
+        company = cs4_payload.get("company", {}) if isinstance(cs4_payload, dict) else {}
+        lookup[ticker] = {
+            "company_id": str(company.get("company_id", "")).strip(),
+            "company_name": str(company.get("name", ticker)).strip() or ticker,
+        }
+    return lookup
+
+
+def _search_companies(
+    api_base: str,
+    api_prefix: str,
+    timeout: int,
+    headers: dict[str, str],
+    verify_tls: bool,
+    query: str,
+    limit: int = 20,
+) -> list[dict[str, str]]:
+    try:
+        url = _api_url(api_base, api_prefix, "/companies")
+        payload = _request_json(
+            "GET",
+            url,
+            params={"page": 1, "page_size": int(limit), "q": query},
+            timeout=timeout,
+            headers=headers,
+            verify=verify_tls,
+        )
+    except Exception:
+        return []
+
+    items = payload.get("items", []) if isinstance(payload, dict) else []
+    out: list[dict[str, str]] = []
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        out.append(
+            {
+                "id": str(item.get("id", "")).strip(),
+                "ticker": str(item.get("ticker", "")).strip().upper(),
+                "name": str(item.get("name", "")).strip(),
+            }
+        )
+    return out
+
+
+def _render_source_evidence(item: dict[str, Any]) -> None:
+    source_type = humanize_source_type(item.get("source_type"))
+    source_url = str(item.get("source_url") or "").strip()
+    title = str(item.get("title") or source_type)
+    confidence = _to_float(item.get("confidence"))
+    excerpt = str(item.get("text") or item.get("content") or "").strip()
+    metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+
+    st.markdown(
+        f"""
+        <div class="insight-card">
+          <div class="insight-kicker">{source_type}</div>
+          <div class="insight-title">{title}</div>
+          <p class="insight-copy">
+            Confidence: {confidence:.2f}<br/>
+            Dimension: {metadata.get("dimension", item.get("dimension", "n/a"))}<br/>
+            Source URL present: {"yes" if source_url else "no"}
+          </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if source_url:
+        st.link_button("Open Source Filing", source_url, use_container_width=True)
+    st.code(excerpt[:2400] if len(excerpt) > 2400 else excerpt)
+
+
+def _render_search_source_check(
+    summary: dict[str, Any],
+    api_base: str,
+    api_prefix: str,
+    timeout: int,
+    headers: dict[str, str],
+    verify_tls: bool,
+) -> None:
+    st.caption("Run evidence search and inspect the exact SEC-backed excerpt, item mapping, and source filing URL.")
+    company_lookup = _portfolio_company_lookup(summary)
+    ticker_options = ["All Portfolio Companies"] + list(company_lookup.keys())
+
+    filter_col1, filter_col2, filter_col3, filter_col4 = st.columns(4)
+    query = filter_col1.text_input("Query", value="data infrastructure api platform", key="search_source_query")
+    ticker_choice = filter_col2.selectbox("Portfolio Company", ticker_options, key="search_source_ticker")
+    mode = filter_col3.selectbox("Mode", ["hybrid", "semantic", "bm25"], index=0, key="search_source_mode")
+    top_k = filter_col4.slider("Top K", min_value=1, max_value=10, value=5, key="search_source_topk")
+
+    filter_col5, filter_col6, filter_col7 = st.columns(3)
+    source_type = filter_col5.selectbox(
+        "Source Type",
+        ["All", "sec_10k_item_1", "sec_10k_item_1a", "sec_10k_item_7"],
+        key="search_source_type",
+    )
+    min_confidence = filter_col6.slider(
+        "Min Confidence",
+        min_value=0.0,
+        max_value=1.0,
+        value=0.0,
+        step=0.05,
+        key="search_source_confidence",
+    )
+    use_hyde = filter_col7.checkbox("Use HyDE", value=True, key="search_source_hyde")
+
+    st.divider()
+    lookup_col1, lookup_col2 = st.columns([1.0, 1.2])
+    company_search_query = lookup_col1.text_input(
+        "Search Any Company",
+        value="",
+        placeholder="Type ticker or company name",
+        key="search_source_company_lookup",
+    )
+    company_matches = _search_companies(
+        api_base,
+        api_prefix,
+        timeout,
+        headers,
+        verify_tls,
+        company_search_query.strip(),
+    ) if company_search_query.strip() else []
+    any_company_labels = [
+        f"{item['ticker'] or 'NO-TICKER'} - {item['name']} ({item['id']})"
+        for item in company_matches
+    ]
+    selected_any_company = lookup_col2.selectbox(
+        "API Company Match",
+        ["None"] + any_company_labels,
+        key="search_source_company_match",
+    )
+
+    selected_company = company_lookup.get(ticker_choice, {})
+    company_id = selected_company.get("company_id") if ticker_choice != "All Portfolio Companies" else None
+    company_name = selected_company.get("company_name") if ticker_choice != "All Portfolio Companies" else "Portfolio"
+
+    if selected_any_company != "None":
+        matched = company_matches[any_company_labels.index(selected_any_company)]
+        company_id = matched["id"]
+        company_name = matched["name"] or matched["ticker"] or company_id
+
+    if st.button("Run Search", key="search_source_run"):
+        try:
+            params: dict[str, Any] = {
+                "q": query,
+                "mode": mode,
+                "top_k": int(top_k),
+                "use_hyde": bool(use_hyde),
+            }
+            if company_id:
+                params["company_id"] = company_id
+            if source_type != "All":
+                params["source_type"] = source_type
+            if min_confidence > 0:
+                params["min_confidence"] = float(min_confidence)
+
+            url = _api_url(api_base, api_prefix, "/search")
+            payload = _request_json("GET", url, params=params, timeout=timeout, headers=headers, verify=verify_tls)
+            st.session_state["search_source_last_payload"] = payload
+        except requests.HTTPError as exc:
+            _show_http_error(exc)
+        except Exception as exc:
+            st.error(f"Search failed: {exc}")
+
+    payload = st.session_state.get("search_source_last_payload")
+    results = payload.get("results", []) if isinstance(payload, dict) else []
+    if not results:
+        st.info("Run a query to inspect exact source evidence.")
+        return
+
+    st.success(f"Showing {len(results)} result(s) for {company_name}.")
+    for idx, item in enumerate(results, start=1):
+        metadata = item.get("metadata", {}) if isinstance(item.get("metadata"), dict) else {}
+        source_item = {
+            "title": metadata.get("title") or metadata.get("doc_type") or f"Result {idx}",
+            "source_type": metadata.get("source_type"),
+            "source_url": metadata.get("source_url"),
+            "confidence": metadata.get("confidence", 0.0),
+            "text": item.get("text", ""),
+            "metadata": metadata,
+        }
+        with st.expander(
+            f"{idx}. {humanize_source_type(metadata.get('source_type'))} | score={_to_float(item.get('score')):.3f}",
+            expanded=(idx == 1),
+        ):
+            _render_source_evidence(source_item)
+
+
+def _render_analytics_hub(summary: dict[str, Any]) -> None:
+    st.caption("Portfolio analytics generated directly from the mirrored submission artifacts.")
+    validation_payload = _result_json(RESULTS_DIR / "PORTFOLIO" / "validation" / "latest_portfolio_validation.json") or {}
+    score_rows = summary["latest_scores"]
+
+    if score_rows:
+        analytics_cols = st.columns([1.35, 1.0])
+        with analytics_cols[0]:
+            st.caption("Portfolio Score Spread")
+            st.vega_lite_chart(
+                score_rows,
+                {
+                    **_vega_common_config(),
+                    "mark": {"type": "bar", "cornerRadiusEnd": 10},
+                    "encoding": {
+                        "y": {"field": "ticker", "type": "nominal", "sort": "-x", "title": None},
+                        "x": {"field": "score", "type": "quantitative", "title": "OrgAIR Score"},
+                        "color": {
+                            "field": "score_band",
+                            "type": "nominal",
+                            "scale": {"range": ["#31c6e6", "#2c8bff", "#5c8eff", "#f7b955", "#f08a5d"]},
+                            "title": "Band",
+                        },
+                        "tooltip": [
+                            {"field": "ticker", "type": "nominal"},
+                            {"field": "score", "type": "quantitative", "format": ".2f"},
+                            {"field": "score_band", "type": "nominal"},
+                        ],
+                    },
+                },
+                use_container_width=True,
+            )
+        with analytics_cols[1]:
+            checks = validation_payload.get("checks", {})
+            check_rows = [
+                {
+                    "ticker": ticker,
+                    "score": _to_float(item.get("score")),
+                    "lower_bound": _to_float(item.get("lower_bound")),
+                    "upper_bound": _to_float(item.get("upper_bound")),
+                    "in_range": bool(item.get("in_range")),
+                }
+                for ticker, item in checks.items()
+                if isinstance(item, dict)
+            ]
+            st.caption("Validation Envelope")
+            if check_rows:
+                st.dataframe(check_rows, use_container_width=True)
+            else:
+                st.info("No validation envelope found yet.")
+
+    dimension_rows: list[dict[str, Any]] = []
+    for ticker in summary["tickers"]:
+        scoring_payload = _load_company_artifacts(ticker).get("scoring") or {}
+        dimensions = scoring_payload.get("dimension_scores", [])
+        for item in dimensions:
+            if isinstance(item, dict):
+                dimension_rows.append(
+                    {
+                        "ticker": ticker,
+                        "dimension": str(item.get("dimension", "unknown")).replace("_", " ").title(),
+                        "score": _to_float(item.get("score")),
+                        "confidence": _to_float(item.get("confidence")),
+                    }
+                )
+
+    if dimension_rows:
+        st.divider()
+        st.caption("Dimension Heatmap")
+        st.vega_lite_chart(
+            dimension_rows,
+            {
+                **_vega_common_config(),
+                "mark": "rect",
+                "encoding": {
+                    "x": {"field": "dimension", "type": "nominal", "title": None},
+                    "y": {"field": "ticker", "type": "nominal", "title": None},
+                    "color": {
+                        "field": "score",
+                        "type": "quantitative",
+                        "scale": {"range": ["#0d2034", "#1d5fa8", "#31c6e6", "#f7b955"]},
+                        "title": "Score",
+                    },
+                    "tooltip": [
+                        {"field": "ticker", "type": "nominal"},
+                        {"field": "dimension", "type": "nominal"},
+                        {"field": "score", "type": "quantitative", "format": ".2f"},
+                        {"field": "confidence", "type": "quantitative", "format": ".2f"},
+                    ],
+                },
+            },
+            use_container_width=True,
+        )
+
+
+def _render_analysis_studio(summary: dict[str, Any]) -> None:
+    st.caption("Company-level narrative analysis sourced from the generated CS4 and scoring artifacts.")
+    if not summary["tickers"]:
+        st.info("No portfolio result folders found yet.")
+        return
+
+    ticker = st.selectbox("Company", summary["tickers"], key="analysis_ticker")
+    artifacts = _load_company_artifacts(ticker)
+    cs4_payload = artifacts.get("cs4") or {}
+    scoring_payload = artifacts.get("scoring") or {}
+
+    company = cs4_payload.get("company", {})
+    assessment = cs4_payload.get("assessment", {})
+    justification = cs4_payload.get("justification", {})
+    ic_packet = cs4_payload.get("ic_packet", {})
+    dimension_score = cs4_payload.get("dimension_score", {})
+    company_name = str(company.get("name", ticker))
+    company_id = str(company.get("company_id", "")).strip()
+    company_label = company_name if not ticker else f"{company_name} ({ticker})"
+    summary_text = sanitize_generated_summary(
+        justification.get("generated_summary"),
+        company_name=company_name,
+        company_id=company_id,
+        ticker=ticker,
+    )
+    recommendation = str(ic_packet.get("recommendation", "n/a"))
+    evidence_total = display_evidence_count(justification, ic_packet, dimension_score)
+
+    head_cols = st.columns(4)
+    head_cols[0].metric("Company", company_label)
+    head_cols[1].metric("OrgAIR", f"{_to_float(assessment.get('org_air_score')):.2f}")
+    head_cols[2].metric("Decision", compact_recommendation(recommendation))
+    head_cols[3].metric("Evidence Count", evidence_total)
+
+    story_col, evidence_col = st.columns([1.2, 0.8])
+    with story_col:
+        st.markdown(
+            f"""
+            <div class="insight-card">
+              <div class="insight-kicker">Justification Summary</div>
+              <div class="insight-title">{str(dimension_score.get("dimension", "analysis")).replace("_", " ").title()}</div>
+              <p class="insight-copy">{summary_text}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with evidence_col:
+        st.markdown(
+            f"""
+            <div class="insight-card">
+              <div class="insight-kicker">IC Snapshot</div>
+              <div class="insight-title">{ic_packet.get("score_band", scoring_payload.get("score_band", "n/a"))}</div>
+              <p class="insight-copy">
+                Recommendation: {recommendation}<br/>
+                Evidence strength: {justification.get("evidence_strength", "n/a")}<br/>
+                Avg evidence strength: {ic_packet.get("avg_evidence_strength", "n/a")}<br/>
+                Risks captured: {len(ic_packet.get("risks", []))}
+              </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    dimension_rows = []
+    for item in scoring_payload.get("dimension_scores", []):
+        if isinstance(item, dict):
+            dimension_rows.append(
+                {
+                    "dimension": str(item.get("dimension", "unknown")).replace("_", " ").title(),
+                    "score": _to_float(item.get("score")),
+                    "confidence": _to_float(item.get("confidence")),
+                    "evidence_count": int(item.get("evidence_count", 0) or 0),
+                }
+            )
+
+    if dimension_rows:
+        st.divider()
+        st.caption("Dimension Profile")
+        st.vega_lite_chart(
+            dimension_rows,
+            {
+                **_vega_common_config(),
+                "mark": {"type": "bar", "cornerRadiusEnd": 8},
+                "encoding": {
+                    "y": {"field": "dimension", "type": "nominal", "sort": "-x", "title": None},
+                    "x": {"field": "score", "type": "quantitative", "title": "Score"},
+                    "color": {
+                        "field": "confidence",
+                        "type": "quantitative",
+                        "scale": {"range": ["#f08a5d", "#31c6e6"]},
+                        "title": "Confidence",
+                    },
+                    "tooltip": [
+                        {"field": "dimension", "type": "nominal"},
+                        {"field": "score", "type": "quantitative", "format": ".2f"},
+                        {"field": "confidence", "type": "quantitative", "format": ".2f"},
+                        {"field": "evidence_count", "type": "quantitative"},
+                    ],
+                },
+            },
+            use_container_width=True,
+        )
+
+    lower_cols = st.columns(2)
+    with lower_cols[0]:
+        st.subheader("Top Evidence")
+        evidence_rows = justification.get("supporting_evidence", [])[:5]
+        if evidence_rows:
+            for item in evidence_rows:
+                st.markdown(
+                    f"**{item.get('title') or item.get('source_type') or 'Evidence'}**  \n"
+                    f"`conf={_to_float(item.get('confidence')):.2f}`  \n"
+                    f"{(item.get('content') or '')[:260]}"
+                )
+        else:
+            st.info("No supporting evidence found.")
+    with lower_cols[1]:
+        st.subheader("Diligence Risks")
+        risks = ic_packet.get("risks", [])
+        questions = ic_packet.get("diligence_questions", [])
+        if risks:
+            for risk in risks:
+                st.write(f"- {risk}")
+        else:
+            st.write("- No explicit risks captured.")
+        st.subheader("Diligence Questions")
+        if questions:
+            for question in questions:
+                st.write(f"- {question}")
+        else:
+            st.write("- No diligence questions captured.")
 
 
 def _hydrate_company_names(
@@ -602,11 +1467,39 @@ def _render_company_breakdown(record: dict[str, Any], company_names: dict[str, s
 st.set_page_config(page_title="PE OrgAIR Platform", layout="wide")
 _inject_ui_theme()
 st.title("PE OrgAIR Platform")
-st.caption("Comprehensive Streamlit console for all current API routers and local scripts.")
+st.caption("Executive-grade portfolio dashboard plus full API, scoring, evidence, and automation console.")
+
+if "connection_mode" not in st.session_state:
+    st.session_state["connection_mode"] = "Cloud Run"
+if "api_base_value" not in st.session_state:
+    st.session_state["api_base_value"] = DEFAULT_CLOUD_RUN_API_BASE
 
 with st.sidebar:
     st.header("Connection")
-    api_base = st.text_input("API Base URL", value=DEFAULT_API_BASE)
+    connection_mode = st.radio(
+        "Environment",
+        ["Cloud Run", "Local", "Custom"],
+        key="connection_mode",
+        horizontal=False,
+    )
+
+    if connection_mode == "Cloud Run":
+        st.session_state["api_base_value"] = DEFAULT_CLOUD_RUN_API_BASE
+        st.success("Cloud Run API preset active")
+    elif connection_mode == "Local":
+        st.session_state["api_base_value"] = DEFAULT_API_BASE
+        st.info("Local API preset active")
+
+    if connection_mode == "Custom":
+        api_base = st.text_input("API Base URL", value=st.session_state.get("api_base_value", DEFAULT_API_BASE))
+        st.session_state["api_base_value"] = api_base
+    else:
+        api_base = st.text_input(
+            "API Base URL",
+            value=st.session_state.get("api_base_value", DEFAULT_API_BASE),
+            disabled=True,
+        )
+
     api_prefix = st.text_input("API Prefix", value=DEFAULT_API_PREFIX)
     scoring_prefix = st.text_input("Scoring Prefix", value=DEFAULT_SCORING_PREFIX)
     timeout = st.number_input("HTTP Timeout (seconds)", min_value=1, max_value=300, value=20)
@@ -625,6 +1518,13 @@ with st.sidebar:
     st.caption("Routing notes")
     st.write("- Health endpoints do not use API prefix")
     st.write("- Scoring routes use the dedicated scoring prefix")
+    st.write(f"- Cloud Run preset: `{DEFAULT_CLOUD_RUN_API_BASE}`")
+    st.write(f"- Local results root: `{RESULTS_DIR}`")
+    st.write(f"- Default portfolio: `{', '.join(PORTFOLIO_TICKERS)}`")
+
+result_summary = _collect_result_summary()
+_render_hero(result_summary, api_base, api_prefix, scoring_prefix)
+st.caption("Navigation is in the horizontal tab row below. Scroll sideways if your screen does not show all tabs.")
 
 
 # ============================================================
@@ -633,6 +1533,11 @@ with st.sidebar:
 
 main_tabs = st.tabs(
     [
+        "Overview",
+        "Results Explorer",
+        "Analysis Studio",
+        "Analytics",
+        "Search & Source Check",
         "Health",
         "Companies",
         "Assessments",
@@ -649,10 +1554,50 @@ main_tabs = st.tabs(
 
 
 # ============================================================
-# Health
+# Overview
 # ============================================================
 
 with main_tabs[0]:
+    _render_overview(result_summary)
+
+
+# ============================================================
+# Results Explorer
+# ============================================================
+
+with main_tabs[1]:
+    _render_results_explorer()
+
+
+# ============================================================
+# Analysis Studio
+# ============================================================
+
+with main_tabs[2]:
+    _render_analysis_studio(result_summary)
+
+
+# ============================================================
+# Analytics
+# ============================================================
+
+with main_tabs[3]:
+    _render_analytics_hub(result_summary)
+
+
+# ============================================================
+# Search & Source Check
+# ============================================================
+
+with main_tabs[4]:
+    _render_search_source_check(result_summary, api_base, api_prefix, int(timeout), headers, verify_tls)
+
+
+# ============================================================
+# Health
+# ============================================================
+
+with main_tabs[5]:
     col1, col2 = st.columns(2)
 
     with col1:
@@ -681,7 +1626,7 @@ with main_tabs[0]:
 # Companies
 # ============================================================
 
-with main_tabs[1]:
+with main_tabs[6]:
     tabs = st.tabs(["List", "Industries", "Get", "Create", "Update", "Delete"])
 
     with tabs[0]:
@@ -818,7 +1763,7 @@ with main_tabs[1]:
 # Assessments
 # ============================================================
 
-with main_tabs[2]:
+with main_tabs[7]:
     tabs = st.tabs(["List", "Get", "Create", "Update Status", "List Scores", "Upsert Score"])
 
     with tabs[0]:
@@ -983,7 +1928,7 @@ with main_tabs[2]:
 # Collection
 # ============================================================
 
-with main_tabs[3]:
+with main_tabs[8]:
     tabs = st.tabs(["Collect Evidence", "Collect Signals", "Task Status"])
 
     with tabs[0]:
@@ -1061,7 +2006,7 @@ with main_tabs[3]:
 # Documents & Chunks
 # ============================================================
 
-with main_tabs[4]:
+with main_tabs[9]:
     tabs = st.tabs(["List Documents", "Get Document", "List Chunks", "Get Chunk"])
 
     with tabs[0]:
@@ -1143,7 +2088,7 @@ with main_tabs[4]:
 # Signals
 # ============================================================
 
-with main_tabs[5]:
+with main_tabs[10]:
     tabs = st.tabs(["List", "Get"])
 
     with tabs[0]:
@@ -1187,7 +2132,7 @@ with main_tabs[5]:
 # Signal Summaries
 # ============================================================
 
-with main_tabs[6]:
+with main_tabs[11]:
     tabs = st.tabs(["List", "Compute"])
 
     with tabs[0]:
@@ -1234,7 +2179,7 @@ with main_tabs[6]:
 # Evidence
 # ============================================================
 
-with main_tabs[7]:
+with main_tabs[12]:
     tabs = st.tabs(["Stats", "List Documents", "Get Document", "Get Document Chunks"])
 
     with tabs[0]:
@@ -1312,7 +2257,7 @@ with main_tabs[7]:
 # Scoring
 # ============================================================
 
-with main_tabs[8]:
+with main_tabs[13]:
     tabs = st.tabs(["Compute", "Latest by Company", "Leaderboard", "Visuals"])
 
     with tabs[0]:
@@ -1458,7 +2403,7 @@ with main_tabs[8]:
 # Scripts
 # ============================================================
 
-with main_tabs[9]:
+with main_tabs[14]:
     scripts = _list_repo_scripts()
 
     st.caption("Run repository scripts from the Streamlit UI (working directory: repo root).")
@@ -1526,7 +2471,7 @@ with main_tabs[9]:
 # Raw API
 # ============================================================
 
-with main_tabs[10]:
+with main_tabs[15]:
     st.caption("Manual API console for any path/method.")
 
     method = st.selectbox("Method", ["GET", "POST", "PUT", "PATCH", "DELETE"], key="raw_method")
