@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Optional
 from app.config import settings
 from app.services.redis_cache import cache_get_json, cache_set_json
 from app.services.snowflake import get_snowflake_connection
+from app.scoring_engine.rubric_scorer import DIMENSION_RUBRICS, FEATURE_TO_RUBRIC_DIM
 
 
 @dataclass(frozen=True)
@@ -64,6 +65,32 @@ class ScoringClient:
         5: "Excellent",
     }
 
+    LEVEL_RANGES: Dict[int, tuple[int, int]] = {
+        1: (0, 19),
+        2: (20, 39),
+        3: (40, 59),
+        4: (60, 79),
+        5: (80, 100),
+    }
+
+    @staticmethod
+    def _coerce_numeric(value: Any, default: float = 0.0) -> float:
+        if value is None:
+            return default
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            try:
+                return float(value)
+            except ValueError:
+                return default
+        if isinstance(value, dict):
+            for key in ("value", "score", "position_factor", "factor", "raw", "final"):
+                if key in value:
+                    return ScoringClient._coerce_numeric(value.get(key), default=default)
+            return default
+        return default
+
     def _parse_breakdown(self, row_variant: Any) -> Dict[str, Any]:
         if row_variant is None:
             return {}
@@ -94,6 +121,32 @@ class ScoringClient:
         if score >= 20:
             return 2
         return 1
+
+    def _rubric_dimension(self, dimension: str) -> str:
+        score_dimension = self._normalize_dimension_for_score(dimension)
+        return FEATURE_TO_RUBRIC_DIM.get(score_dimension, self._normalize_dimension_for_justify(score_dimension))
+
+    def _dimension_confidence_interval(
+        self,
+        score: float,
+        confidence: Optional[float],
+    ) -> tuple[float, float]:
+        conf = float(confidence if confidence is not None else 0.5)
+        conf = max(0.0, min(1.0, conf))
+        half_width = max(4.0, round(12.0 - (conf * 8.0), 2))
+        return (
+            max(0.0, round(float(score) - half_width, 2)),
+            min(100.0, round(float(score) + half_width, 2)),
+        )
+
+    def _hr_score_from_payload(self, payload: Dict[str, Any]) -> Optional[float]:
+        breakdown = payload.get("breakdown", {}) or {}
+        hr = breakdown.get("hr")
+        if isinstance(hr, dict):
+            score = hr.get("score")
+            if isinstance(score, (int, float)):
+                return round(float(score), 2)
+        return None
 
     def _latest_score_row(self, company_id: str) -> ScoringRecord:
         conn = get_snowflake_connection()
@@ -237,6 +290,10 @@ class ScoringClient:
             "evidence_count": int(entry.get("evidence_count", 0) or 0),
             "level": level,
             "level_name": self.LEVEL_NAMES[level],
+            "confidence_interval": self._dimension_confidence_interval(
+                raw_score,
+                float(entry.get("confidence_used", entry.get("confidence", 0.0)) or 0.0),
+            ),
             "score_band": payload.get("score_band"),
             "overall_score": payload.get("overall_score"),
             "scored_at": payload.get("scored_at"),
@@ -259,12 +316,106 @@ class ScoringClient:
             "weighted_score": dimension_score["weighted_score"],
             "sector_weight": dimension_score["sector_weight"],
             "confidence": dimension_score["confidence"],
+            "confidence_interval": dimension_score["confidence_interval"],
             "evidence_count": dimension_score["evidence_count"],
             "level": dimension_score["level"],
             "level_name": dimension_score["level_name"],
             "overall_score": dimension_score["overall_score"],
             "score_band": dimension_score["score_band"],
             "scored_at": dimension_score["scored_at"],
+        }
+
+    def get_rubric(
+        self,
+        dimension: str,
+        level: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
+        rubric_dimension = self._rubric_dimension(dimension)
+        rubrics = DIMENSION_RUBRICS.get(rubric_dimension, {})
+        out: List[Dict[str, Any]] = []
+
+        for level_enum, criteria in rubrics.items():
+            level_value = int(level_enum.name.split("_")[-1])
+            if level is not None and level_value != int(level):
+                continue
+
+            score_range = self.LEVEL_RANGES[level_value]
+            criteria_text = (
+                f"{rubric_dimension.replace('_', ' ').title()} Level {level_value} "
+                f"({self.LEVEL_NAMES[level_value]}) expects keyword evidence such as "
+                f"{', '.join(criteria.keywords[:5])} and a quantitative threshold "
+                f"of at least {criteria.quantitative_threshold:.2f}."
+            )
+
+            out.append(
+                {
+                    "dimension": rubric_dimension,
+                    "level": level_value,
+                    "level_name": self.LEVEL_NAMES[level_value],
+                    "criteria_text": criteria_text,
+                    "keywords": list(criteria.keywords),
+                    "quantitative_thresholds": {
+                        "threshold": float(criteria.quantitative_threshold),
+                        "min_keyword_matches": int(criteria.min_keyword_matches),
+                        "score_min": score_range[0],
+                        "score_max": score_range[1],
+                    },
+                }
+            )
+
+        out.sort(key=lambda item: int(item["level"]), reverse=True)
+        return out
+
+    def get_assessment(self, company_id: str) -> Dict[str, Any]:
+        payload = self.get_latest_scores(company_id)
+        dimension_scores = {
+            item["dimension"]: {
+                "dimension": item["dimension"],
+                "score": item["raw_score"],
+                "level": item["level"],
+                "level_name": item["level_name"],
+                "confidence": item["confidence"],
+                "confidence_interval": self._dimension_confidence_interval(
+                    float(item["raw_score"]),
+                    float(item["confidence"]),
+                ),
+                "evidence_count": item["evidence_count"],
+                "sector_weight": item["sector_weight"],
+                "weighted_score": item["weighted_score"],
+            }
+            for item in self.get_dimension_scores_from_payload(payload)
+        }
+
+        lower = payload.get("sem_lower")
+        upper = payload.get("sem_upper")
+        if not isinstance(lower, (int, float)) or not isinstance(upper, (int, float)):
+            overall_score = float(payload.get("overall_score", payload.get("composite_score", 0.0)) or 0.0)
+            lower = max(0.0, round(overall_score - 8.0, 2))
+            upper = min(100.0, round(overall_score + 8.0, 2))
+
+        breakdown = payload.get("breakdown", {}) or {}
+        talent_penalty = breakdown.get("talent_penalty", {}) if isinstance(breakdown, dict) else {}
+
+        return {
+            "company_id": payload.get("company_id"),
+            "assessment_id": payload.get("assessment_id"),
+            "assessment_date": str(payload.get("scored_at") or ""),
+            "vr_score": self._coerce_numeric(payload.get("vr_score", 0.0), default=0.0),
+            "hr_score": self._hr_score_from_payload(payload),
+            "synergy_score": self._coerce_numeric(payload.get("synergy_bonus", 0.0), default=0.0),
+            "org_air_score": self._coerce_numeric(
+                payload.get("overall_score", payload.get("composite_score", 0.0)),
+                default=0.0,
+            ),
+            "confidence_interval": (float(lower), float(upper)),
+            "dimension_scores": dimension_scores,
+            "talent_concentration": self._coerce_numeric(talent_penalty.get("hhi_value", 0.0), default=0.0),
+            "position_factor": self._coerce_numeric(
+                breakdown.get("position_factor") if isinstance(breakdown, dict) else 0.0,
+                default=0.0,
+            ),
+            "score_band": payload.get("score_band"),
+            "scored_at": payload.get("scored_at"),
         }
 
     def list_latest_scores(self, limit: int = 50) -> List[Dict[str, Any]]:

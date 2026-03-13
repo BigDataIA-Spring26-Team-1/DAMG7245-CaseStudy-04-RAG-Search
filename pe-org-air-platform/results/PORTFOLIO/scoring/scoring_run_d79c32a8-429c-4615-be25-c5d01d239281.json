@@ -1,0 +1,21 @@
+{
+  "company_ids": [
+    "dd017852-8634-45f9-9742-90543d2e18ef",
+    "1fe32432-e260-489f-aeae-438b76cfd376",
+    "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+    "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+    "a1f76037-e575-477a-9c08-1a26fd34df09"
+  ],
+  "generated_at_utc": "2026-03-13T19:03:46+00:00",
+  "model_version": "cs3-scoring-v2",
+  "run_id": "d79c32a8-429c-4615-be25-c5d01d239281",
+  "status": "success",
+  "tickers": [
+    "NVDA",
+    "JPM",
+    "WMT",
+    "GE",
+    "DG"
+  ],
+  "version": "v1.0"
+}

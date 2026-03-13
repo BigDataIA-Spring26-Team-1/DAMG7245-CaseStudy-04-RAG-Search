@@ -11,6 +11,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
  
 from app.config import settings
+from app.services.result_artifacts import write_json_artifact, write_text_artifact
 from app.services.snowflake import get_snowflake_connection
 from app.services.s3_storage import is_s3_configured, upload_json, upload_text
 from app.services.signal_store import SignalStore
@@ -92,6 +93,24 @@ def _write_json(path: Path, obj: Any) -> None:
 def _normalize_prefix(prefix: str, default_prefix: str) -> str:
     normalized = prefix.strip().strip("/\\").replace("\\", "/")
     return normalized or default_prefix
+
+
+def _mirror_text_result(ticker: str, filename: str, text: str) -> None:
+    write_text_artifact(
+        ticker=ticker,
+        category="signals",
+        filename=filename,
+        text=(text or "")[:20000],
+    )
+
+
+def _mirror_json_result(ticker: str, filename: str, payload: Any) -> None:
+    write_json_artifact(
+        ticker=ticker,
+        category="signals",
+        filename=filename,
+        payload=payload,
+    )
  
  
 def _safe_get_patents_rss(collector: ExternalSignalCollector, query: str) -> Tuple[Optional[str], Optional[str], str]:
@@ -247,6 +266,7 @@ def main() -> int:
  
                 # Proof artifact: small summary JSON
                 jobs_sample = {"source": source_used, "inserted": inserted_jobs, "sample": jobs[:3]}
+                _mirror_json_result(ticker, "jobs_board_sample.json", jobs_sample)
                 if s3_enabled:
                     upload_json(jobs_sample, f"{artifact_prefix}/jobs_board_sample.json")
                 else:
@@ -256,6 +276,7 @@ def main() -> int:
             else:
                 jobs_q = f"{company_name} {ticker} hiring jobs"
                 jobs_url, jobs_rss = collector.google_jobs_rss(jobs_q)
+                _mirror_text_result(ticker, "jobs_rss.txt", jobs_rss)
                 if s3_enabled:
                     upload_text((jobs_rss or "")[:20000], f"{artifact_prefix}/jobs_rss.txt")
                 else:
@@ -296,6 +317,7 @@ def main() -> int:
             # =========================================================
             news_q = f"{company_name} {ticker}"
             news_url, news_rss = collector.google_news_rss(news_q)
+            _mirror_text_result(ticker, "news_rss.txt", news_rss)
             if s3_enabled:
                 upload_text((news_rss or "")[:20000], f"{artifact_prefix}/news_rss.txt")
             else:
@@ -328,36 +350,22 @@ def main() -> int:
             tech_blob = "\n".join([x for x in [news_rss, jobs_rss] if x])
             tech_counts = _extract_tech_counts(collector, tech, tech_blob)
             tech_summary = summarize_tech_signals(tech_counts)
+            tech_payload = {
+                "counts": tech_counts,
+                "summary": {
+                    "score": tech_summary.score,
+                    "unique_keywords": tech_summary.unique_keywords,
+                    "cloud_ml_count": tech_summary.cloud_ml_count,
+                    "ml_framework_count": tech_summary.ml_framework_count,
+                    "data_platform_count": tech_summary.data_platform_count,
+                    "ai_api_count": tech_summary.ai_api_count,
+                },
+            }
+            _mirror_json_result(ticker, "tech_counts.json", tech_payload)
             if s3_enabled:
-                upload_json(
-                    {
-                        "counts": tech_counts,
-                        "summary": {
-                            "score": tech_summary.score,
-                            "unique_keywords": tech_summary.unique_keywords,
-                            "cloud_ml_count": tech_summary.cloud_ml_count,
-                            "ml_framework_count": tech_summary.ml_framework_count,
-                            "data_platform_count": tech_summary.data_platform_count,
-                            "ai_api_count": tech_summary.ai_api_count,
-                        },
-                    },
-                    f"{artifact_prefix}/tech_counts.json",
-                )
+                upload_json(tech_payload, f"{artifact_prefix}/tech_counts.json")
             else:
-                _write_json(
-                    out_dir / "tech_counts.json",
-                    {
-                        "counts": tech_counts,
-                        "summary": {
-                            "score": tech_summary.score,
-                            "unique_keywords": tech_summary.unique_keywords,
-                            "cloud_ml_count": tech_summary.cloud_ml_count,
-                            "ml_framework_count": tech_summary.ml_framework_count,
-                            "data_platform_count": tech_summary.data_platform_count,
-                            "ai_api_count": tech_summary.ai_api_count,
-                        },
-                    },
-                )
+                _write_json(out_dir / "tech_counts.json", tech_payload)
  
             if tech_counts:
                 tech_hash = sha256_text(f"tech|{ticker}|" + json.dumps(tech_counts, sort_keys=True))
@@ -395,6 +403,7 @@ def main() -> int:
             pat_q = f"{company_name} {ticker}"
             pat_url, pat_rss, pat_source = _safe_get_patents_rss(collector, pat_q)
             patents_rss = pat_rss or ""
+            _mirror_text_result(ticker, "patents_rss.txt", patents_rss)
             if s3_enabled:
                 upload_text((patents_rss or "")[:20000], f"{artifact_prefix}/patents_rss.txt")
             else:

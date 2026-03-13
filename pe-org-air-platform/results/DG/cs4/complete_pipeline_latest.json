@@ -1,0 +1,150 @@
+{
+  "assessment": {
+    "assessment_date": "2026-03-13 12:02:33.982000",
+    "company_id": "dd017852-8634-45f9-9742-90543d2e18ef",
+    "confidence_interval": [
+      38.29,
+      48.29
+    ],
+    "hr_score": null,
+    "org_air_score": 43.29,
+    "position_factor": -0.289885,
+    "synergy_score": 15.2,
+    "talent_concentration": 0.0,
+    "vr_score": 33.9
+  },
+  "company": {
+    "company_id": "dd017852-8634-45f9-9742-90543d2e18ef",
+    "employee_count": null,
+    "fiscal_year_end": null,
+    "market_cap_percentile": 0.5,
+    "name": "Dollar General Corporation",
+    "revenue_millions": null,
+    "sector": "consumer",
+    "sub_sector": "Retail",
+    "ticker": "DG"
+  },
+  "dimension_score": {
+    "confidence_interval": [
+      81.2,
+      98.8
+    ],
+    "dimension": "data_infrastructure",
+    "evidence_count": 117,
+    "last_updated": "2026-03-13 12:02:33.982000",
+    "level": 5,
+    "level_name": "Excellent",
+    "score": 90.0
+  },
+  "evidence_summary": {
+    "deleted_before_reindex": 0,
+    "fetched": 105,
+    "indexed": 105
+  },
+  "ic_packet": {
+    "avg_evidence_strength": "weak",
+    "company_id": "dd017852-8634-45f9-9742-90543d2e18ef",
+    "company_profile": {
+      "created_at": "2026-02-19 20:52:01.131000",
+      "id": "dd017852-8634-45f9-9742-90543d2e18ef",
+      "industry_id": "550e8400-e29b-41d4-a716-446655440004",
+      "is_deleted": false,
+      "name": "Dollar General Corporation",
+      "position_factor": 0.0,
+      "ticker": "DG",
+      "updated_at": "2026-03-13 11:58:13.109000"
+    },
+    "diligence_questions": [
+      "Which current AI initiatives are already delivering measurable business impact, and how are they governed?"
+    ],
+    "dimensions": [
+      {
+        "dimension": "data_infrastructure",
+        "evidence_strength": "weak",
+        "gaps_identified": [],
+        "level": 5,
+        "level_name": "Excellent",
+        "score": 90.0,
+        "summary": "dd017852-8634-45f9-9742-90543d2e18ef is assessed at 90.0/100 for Data Infrastructure (Level 5 - Excellent). No strong supporting evidence was retrieved, so this justification should be treated as weak and provisional.  Company-level context: overall_score=43.29, score_band=Progressing. The current rubric expectation is: Data Infrastructure Level 5 (Excellent) expects keyword evidence such as snowflake, databricks, real-time, api-first and a quantitative threshold of at least 0.90.",
+        "top_evidence": []
+      }
+    ],
+    "generated_at": "2026-03-13T19:14:11.640288+00:00",
+    "generated_by": "deterministic_ic_prep_workflow",
+    "key_gaps": [],
+    "overall_level": 3,
+    "overall_level_name": "Adequate",
+    "overall_score": 43.29,
+    "recommendation": "FURTHER DILIGENCE - Material capability gaps or weak evidence",
+    "risks": [
+      "Data Infrastructure has limited supporting evidence and should be treated as a diligence risk"
+    ],
+    "score_band": "Progressing",
+    "strengths": [],
+    "total_evidence_count": 0
+  },
+  "justification": {
+    "company_id": "dd017852-8634-45f9-9742-90543d2e18ef",
+    "confidence_interval": [
+      81.2,
+      98.8
+    ],
+    "dimension": "data_infrastructure",
+    "evidence_count": 0,
+    "evidence_strength": "weak",
+    "gaps_identified": [],
+    "generated_summary": "dd017852-8634-45f9-9742-90543d2e18ef is assessed at 90.0/100 for Data Infrastructure (Level 5 - Excellent). No strong supporting evidence was retrieved, so this justification should be treated as weak and provisional.  Company-level context: overall_score=43.29, score_band=Progressing. The current rubric expectation is: Data Infrastructure Level 5 (Excellent) expects keyword evidence such as snowflake, databricks, real-time, api-first and a quantitative threshold of at least 0.90.",
+    "generation_mode": "cs3_context_grounded",
+    "level": 5,
+    "level_name": "Excellent",
+    "query_used": "Why did Dollar General Corporation score 90.0 on data infrastructure? data infrastructure snowflake databricks real-time api-first current score 90.0 level Excellent",
+    "rubric_criteria": "Data Infrastructure Level 5 (Excellent) expects keyword evidence such as snowflake, databricks, real-time, api-first and a quantitative threshold of at least 0.90.",
+    "rubric_keywords": [
+      "snowflake",
+      "databricks",
+      "real-time",
+      "api-first"
+    ],
+    "rubric_source": "cs3_rubric",
+    "score": 90.0,
+    "score_context": {
+      "company_id": "dd017852-8634-45f9-9742-90543d2e18ef",
+      "confidence": 0.4,
+      "confidence_interval": [
+        81.2,
+        98.8
+      ],
+      "dimension": "data_infrastructure",
+      "evidence_count": 117,
+      "level": 5,
+      "level_name": "Excellent",
+      "overall_score": 43.29,
+      "raw_score": 90.0,
+      "score_band": "Progressing",
+      "score_dimension": "data_infrastructure",
+      "scored_at": "2026-03-13 12:02:33.982000",
+      "sector_weight": 0.14,
+      "weighted_score": 5.040000000000001
+    },
+    "supporting_evidence": []
+  },
+  "rubric": [
+    {
+      "criteria_text": "Data Infrastructure Level 5 (Excellent) expects keyword evidence such as snowflake, databricks, real-time, api-first and a quantitative threshold of at least 0.90.",
+      "dimension": "data_infrastructure",
+      "keywords": [
+        "snowflake",
+        "databricks",
+        "real-time",
+        "api-first"
+      ],
+      "level": 5,
+      "quantitative_thresholds": {
+        "min_keyword_matches": 2,
+        "score_max": 100,
+        "score_min": 80,
+        "threshold": 0.9
+      }
+    }
+  ]
+}

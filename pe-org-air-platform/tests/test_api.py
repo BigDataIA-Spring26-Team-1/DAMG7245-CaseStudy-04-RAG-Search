@@ -452,3 +452,45 @@ def test_search_uses_single_filter_without_and(client, monkeypatch):
     r = client.get("/api/v1/search?q=leadership&company_id=company-1")
     assert r.status_code == 200
     assert seen["where"] == {"company_id": "company-1"}
+
+
+def test_search_supports_multiple_source_type_filters(client, monkeypatch):
+    seen = {}
+
+    class _Store:
+        def query(self, query_text, top_k=5, where=None):
+            seen["where"] = where
+            return []
+
+    monkeypatch.setattr("app.routers.search.get_vector_store", lambda: _Store())
+    r = client.get(
+        "/api/v1/search?q=governance&company_id=company-1&source_type=sec_10k_item_1a,board_proxy_def14a"
+    )
+    assert r.status_code == 200
+    assert seen["where"] == {
+        "$and": [
+            {"company_id": "company-1"},
+            {
+                "$or": [
+                    {"source_type": "sec_10k_item_1a"},
+                    {"source_type": "board_proxy_def14a"},
+                ]
+            },
+        ]
+    }
+
+
+def test_hybrid_search_passes_source_types_to_retriever(client, monkeypatch):
+    seen = {}
+
+    class _Hybrid:
+        def search(self, **kwargs):
+            seen.update(kwargs)
+            return []
+
+    monkeypatch.setattr("app.routers.search.get_hybrid", lambda: _Hybrid())
+    r = client.get(
+        "/api/v1/search?q=data%20platform&mode=hybrid&company_id=company-1&source_type=sec_10k_item_7,job_posting_linkedin"
+    )
+    assert r.status_code == 200
+    assert seen["source_types"] == ["sec_10k_item_7", "job_posting_linkedin"]

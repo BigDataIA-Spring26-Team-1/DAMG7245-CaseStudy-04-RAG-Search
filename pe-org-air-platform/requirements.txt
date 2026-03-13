@@ -33,6 +33,7 @@ pyjwt==2.10.1
 pyopenssl==25.3.0
 pdfplumber==0.11.8
 pytest==9.0.2
+pytest-cov==6.0.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
 pytz==2025.2
@@ -56,3 +57,5 @@ chromadb>=1.5.1,<2.0.0
 sentence-transformers>=5.2.3,<6.0.0
 rank-bm25>=0.2.2,<0.3.0
 litellm>=1.82.1,<2.0.0
+hypothesis>=6.125.0,<7.0.0
+streamlit>=1.43.0,<2.0.0

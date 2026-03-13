@@ -68,4 +68,52 @@ def test_scoring_client_get_dimension_context_maps_aliases(fake_sf):
     assert out["raw_score"] == 74.0
     assert out["level"] == 4
     assert out["level_name"] == "Good"
+    assert out["confidence_interval"][0] < out["raw_score"] < out["confidence_interval"][1]
     assert out["score_band"] == "good"
+
+
+def test_scoring_client_exposes_rubric_and_assessment(fake_sf):
+    fake_sf._one = (
+        COMPANY_ID,
+        "assessment-2",
+        "run-2",
+        76.0,
+        4.0,
+        0.5,
+        69.0,
+        82.0,
+        79.5,
+        "green",
+        json.dumps(
+            {
+                "vr": {
+                    "dimension_breakdown": [
+                        {
+                            "dimension": "data_infrastructure",
+                            "raw_score": 78.0,
+                            "weighted_score": 19.5,
+                            "sector_weight": 0.25,
+                            "confidence_used": 0.9,
+                            "evidence_count": 8,
+                        }
+                    ]
+                },
+                "hr": {"score": 63.0},
+                "talent_penalty": {"hhi_value": 0.22},
+                "position_factor": 0.35,
+            }
+        ),
+        datetime(2026, 1, 3, tzinfo=timezone.utc),
+    )
+
+    client = ScoringClient()
+    rubric = client.get_rubric("data_infrastructure", level=4)
+    assessment = client.get_assessment(COMPANY_ID)
+
+    assert rubric
+    assert rubric[0]["level"] == 4
+    assert rubric[0]["keywords"]
+    assert assessment["org_air_score"] == 79.5
+    assert assessment["hr_score"] == 63.0
+    assert assessment["dimension_scores"]["data_infrastructure"]["level"] == 4
+    assert assessment["dimension_scores"]["data_infrastructure"]["confidence_interval"][0] < 78.0

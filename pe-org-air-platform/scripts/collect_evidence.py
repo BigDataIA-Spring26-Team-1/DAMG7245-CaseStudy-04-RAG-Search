@@ -15,6 +15,7 @@ from app.config import settings
 from app.pipelines.sec_edgar import SecEdgarClient, store_raw_filing
 from app.pipelines.document_parser import parse_filing_bytes, chunk_document
 from app.services.evidence_store import EvidenceStore, DocumentRow, ChunkRow
+from app.services.result_artifacts import write_text_artifact
 from app.services.s3_storage import is_s3_configured, upload_text
 from app.services.snowflake import get_snowflake_connection
  
@@ -97,7 +98,21 @@ def _write_processed_artifacts(
     base_name = f"{filing.form}_{filing.filing_date}_{filing.accession}"
     body_text = parsed.sections.get("Item 1A") or parsed.full_text[:20000]
     chunks_text = "\n\n--- CHUNK ---\n\n".join([c.content[:1500] for c in chunks[:10]])
- 
+
+    # Always mirror one portfolio copy into results/ and, when configured, S3 results/.
+    write_text_artifact(
+        ticker=ticker,
+        category="evidence/processed",
+        filename=f"{base_name}.txt",
+        text=body_text,
+    )
+    write_text_artifact(
+        ticker=ticker,
+        category="evidence/processed",
+        filename=f"{base_name}_chunks.txt",
+        text=chunks_text,
+    )
+
     if s3_enabled:
         key_prefix = f"{out_prefix}/{ticker}"
         upload_text(body_text, f"{key_prefix}/{base_name}.txt")

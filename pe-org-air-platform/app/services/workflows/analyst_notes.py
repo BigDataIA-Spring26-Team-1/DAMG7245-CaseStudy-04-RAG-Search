@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
+from enum import Enum
 from typing import Any, Dict, List, Optional
+from uuid import uuid4
 
 from app.services.integration.company_client import CompanyClient
 from app.services.justification.generator import JustificationGenerator
+from app.services.search.vector_store import DocumentChunk, VectorStore
 
 
 @dataclass
@@ -22,15 +25,39 @@ class AnalystNoteRecord:
     generated_by: str
 
 
+class NoteType(str, Enum):
+    INTERVIEW_TRANSCRIPT = "interview_transcript"
+    MANAGEMENT_MEETING = "management_meeting"
+    SITE_VISIT = "site_visit"
+    DD_FINDING = "dd_finding"
+    DATA_ROOM_SUMMARY = "data_room_summary"
+
+
+@dataclass
+class AnalystNote:
+    note_id: str
+    company_id: str
+    note_type: NoteType
+    title: str
+    content: str
+    interviewee: Optional[str] = None
+    interviewee_title: Optional[str] = None
+    dimensions_discussed: List[str] = field(default_factory=list)
+    key_findings: List[str] = field(default_factory=list)
+    risk_flags: List[str] = field(default_factory=list)
+    assessor: str = ""
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    confidence: float = 1.0
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
 class AnalystNotesCollector:
     """
-    Builds structured analyst notes from justification outputs.
+    Supports both spec-facing analyst-note ingestion and summary generation.
 
-    Current implementation is deterministic and grounded:
-    - fetches company metadata
-    - runs dimension-level justifications
-    - converts them into note-friendly summaries
-    - packages a normalized analyst-note record
+    The collector can:
+    - submit primary-source diligence notes and index them into CS4 retrieval
+    - synthesize a dimension note from grounded justification output
     """
 
     SUPPORTED_DIMENSIONS: List[str] = [
@@ -46,6 +73,7 @@ class AnalystNotesCollector:
     def __init__(self) -> None:
         self.company_client = CompanyClient()
         self.generator = JustificationGenerator()
+        self.vector_store: Optional[VectorStore] = None
 
     def collect_note(
         self,
@@ -90,6 +118,111 @@ class AnalystNotesCollector:
         )
 
         return asdict(note)
+
+    def _get_vector_store(self) -> VectorStore:
+        if self.vector_store is None:
+            self.vector_store = VectorStore()
+        return self.vector_store
+
+    def _normalize_dimensions(self, dimensions: Optional[List[str]]) -> List[str]:
+        out: List[str] = []
+        for dimension in dimensions or []:
+            normalized = self._normalize_dimension(dimension)
+            if normalized and normalized not in out:
+                out.append(normalized)
+        return out
+
+    def _note_to_chunk(self, note: AnalystNote, primary_dimension: str) -> DocumentChunk:
+        metadata = {
+            "company_id": note.company_id,
+            "source_type": note.note_type.value,
+            "dimension": primary_dimension,
+            "confidence": note.confidence,
+            "assessor": note.assessor,
+            "title": note.title,
+            "created_at": note.created_at.isoformat(),
+        }
+        metadata.update(note.metadata)
+        if note.interviewee:
+            metadata["interviewee"] = note.interviewee
+        if note.interviewee_title:
+            metadata["interviewee_title"] = note.interviewee_title
+
+        return DocumentChunk(
+            id=note.note_id,
+            text=note.content,
+            metadata=metadata,
+        )
+
+    def _index_note(self, note: AnalystNote) -> str:
+        dimensions = self._normalize_dimensions(note.dimensions_discussed)
+        primary_dimension = dimensions[0] if dimensions else "leadership"
+        chunk = self._note_to_chunk(note, primary_dimension)
+        self._get_vector_store().upsert([chunk])
+        return note.note_id
+
+    def submit_interview(
+        self,
+        company_id: str,
+        interviewee: str,
+        interviewee_title: str,
+        transcript: str,
+        assessor: str,
+        dimensions_discussed: List[str],
+    ) -> str:
+        note = AnalystNote(
+            note_id=f"interview_{uuid4()}",
+            company_id=company_id,
+            note_type=NoteType.INTERVIEW_TRANSCRIPT,
+            title=f"Interview with {interviewee_title}",
+            content=f"Interview: {interviewee_title}\n\n{transcript}",
+            interviewee=interviewee,
+            interviewee_title=interviewee_title,
+            dimensions_discussed=self._normalize_dimensions(dimensions_discussed),
+            assessor=assessor,
+        )
+        return self._index_note(note)
+
+    def submit_dd_finding(
+        self,
+        company_id: str,
+        title: str,
+        finding: str,
+        dimension: str,
+        severity: str,
+        assessor: str,
+    ) -> str:
+        note = AnalystNote(
+            note_id=f"dd_{uuid4()}",
+            company_id=company_id,
+            note_type=NoteType.DD_FINDING,
+            title=title,
+            content=f"{title}\n\n{finding}",
+            dimensions_discussed=[self._normalize_dimension(dimension)],
+            assessor=assessor,
+            metadata={"severity": severity},
+        )
+        return self._index_note(note)
+
+    def submit_data_room_summary(
+        self,
+        company_id: str,
+        document_name: str,
+        summary: str,
+        dimension: str,
+        assessor: str,
+    ) -> str:
+        note = AnalystNote(
+            note_id=f"dataroom_{uuid4()}",
+            company_id=company_id,
+            note_type=NoteType.DATA_ROOM_SUMMARY,
+            title=f"Data Room: {document_name}",
+            content=f"Data Room: {document_name}\n\n{summary}",
+            dimensions_discussed=[self._normalize_dimension(dimension)],
+            assessor=assessor,
+            metadata={"document_name": document_name},
+        )
+        return self._index_note(note)
 
     def collect_notes_for_dimensions(
         self,

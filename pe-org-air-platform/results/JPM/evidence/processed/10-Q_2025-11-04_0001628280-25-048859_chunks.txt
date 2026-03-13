@@ -1,0 +1,150 @@
+Item 1A. Risk Factors.
+Refer to Part I, Item 1A: Risk Factors on pages 10–37 of JPMorganChase’s 2024 Form 10-K and Forward-Looking Statements on page 91 of this Form 10-Q for a discussion of certain risk factors affecting the Firm.
+Supervision and regulation
+Refer to the Supervision and regulation section on pages 2-7 of JPMorganChase’s 2024 Form 10-K for information on Supervision and Regulation.
+Item 2. Unregistered Sales of Equity Securities and Use of Proceeds.
+
+Repurchases under the common share repurchase program
+Refer to Capital Risk Management on pages 44-50 of this Form 10-Q and pages 97–107 of JPMorganChase’s 2024 Form 10-K for information regarding repurchases under the Firm’s common share repurchase program.
+On July 1, 2025, the Firm announced that its Board of Directors had authorized a new $50 billion common share repurchase program, effective July 1, 2025. Through June 30, 2025, the Firm was authorized to purchase up to $30 billion of common shares under its previously-approved common share repurchase program that was announced on June 28, 2024.
+203
+Shares repurchased pursuant to the common share repurchase program during the nine months ended
+
+--- CHUNK ---
+
+Repurchases under the common share repurchase program
+Refer to Capital Risk Management on pages 44-50 of this Form 10-Q and pages 97–107 of JPMorganChase’s 2024 Form 10-K for information regarding repurchases under the Firm’s common share repurchase program.
+On July 1, 2025, the Firm announced that its Board of Directors had authorized a new $50 billion common share repurchase program, effective July 1, 2025. Through June 30, 2025, the Firm was authorized to purchase up to $30 billion of common shares under its previously-approved common share repurchase program that was announced on June 28, 2024.
+203
+Shares repurchased pursuant to the common share repurchase program during the nine months ended
+
+--- CHUNK ---
+
+September 30, 2025 were as follows:
+Nine months ended September 30, 2025
+Total number of shares of common stock repurchased
+Average price paid per share of common stock
+(a)
+Aggregate purchase price of common stock repurchases
+ (in millions)
+(a)
+Dollar value of remaining authorized repurchase
+(in millions)
+(a)
+First quarter
+29,953,620 
+$
+252.50 
+$
+7,563 
+$
+11,763 
+Second quarter
+29,800,960 
+$
+251.67 
+$
+7,500 
+$
+4,263 
+(b)
+   July
+9,223,719 
+291.74 
+2,691 
+47,309 
+   August
+9,605,280 
+292.95 
+2,814 
+44,495 
+   September
+9,158,017 
+306.84 
+2,810 
+41,685 
+(c)
+Third quarter
+27,987,016 
+297.10 
+8,315 
+41,685 
+(c)
+Year-to-date
+87,741,596 
+$
+266.44 
+$
+23,378 
+$
+41,685 
+(c)
+(a)
+Excludes excise tax and commissions.
+(b)
+The $4.3 billion under the prior Board authorization was canceled when the $50 billion repurchase program was authorized by the Board of Directors effective July 1, 2025.
+(c)
+Represents the amount remaining under the $50 billion repurchase program.
+Item 3.    Defaults Upon Senior Securities.
+None.
+Item 4.    Mine Safety Disclosures.
+Not applicable.
+204
+Item 5.    Other Information.
+Trading arrangements
+The following table provides information concerning Rule 10b5-1 trading arrangements (as defined in Item 408 of Regulation S-K under the Securities Exchange Act of 1934) adopted in the third quarter of 2025, by any director or officer who is subject to the filing requirements of Section 16 of the Securities Exchange Act of 1934 ("Section 16 Director or Officer"). These tra
+
+--- CHUNK ---
+
+Form 8-K of J
+PM
+organ Ch
+a
+se & Co. (File No. 1-5805) filed S
+eptember 
+1
+2, 202
+5
+).
+15
+Letter re: Unaudited Interim Financial Information.
+(a)
+22
+Subsidiary Guarantors and Issuers of Guaranteed Securities
+.
+(a)
+31.1
+Certification.
+(a)
+31.2
+Certification.
+(a)
+32
+Certification Pursuant to Section 906 of the Sarbanes-Oxley Act of 2002.
+(b)
+101.INS
+The instance document does not appear in the interactive data file because its XBRL tags are embedded within the Inline XBRL document.
+(c)
+101.SCH
+XBRL Taxonomy Extension Schema Document.
+(a)
+101.CAL
+XBRL Taxonomy Extension Calculation Linkbase Document.
+(a)
+101.DEF
+XBRL Taxonomy Extension Definition Linkbase Document.
+(a)
+101.LAB
+XBRL Taxonomy Extension Label Linkbase Document.
+(a)
+101.PRE
+XBRL Taxonomy Extension Presentation Linkbase Document.
+(a)
+104
+Cover Page Interactive Data File (embedded within the Inline XBRL document and included in Exhibit 101).
+(a)
+Filed herewith.
+(b)
+Furnished herewith. This exhibit shall not be deemed “filed” for purposes of Section 18 of the Securities Exchange Act of 1934, or otherwise subject to the liability of that Section. Such exhibit shall not be deemed incorporated into any filing under the Securities Act of 1933 or the Securities Exchange Act of 1934.
+(c)
+Pursuant to Rule 405 of Regulation S-T, includes the following financial information included in the Firm’s Quarterly Report on Form 10-Q for the quarterly period ended September 30, 2025, formatted in XBRL (eXtensible Business Reporting Lan

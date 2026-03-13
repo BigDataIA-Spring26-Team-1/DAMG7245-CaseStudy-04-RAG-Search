@@ -1,0 +1,13 @@
+{
+  "counts": {
+    "openai": 6
+  },
+  "summary": {
+    "ai_api_count": 6,
+    "cloud_ml_count": 0,
+    "data_platform_count": 0,
+    "ml_framework_count": 0,
+    "score": 10.0,
+    "unique_keywords": 1
+  }
+}

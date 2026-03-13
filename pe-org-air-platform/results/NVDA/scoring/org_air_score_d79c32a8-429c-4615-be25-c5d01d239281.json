@@ -1,0 +1,230 @@
+{
+  "assessment_id": "b5108257-45fc-4f4b-852f-01f6caa74e51",
+  "breakdown": {
+    "composite": {
+      "alpha": 0.6,
+      "beta": 0.12,
+      "composite_score": 88.02,
+      "score_band": "Leading"
+    },
+    "generated_at_utc": "2026-03-13T19:03:23+00:00",
+    "hr": {
+      "hr_base": 75.0,
+      "hr_score": 84.84898125000001
+    },
+    "position_factor": {
+      "market_cap_blend_weight": 0.85,
+      "market_cap_percentile": 0.8825000000000001,
+      "market_cap_percentile_seed": 0.5,
+      "position_factor": 0.875465,
+      "position_factor_blend_weight": 0.65,
+      "position_factor_formula": 0.8299
+    },
+    "sector": "Services",
+    "sem": {
+      "global_fit": {},
+      "lower": 83.02,
+      "method_used": "fallback_constant_band",
+      "model_fit_index": {},
+      "standard_error": 5.0,
+      "upper": 93.02
+    },
+    "synergy": {
+      "alignment": 0.911888537239638,
+      "base_term": 79.46966404329255,
+      "formula_synergy_score": 72.4674756993635,
+      "hits": [
+        {
+          "activated": true,
+          "dim_a": "leadership_vision",
+          "dim_b": "use_case_portfolio",
+          "magnitude": 2.5,
+          "reason": "both >= 60.0",
+          "threshold": 60.0,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "ai_governance",
+          "dim_b": "culture_change",
+          "magnitude": 3.0,
+          "reason": "needs both >= 60.0 (a=100.0, b=50.0)",
+          "threshold": 60.0,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "talent_skills",
+          "dim_b": "use_case_portfolio",
+          "magnitude": 2.5,
+          "reason": "needs both >= 60.0 (a=50.0, b=100.0)",
+          "threshold": 60.0,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "use_case_portfolio",
+          "dim_b": "ai_governance",
+          "magnitude": -3.0,
+          "reason": "needs a >= 60.0 & b < 60.0 (a=100.0, b=100.0)",
+          "threshold": 60.0,
+          "type": "negative"
+        },
+        {
+          "activated": true,
+          "dim_a": "data_infrastructure",
+          "dim_b": "technology_stack",
+          "magnitude": 3.0,
+          "reason": "both >= 60.0",
+          "threshold": 60.0,
+          "type": "positive"
+        }
+      ],
+      "rule_synergy_bonus": 5.5,
+      "timing_factor": 1.0
+    },
+    "talent_concentration": {
+      "job_analysis": {
+        "entry_ai_jobs": 0,
+        "mid_ai_jobs": 8,
+        "senior_ai_jobs": 0,
+        "total_ai_jobs": 8,
+        "unique_skills_count": 0
+      },
+      "talent_risk_adjustment": 1.0,
+      "tc": 0.19296000000000002,
+      "tc_blend_weight": 0.6,
+      "tc_measured": 0.3024
+    },
+    "version": "v1.0",
+    "vr": {
+      "cv": 0.2603778219616477,
+      "cv_penalty_factor": 0.9349055445095881,
+      "dimension_breakdown": [
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "use_case_portfolio",
+          "evidence_count": 178.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.16,
+          "weighted_conf": 0.064,
+          "weighted_score": 6.4
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "talent_skills",
+          "evidence_count": 22.0,
+          "raw_score": 50.0,
+          "sector_weight": 0.16,
+          "weighted_conf": 0.064,
+          "weighted_score": 3.2
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "leadership_vision",
+          "evidence_count": 123.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.14,
+          "weighted_conf": 0.05600000000000001,
+          "weighted_score": 5.6000000000000005
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "technology_stack",
+          "evidence_count": 97.0,
+          "raw_score": 90.0,
+          "sector_weight": 0.13,
+          "weighted_conf": 0.052000000000000005,
+          "weighted_score": 4.680000000000001
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "data_infrastructure",
+          "evidence_count": 208.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.15,
+          "weighted_conf": 0.06,
+          "weighted_score": 6.0
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "ai_governance",
+          "evidence_count": 87.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.12,
+          "weighted_conf": 0.048,
+          "weighted_score": 4.8
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "culture_change",
+          "evidence_count": 42.0,
+          "raw_score": 50.0,
+          "sector_weight": 0.14,
+          "weighted_conf": 0.05600000000000001,
+          "weighted_score": 2.8000000000000003
+        }
+      ],
+      "vr_adjusted": 93.6601275260362,
+      "vr_raw": 83.70000000000002
+    }
+  },
+  "company_id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+  "composite_score": 88.02,
+  "dimension_scores": [
+    {
+      "confidence": 0.4,
+      "dimension": "data_infrastructure",
+      "evidence_count": 208,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "ai_governance",
+      "evidence_count": 87,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "technology_stack",
+      "evidence_count": 97,
+      "score": 90.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "talent_skills",
+      "evidence_count": 22,
+      "score": 50.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "leadership_vision",
+      "evidence_count": 123,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "use_case_portfolio",
+      "evidence_count": 178,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "culture_change",
+      "evidence_count": 42,
+      "score": 50.0
+    }
+  ],
+  "score_band": "Leading",
+  "scoring_run_id": "d79c32a8-429c-4615-be25-c5d01d239281",
+  "sector": "Services",
+  "ticker": "NVDA",
+  "version": "v1.0"
+}

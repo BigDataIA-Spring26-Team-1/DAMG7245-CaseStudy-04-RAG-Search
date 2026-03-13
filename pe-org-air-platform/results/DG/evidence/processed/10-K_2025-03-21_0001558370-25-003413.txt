@@ -1,0 +1,379 @@
+Item 1A. Risk Factors” for additional information regarding cybersecurity-related risks that could impact our business.
+​
+The 
+Audit Committee
+ of our Board of Directors oversees our cybersecurity risks through various means, including but not limited to its oversight of our enterprise risk management program. In connection with its oversight of this program, our Audit Committee discusses with management the process by which risk assessment and risk management is undertaken and our major financial and other risk exposures, including without limitation those relating to information systems, information security, data privacy, business continuity, artificial intelligence, and third-party information security, and the steps management has taken to monitor and control such exposures. Our Audit Committee reviews enterprise risk evaluation results at least annually and high residual risk categories, along with their mitigation strategies, quarterly. 
+​
+In addition to consideration as part of the enterprise risk management program, cybersecurity risk is further evaluated through various internal and external audits and assessments designed to validate the effectiveness of our controls for managing the security of our information assets. 
+Management develops action plans to address select identified opportunities for improvement identified through these assessments. Additionally, our Audit Committee quarterly reviews reports and metrics, including a dashboard, pertaining to cybersecurity risks and prevention, detection, mitigation and remediation efforts with our CIO and CISO to help our Audit Committee understand and evaluate current risks, monitor trends, and track our progress against specific metrics.
+ 
+Our Audit Committee also has the responsibility to review with management and our outside auditor any unauthorized access to information technology systems that could have a material effect on our financial statements. Further, our Audit Committee receives quarterly updates regarding our business continuity and IT disaster recovery plan, as well as cybersecurity incidents which occurred during the prior quarter.
+​
+The Audit Committee receives cybersecurity education to assist members in overseeing related risks. This education includes or has included in recent years: an overview of Company-specific cyber-related risks considerations; an overview of various artificial intelligence considerations, including those related to risk management, governance and ethics, and workforce and culture; updates on the state of cybersecurity regulation; updates on the evolving retail landscape’s impact on cyber risk to retail organizations; a cyber threat intelligence update focusing on the global impact of ransomware on the retail sector and trends in retail sector compromises; and an overview of methods to perform cyber risk quantification.
+​
+​
+23
+
+Table of Contents
+ITEM 2. PROPERTIES
+​
+As of February 28, 2025, we operated 20,662 retail stores, including those located in 48 U.S. states as listed in the table below, and eight stores in Mexico.
+​
+​
+​
+​
+​
+​
+​
+​
+​
+State
+    
+Number of Stores
+                
+State
+    
+Number of Stores
+ 
+Alabama
+ 
+ 975
+ 
+Nebraska
+ 
+ 154
+​
+Arizona
+ 
+ 145
+ 
+Nevada
+ 
+ 23
+​
+Arkansas
+ 
+ 581
+ 
+New Hampshire
+ 
+ 47
+​
+California
+ 
+ 264
+ 
+New Jersey
+ 
+ 197
+​
+Colorado
+ 
+ 80
+ 
+New Mexico
+ 
+ 146
+​
+Connecticut
+ 
+ 99
+ 
+New York
+ 
+ 615
+​
+Delaware
+ 
+ 56
+ 
+North Carolina
+ 
+ 1,121
+​
+Florida
+ 
+ 1,081
+ 
+North Dakota
+ 
+ 74
+​
+Georgia
+ 
+ 1,134
+ 
+Ohio
+ 
+ 1,030
+​
+Idaho
+​
+ 8
+​
+Oklahoma
+ 
+ 574
+​
+Illinois
+ 
+ 724
+ 
+Oregon
+ 
+ 87
+​
+Indiana
+ 
+ 710
+ 
+Pennsylvania
+ 
+ 980
+​
+Iowa
+ 
+ 338
+ 
+Rhode Island
+ 
+ 26
+​
+Kansas
+ 
+ 276
+ 
+South Carolina
+ 
+ 690
+​
+Kentucky
+ 
+ 789
+ 
+South Dakota
+ 
+ 81
+​
+Louisiana
+ 
+ 681
+ 
+Tennessee
+ 
+ 1,032
+​
+Maine
+ 
+ 71
+ 
+Texas
+ 
+ 1,949
+​
+Maryland
+ 
+ 175
+ 
+Utah
+ 
+ 14
+​
+Massachusetts
+ 
+ 56
+ 
+Vermont
+ 
+ 42
+​
+Michigan
+ 
+ 759
+ 
+Virginia
+​
+ 499
+​
+Minnesota
+ 
+ 226
+ 
+Washington
+ 
+ 45
+​
+Mississippi
+ 
+ 668
+ 
+West Virginia
+ 
+ 313
+​
+Missouri
+ 
+ 689
+​
+Wisconsin
+​
+ 294
+​
+Montana
+ 
+ 9
+​
+Wyoming
+​
+ 27
+​
+​
+Most of our stores are located in leased premises. Individual store leases vary as to their terms, rental provisions and expiration dates. Many stores, including a significant portion of our new stores, typically carry a primary lease term of up to 15 years with multiple renewal options. We also have stores subject to shorter-term leases, and many of these leases also have renewal options.
+​
+As of February 28, 2025, we operated 20 distribution centers for non-refrigerated products, ten cold storage distribution centers, and four combination distribution centers which have both refrigerated and non-refrigerated products. We lease 15 of these facilities and the remainder are owned. We have a total of 22.8 million square feet of non-refrigerated space and a total of 2.9 million square feet of cold storage space. Approximately 7.25 acres of the land for one of the distribution centers is subject to a ground lease. We also leased approximately 3.2 million square feet of additional warehouse space in support of our distribution network for non-refrigerated merchandise. 
+​
+Our executive offices are located in approximately 302,000 square feet of owned buildings in Goodlettsville, Tennessee. As of February 28, 2025, we also leased approximately 186,000 square feet of additional space in Goodlettsville, Tennessee to support merchandising initiatives and 85,000 square feet of additional office space outside the United States.
+​
+ITEM 3. LEGAL PROCEEDINGS
+​
+The information contained in Note 7 to the consolidated financial statements under the heading “Legal proceedings” contained in Part II, Item 8 of this report is incorporated herein by this reference.
+​
+24
+
+Table of Contents
+ITEM 4. MINE SAFETY DISCLOSURE
+S
+​
+Not applicable.
+​
+INFORMATION ABOUT OUR EXECUTIVE OFFICERS
+​
+Information regarding our current executive officers as of March 21, 2025 is set forth below. Each of our executive officers serves at the discretion of our Board of Directors and is elected annually by the Board to serve until a successor is duly elected or their earlier resignation or termination. There are no familial relationships between any of our directors or executive officers. 
+​
+8
+Name
+    
+Age
+    
+Position
+Todd J. Vasos
+​
+63
+​
+Chief Executive Officer and Director
+Kelly M. Dilts
+​
+56
+​
+Executive Vice President and Chief Financial Officer
+Steven R. Deckard
+​
+56
+​
+Executive Vice President, Strategy and Development
+Tracey N. Herrmann
+​
+47
+​
+Executive Vice President, Store Operations
+Kathleen A. Reardon
+​
+53
+​
+Executive Vice President and Chief People Officer
+Emily C. Taylor
+​
+49
+​
+Executive Vice President and Chief Merchandising Officer
+Rhonda M. Taylor
+​
+57
+​
+Executive Vice President and General Counsel
+Carman R. Wenkoff
+​
+57
+​
+Executive Vice President and Chief Information Officer
+Roderick J. West
+​
+53
+​
+Executive Vice President, Global Supply Chain
+Anita C. Elliott
+​
+60
+​
+Senior Vice President and Chief Accounting Officer
+​
+Mr. Vasos
+ 
+currently serves as our Chief Executive Officer, having returned to Dollar General in October 2023 after serving as our CEO from June 2015 to November 2022 and as Senior Advisor from November 2022 until his retirement in April 2023. He has served as a member of our Board of Directors since June 2015. Mr. Vasos joined Dollar General in December 2008 as Executive Vice President, Division President and Chief Merchandising Officer and was promoted to Chief Operating Officer in November 2013. Prior to joining Dollar General, Mr. Vasos served in leadership positions with Longs Drug Stores Corporation, Phar-Mor Food and Drug Inc. and Eckerd Corporation. Mr. Vasos has served as a director of KeyCorp since July 2020.
+​
+Ms. Dilts
+ 
+has served as Executive Vice President and Chief Financial Officer since May 2023. She joined Dollar General in July 2019 as Senior Vice President, Finance, overseeing financial planning and analysis; procurement; margin planning and analytics; decision science and analytics; and investor relations. Prior to joining the Company, Ms. Dilts served as Executive Vice President and Chief Financial Officer at Francesca’s Holdings Corporation from April 2016 until July 2019. Between February 1998 and April 2016, she held various positions of increasing responsibility in finance and investor relations with Tailored Brands, Inc., including Senior Vice President, Finance and Investor Relations (June 2014 to April 2016); Senior Vice President and Chief Accounting Officer (July 2012 to June 2014); Vice President, Finance (April 2003 to July 2012); Associate Vice President, Finance (April 2002 to April 2003); Financial Planning and Analysis Manager (March 2000 to April 2002); and Assistant Controller (February 1998 to March 2000). She also served as the Controller for Olympia Enterprises from April 1993 to February 1998, after beginning her career with Deloitte & Touche in January 1990
+.
+​
+Mr. Deckard 
+has served as Executive Vice President, Strategy and Development, since February 2025. He has over 19 years of employment experience with Dollar General, 
+including Executive Vice President, Store Operations and Development (January 2024 to February 2025); Executive Vice President, Growth and Emerging Markets (June 2023 to January 2024); Senior Vice President, Emerging Markets (March 2021 to June 2023); Senior Vice President, Store Operations (March 2015 to March 2021); Vice President, Store Operations (October 2012 to March 2015); Vice President, Financial Planning and Shrink Improvement (March 2012 to October 2012); Vice President, Loss Prevention and Shrink Improvement (November 2010 to March 2012); Senior Director, Store Operations (October 2007 to November 2010); Director, Store Operations (February 2007 to October 2007); and Regional Director (February 2006 to February 2007). Prior to joining Dollar General, Mr. Deckard held various store operations positions with Walmart Inc. from November 1990 to April 2005.
+​
+​
+25
+
+Table of Contents
+Ms. Herrmann
+ has served as Executive Vice President, Store Operations, since February 2025. She has over 12 years of employment experience with Dollar General, including Senior Vice President, Store Operations (February 2024 to February 2025); Senior Vice President, Channel Innovation (September 2020 to February 2024); Senior Vice President, Store Operations (May 2017 to September 2020); Vice President, Division Manager (March 2016 to May 2017); Vice President, Merchandising Support (April 2014 to March 2016); and Senior Director, Merchandising (January 2013 to April 2014). Prior to joining Dollar General, Ms. Herrmann served in roles of increasing responsibility with Delhaize America, including Director of Pricing and Promotions, Bottom Dollar Food (September 2012 to December 2012); Director of Operations, Food Lion (July 2011 to September 2012); District Manager, Food Lion (May 2010 to July 2011); Merchandising Manager, Food Lion (February 2009 to May 2010); and Category Manager, Food Lion (April 2006 to February 2009). Prior to Food Lion, Ms. Herrmann held positions with EK Success Ltd., Hirschberg Schutz/Horizon Group USA and The Insight Research Corporation after beginning her career with Xerox Corporation in July 1999. 
+​
+Ms. Reardon
+ 
+has served as Executive Vice President and Chief People Officer since August 2020. She joined Dollar General as Director, Human Resources in September 2009 and was promoted to Vice President, Talent Management in October 2012. She became Vice President, Retail Human Resources in October 2014 and was promoted to Senior Vice President, Human Resources in March 2019 and to Senior Vice President and Chief People Officer in May 2019. Prior to joining Dollar General, Ms. Reardon held several positions of increasing responsibility at Centex from August 2005 until September 2009, serving as Director of Human Resources from October 2007 until September 2009. Since beginning her career in May 1998, Ms. Reardon also held various roles with Carrier Corporation and was also a Career Consultant at the Darden Graduate School of Business Administration, University of Virginia.
+​
+Ms. E. Taylor
+ has served as Executive Vice President and Chief Merchandising Officer since September 2020. She joined Dollar General in 1998 and held roles of increasing responsibility in investor relations, financial planning and analysis, merchandise planning, pricing and merchandising operations prior to her promotion to Vice President, Pricing & Merchandise Data Optimization in March 2011. She served as Vice President, Merchandising Operations (March 2012 to April 2014) and was subsequently promoted to Senior Vice President, General Merchandise Manager in April 2014. She most recently served as Senior Vice President, Channel Innovation (September 2019 to September 2020).
+​
+Ms. R. Taylor 
+has served as Executive Vice President and General Counsel since March 2015.  She joined Dollar General as an Employment Attorney in March 2000 and was subsequently promoted to Senior Employment Attorney in 2001, Deputy General Counsel in 2004, Vice President and Assistant General Counsel in March 2010, and Senior Vice President and General Counsel in June 2013.  Prior to joining Dollar General, she practiced law with Ogletree, Deakins, Nash, Smoak & Stewart, P.C., where her practice was focused on labor law and employment litigation. She has also held attorney positions with Ford & Harrison LLP. 
+​
+Mr. Wenkoff 
+has served as Executive Vice President and Chief Information Officer since July 2017.  He previously served as the Chief Information Officer (May 2012 to June 2017) and Chief Digital Officer (June 2016 to June 2017) of Franchise World Headquarters, LLC (“Subway”) and owned a Subway franchise from July 2015 until October 2017. He also previously served as Chairman of the Board and Co-President of Retail Gift Card Association (February 2008 to May 2012); Deputy Chief Information Officer for Independent Purchase Cooperative, Inc. (May 2005 to May 2012) and President of its subsidiary, Value Pay Services LLC (May 2005 to February 2011); founder and President of Stored Value Management, Inc. (January 2004 to May 2005); and Vice President, Operations and Finance, and General Counsel of Ontain Corporation (January 2000 to December 2004).  Mr. Wenkoff began his career in 1993 as an articled student, and then attorney with Douglas Symes & Brissenden and served in various legal positions, including General Counsel, with Pivotal Corporation from 1997 to 2000.
+​
+Mr. West
+ has served as Executive Vice President, Global Supply Chain, since September 2023. He has over 19 years of employment experience with Dollar General, including Senior Vice President, Distribution (March 2021 to August 2023); Vice President, Perishable Growth and Development (January 2018 to March 2021); and Vice President, Process Improvement (August 2005 to January 2018). Prior to joining Dollar General, Mr. West was a consultant with Kurt Salmon Associates from July 1994 to August 2005.
+​
+26
+
+Table of Contents
+Ms. Elliott
+ 
+has served as Senior Vice President and Chief Accounting Officer since December 2015.  She joined Dollar General as Senior Vice President and Controller in August 2005. Prior to joining Dollar General, she served as Vice President and Controller of Big Lots, Inc. from May 2001 to August 2005, and as Vice President and Controller for Jitney-Jungle Stores of America, Inc. from April 1998 to March 2001. Prior to serving at Jitney-Jungle, she practiced public accounting for 12 years, 6 of which were with Ernst & Young LLP.
+ 
+​
+Involvement in Legal Proceedings
+. Ms. Dilts served as Executive Vice President and Chief Financial Officer at Francesca’s Holdings Corporation from April 2016 until July 2019. On December 3, 2020, Francesca’s Holdings Corporation filed voluntary petitions for relief under Chapter 11 of Title 11 of the Bankruptcy Code. The Chapter 11 Plan of Liquidation was confirmed on July 20, 2021.
+​
+​
+PART II
+​
+ITEM 5. MARKET FOR REGISTRANT’S COMMON EQUITY, RELATED STOCKHOLDER
+ MATTERS AND ISSUER PURCHASES OF EQUITY SECURITIES
+​
+Market Information
+​
+Our common stock is traded on the New York Stock Exchange under the symbol “DG.” On March 19, 2025, there were approximately 2,601 shareholders of record of our common stock.
+​
+Dividends
+​
+We have paid quarterly cash dividends since 2015. Our current quarterly cash dividend is $0.59 per share. While our Board of Directors currently expects to continue regular quarterly cash dividends, the declaration and amount of future cash dividends are subject to the Board’s sole discretion and will depend upon, among other things, our results of operations, cash requirements, financial condition, contractual restrictions, excess debt capacity, and other factors that the Board may deem relevant in its sole discretion.
+​
+ITEM 6. [RESE
+RVED]
+​
+Not applicable.
+​
+​
+27
+
+Table of Contents

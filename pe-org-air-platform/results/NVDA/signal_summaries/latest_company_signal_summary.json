@@ -1,0 +1,35 @@
+{
+  "as_of_date": "2026-03-13",
+  "breakdown": {
+    "jobs": {
+      "avg_score": 1.2774999999999999,
+      "count": 8
+    },
+    "news": {
+      "avg_score": 38.75,
+      "count": 8
+    },
+    "patents": {
+      "avg_score": 44.800000000000004,
+      "count": 6
+    },
+    "tech": {
+      "avg_score": 18.0,
+      "count": 5
+    }
+  },
+  "company_id": "f7a9f167-c3e7-4adc-899b-3c81fc4110ae",
+  "composite_score": 20.62,
+  "notes": [
+    "avg_score sourced from external_signals.metadata.score",
+    "composite is weighted sum normalized if some signal types missing"
+  ],
+  "signal_count": 27,
+  "ticker": "NVDA",
+  "weights": {
+    "jobs": 0.35,
+    "news": 0.15,
+    "patents": 0.2,
+    "tech": 0.3
+  }
+}

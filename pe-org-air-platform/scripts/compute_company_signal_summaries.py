@@ -5,6 +5,7 @@ import json
 from datetime import date
 from uuid import uuid4
 
+from app.services.result_artifacts import write_json_artifact
 from app.services.snowflake import get_snowflake_connection
 
 
@@ -32,16 +33,16 @@ def main() -> int:
     conn = get_snowflake_connection()
     cur = conn.cursor()
     try:
-        # Add UPDATED_AT safely (Snowflake doesn't support ADD COLUMN IF NOT EXISTS)
+        # Add UPDATED_AT safely because Snowflake lacks ADD COLUMN IF NOT EXISTS.
         try:
             cur.execute(
                 "ALTER TABLE company_signal_summaries "
                 "ADD COLUMN updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()"
             )
         except Exception:
-            pass  # already exists
+            pass
 
-        # ✅ Key fix: metadata:score::string then TRY_TO_DOUBLE(...)
+        # Cast metadata:score safely before aggregating signal averages.
         cur.execute(
             """
             SELECT
@@ -77,12 +78,12 @@ def main() -> int:
             composite = 0.0
             weight_used = 0.0
 
-            for t, w in WEIGHTS.items():
-                if t in by_type:
-                    composite += by_type[t]["avg_score"] * w
-                    weight_used += w
+            for signal_type, weight in WEIGHTS.items():
+                if signal_type in by_type:
+                    composite += by_type[signal_type]["avg_score"] * weight
+                    weight_used += weight
 
-            if weight_used > 0 and weight_used < 1.0:
+            if 0 < weight_used < 1.0:
                 composite = composite / weight_used
 
             composite = round(composite, 2)
@@ -129,9 +130,28 @@ def main() -> int:
                 (summary_id, company_id, ticker, as_of, summary_text, signal_count),
             )
 
+            payload = {
+                "company_id": company_id,
+                "ticker": ticker,
+                **summary,
+                "signal_count": signal_count,
+            }
+            write_json_artifact(
+                ticker=ticker,
+                category="signal_summaries",
+                filename=f"company_signal_summary_{as_of}.json",
+                payload=payload,
+            )
+            write_json_artifact(
+                ticker=ticker,
+                category="signal_summaries",
+                filename="latest_company_signal_summary.json",
+                payload=payload,
+            )
+
             upserted += 1
 
-        print(f"✅ Company summaries computed & upserted: {upserted} (as_of_date={as_of})")
+        print(f"OK: Company summaries computed and upserted: {upserted} (as_of_date={as_of})")
         return 0
 
     finally:

@@ -1,0 +1,493 @@
+Item 1. Business
+Our Company
+NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. NVIDIA is now a data center scale AI infrastructure company reshaping all industries.
+Our technology stack includes the foundational NVIDIA CUDA development platform that runs on all NVIDIA GPUs, as well as hundreds of domain-specific software libraries, frameworks, algorithms, software development kits, or SDKs, and application programming interfaces, or APIs. This deep and broad software stack accelerates the performance and facilitates the deployment of NVIDIA accelerated computing for computationally intensive workloads such as artificial intelligence, or AI, model training and inference, data analytics, scientific computing, robotics, and 3D graphics, with vertical-specific optimizations to address industries ranging from healthcare and telecom to automotive and manufacturing.
+Introduced with the Blackwell architecture, our data-center-scale offerings feature extreme co-design where the infrastructure’s chips, networking, systems, software, and algorithms are holistically architected and optimized to maximize performance and scale. Hundreds of thousands of GPUs can be interconnected to function as a single giant computer. This type of data center architecture and scale is needed for the development and deployment of modern AI and accelerated computing applications. 
+The GPU was initially used to simulate human imagination, enabling the virtual wo
+
+--- CHUNK ---
+
+joined NVIDIA in 2013 as Executive Vice President and Chief Financial Officer. Prior to NVIDIA, Ms. Kress most recently served as Senior Vice President and Chief Financial Officer of the Business Technology and Operations Finance organization at Cisco Systems, Inc., a networking equipment company, since 2010. At Cisco, Ms. Kress was responsible for financial strategy, planning, reporting and business development for all business segments, engineering and operations. From 1997 to 2010 Ms. Kress held a variety of positions at Microsoft, a software company, including, beginning in 2006, Chief Financial Officer of the Server and Tools division, where Ms. Kress was responsible for financial strategy, planning, reporting and business development for the division. Prior to joining Microsoft, Ms. Kress spent eight years at Texas Instruments Incorporated, a semiconductor company, where she held a variety of finance positions. Ms. Kress holds a B.S. degree in Finance from University of Arizona and an M.B.A. degree from Southern Methodist University.
+Ajay K. Puri 
+joined NVIDIA in 2005 as Senior Vice President, Worldwide Sales and became Executive Vice President, Worldwide Field Operations in 2009. Prior to NVIDIA, he held positions in sales, marketing, and general management over a 22-year career at Sun Microsystems, Inc., a computing systems company. Mr. Puri previously held marketing, management consulting, and product development positions at Hewlett-Packard, an information technolo
+
+--- CHUNK ---
+
+The Audit Committee receives regular information security updates from management, including our Chief Security Officer and members of our security team. The Board also receives annual reports on information security matters from our Chief Security Officer and members of our security team.
+Our security efforts are managed by a team of executive cybersecurity, IT, engineering, operations, and legal professionals. We have established a cross-functional leadership team, consisting of executive-level leaders, that meets regularly to review cybersecurity matters and evaluate emerging threats.
+ With oversight and guidance provided by the cross-functional leadership team, our information security teams refine our practices to address emerging security risks and changes in regulations. Our executive-level leadership team also participates in cybersecurity incident response efforts by engaging with the incident response team and helping direct the company’s response to and assessment of certain cybersecurity incidents.
+We have designated a Chief Security Officer, reporting to our Senior Vice President of Software Engineering, to oversee the identification, assessment, and management of material cybersecurity risks
+. 
+Our Chief Security Officer’s cybersecurity expertise includes over 18 years of combined government and private sector assignments.
+32
+Table of Contents
+Item 2. Properties
+Our headquarters is in Santa Clara, California. We own and lease approximately 3 million square feet 
+
+--- CHUNK ---
+
+1/31/2021
+1/30/2022
+1/29/2023
+1/28/2024
+1/26/2025
+1/25/2026
+NVIDIA Corporation
+$
+100.00 
+$
+175.98 
+$
+157.05 
+$
+470.88 
+$
+1,100.68 
+$
+1,448.75 
+S&P 500
+$
+100.00 
+$
+121.00 
+$
+112.98 
+$
+137.98 
+$
+174.50 
+$
+200.33 
+Nasdaq 100
+$
+100.00 
+$
+112.60 
+$
+95.60 
+$
+138.07 
+$
+173.95 
+$
+206.01 
+Item 6. [Reserved]
+35
+Table of Contents
+Item 7. Management's Discussion and Analysis of Financial Condition and Results of Operations
+The following discussion and analysis of our financial condition and results of operations should be read in conjunction with “Item 1A. Risk Factors,” our Consolidated Financial Statements and related Notes thereto, as well as other cautionary statements and risks described elsewhere in this Annual Report on Form 10-K, before deciding to purchase, hold, or sell shares of our common stock.
+Overview
+Our Company and Our Businesses
+NVIDIA pioneered accelerated computing to help solve the most challenging computational problems. Since our original focus on PC graphics, we have expanded to several other large and important computationally intensive fields. Fueled by the sustained demand for exceptional 3D graphics and the scale of the gaming market, NVIDIA has leveraged its GPU architecture to create platforms for scientific computing, AI, data science, autonomous vehicles, robotics, and digital twin applications. NVIDIA is now a data center scale AI infrastructure company reshaping all industries.
+Our two operating segments are "Compute & Networking" and "Graphics." Refer t
+
+--- CHUNK ---
+
+Year Ended
+
+--- CHUNK ---
+
+Jan 25, 2026
+Jan 26, 2025
+Change
+($ in millions, except per share data)
+Revenue
+$
+215,938 
+$
+130,497 
+Up 65%
+Gross margin
+71.1 
+%
+75.0 
+%
+-3.9 pts
+Operating expenses
+$
+23,076 
+$
+16,405 
+Up 41%
+Operating income
+$
+130,387 
+$
+81,453 
+Up 60%
+Net income
+$
+120,067 
+$
+72,880 
+Up 65%
+Net income per diluted share
+$
+4.90 
+$
+2.94 
+Up 67%
+Revenue for fiscal year 2026 was $215.9 billion, up 65% from a year ago.
+Data Center revenue for fiscal year 2026 was up 68% from a year ago. The strong year-on-year growth was driven by the major platform shifts – accelerated computing and AI.
+Gaming revenue for fiscal year 2026 was up 41% from a year ago, driven by strong Blackwell demand. We expect supply constraints to be a headwind to Gaming in the first quarter of fiscal 2027 and beyond.
+Professional Visualization revenue for fiscal year 2026 was up 70% from a year ago, driven by exceptional demand for Blackwell as well as the launch of our new DGX Spark.
+Automotive revenue for fiscal year 2026 was up 39% from a year ago, driven by continued adoption of our self-driving platforms.
+Gross margin decreased in fiscal year 2026 as our business model transitioned from offering Hopper HGX systems to Blackwell full-scale datacenter solutions. The gross margin decrease was also impacted by a $4.5 billion charge associated with H20 excess inventory and purchase obligations.
+Operating expenses for fiscal year 2026 were up 41% from a year ago, driven by higher compensation and benefits expenses due to employe
+
+--- CHUNK ---
+
+Jan 25, 2026
+Jan 26, 2025
+Revenue
+100.0 
+%
+100.0 
+%
+Cost of revenue
+28.9 
+25.0 
+Gross profit
+71.1 
+75.0 
+Operating expenses
+
+Research and development
+8.6 
+9.9 
+Sales, general and administrative
+2.1 
+2.7 
+Total operating expenses
+10.7 
+12.6 
+Operating income
+60.4 
+62.4 
+Interest income
+1.1 
+1.4 
+Interest expense
+(0.1)
+(0.2)
+Other income, net
+4.2 
+0.8 
+Total other income, net
+5.2 
+2.0 
+Income before income tax
+65.5 
+64.4 
+Income tax expense
+9.9 
+8.6 
+Net income
+55.6 
+%
+55.8 
+%
+Reportable Segments
+Revenue by Reportable Segments
+Year Ended
+Jan 25, 2026
+Jan 26, 2025
+$
+Change
+%
+Change
+($ in millions)
+Compute & Networking
+$
+193,479 
+$
+116,193 
+$
+77,286 
+67 
+%
+Graphics
+22,459 
+14,304 
+8,155 
+57 
+%
+Total
+$
+215,938 
+$
+130,497 
+$
+85,441 
+65 
+%
+Operating Income by Reportable Segments
+Year Ended
+Jan 25, 2026
+Jan 26, 2025
+$
+Change
+%
+Change
+($ in millions)
+Compute & Networking
+$
+130,141 
+$
+82,875 
+$
+47,266 
+57 
+%
+Graphics
+9,156 
+5,085 
+4,071 
+80 
+%
+Total
+$
+139,297 
+$
+87,960 
+$
+51,337 
+58 
+%
+Compute & Networking revenue
+ – The year over year increase was driven by the major platform shifts – accelerated computing and AI. Revenue from Data Center computing grew 59% driven by demand for our Blackwell computing platform. Revenue from Data Center networking grew 142% driven by the introduction and continued ramp of NVLink compute fabric for GB200 and GB300 systems and the growth of Ethernet and InfiniBand platforms.
+Graphics revenue 
+– The year over year increase was driven by sales of our Black
+
+--- CHUNK ---
+
+Research and development
+8.6 
+9.9 
+Sales, general and administrative
+2.1 
+2.7 
+Total operating expenses
+10.7 
+12.6 
+Operating income
+60.4 
+62.4 
+Interest income
+1.1 
+1.4 
+Interest expense
+(0.1)
+(0.2)
+Other income, net
+4.2 
+0.8 
+Total other income, net
+5.2 
+2.0 
+Income before income tax
+65.5 
+64.4 
+Income tax expense
+9.9 
+8.6 
+Net income
+55.6 
+%
+55.8 
+%
+Reportable Segments
+Revenue by Reportable Segments
+Year Ended
+Jan 25, 2026
+Jan 26, 2025
+$
+Change
+%
+Change
+($ in millions)
+Compute & Networking
+$
+193,479 
+$
+116,193 
+$
+77,286 
+67 
+%
+Graphics
+22,459 
+14,304 
+8,155 
+57 
+%
+Total
+$
+215,938 
+$
+130,497 
+$
+85,441 
+65 
+%
+Operating Income by Reportable Segments
+Year Ended
+Jan 25, 2026
+Jan 26, 2025
+$
+Change
+%
+Change
+($ in millions)
+Compute & Networking
+$
+130,141 
+$
+82,875 
+$
+47,266 
+57 
+%
+Graphics
+9,156 
+5,085 
+4,071 
+80 
+%
+Total
+$
+139,297 
+$
+87,960 
+$
+51,337 
+58 
+%
+Compute & Networking revenue
+ – The year over year increase was driven by the major platform shifts – accelerated computing and AI. Revenue from Data Center computing grew 59% driven by demand for our Blackwell computing platform. Revenue from Data Center networking grew 142% driven by the introduction and continued ramp of NVLink compute fabric for GB200 and GB300 systems and the growth of Ethernet and InfiniBand platforms.
+Graphics revenue 
+– The year over year increase was driven by sales of our Blackwell architecture.
+Reportable segment operating income
+ – The year over year increase in Compute & Networking segment operati
+
+--- CHUNK ---
+
+Year Ended
+
+Jan 25, 2026
+Jan 26, 2025
+$
+Change
+%
+Change
+
+($ in millions)
+Research and development
+$
+18,497 
+$
+12,914 
+$
+5,583 
+43 
+%
+Sales, general and administrative
+4,579 
+3,491 
+1,088 
+31 
+%
+Total operating expenses
+$
+23,076 
+$
+16,405 
+$
+6,671 
+41 
+%
+The increases in research and development expenses for fiscal year 2026 were driven by a 29% increase in compensation and benefits expense, including stock-based compensation, reflecting employee growth and compensation increases and a 79% increase in compute and infrastructure.
+41
+Table of Contents
+The increases in sales, general and administrative expenses for fiscal year 2026 were primarily driven by compensation and benefits expense, including stock-based compensation, reflecting employee growth and compensation increases.
+Total Other Income, Net
+
+Year Ended
+
+Jan 25, 2026
+Jan 26, 2025
+$
+Change
+
+($ in millions)
+Interest income
+$
+2,300 
+$
+1,786 
+$
+514 
+Interest expense
+(259)
+(247)
+(12)
+Other income, net
+9,022 
+1,034 
+7,988 
+Total other income, net
+$
+11,063 
+$
+2,573 
+$
+8,490 
+The increase in interest income was primarily due to growth in cash, cash equivalents, and debt securities.
+Interest expense is primarily comprised of coupon interest and debt discount amortization related to our notes.
+Other income, net primarily consists of realized or unrealized gains and losses from investments in non-marketable equity securities, publicly-held equity securities, and the impact of changes in foreign currency rates. The change in Othe
+
+--- CHUNK ---
+
+(In millions)
+Cash and cash equivalents
+$
+10,605 
+$
+8,589 
+Marketable securities
+51,951 
+34,621 
+Cash, cash equivalents, and marketable securities
+$
+62,556 
+$
+43,210 
+42
+Table of Contents
+
+Year Ended
+Jan 25, 2026
+Jan 26, 2025
+
+(In millions)
+Net cash provided by operating activities
+$
+102,718 
+$
+64,089 
+Net cash used in investing activities
+$
+(52,228)
+$
+(20,421)
+Net cash used in financing activities
+$
+(48,474)
+$
+(42,359)
+Our fixed income security investments include highly rated, diversified investment types and credit exposures with shorter maturities.
+Cash provided by operating activities increased in fiscal year 2026 compared to fiscal year 2025, due to higher revenue.
+Cash used in investing activities increased in fiscal year 2026 compared to fiscal year 2025, primarily driven by higher purchases of equity investment securities and the execution of a non-exclusive license agreement with Groq.
+Cash used in financing activities increased in fiscal year 2026 compared to fiscal year 2025, mainly due to higher share repurchases.
+Liquidity
+Our primary sources of liquidity include cash, cash equivalents, marketable securities, and cash generated by our operations. As of January 25, 2026, we had $62.6 billion in cash, cash equivalents, and marketable securities. We believe that we have sufficient liquidity to meet our operating requirements for at least the next twelve months and for the foreseeable future, including our future obligations. We continuously evaluate our liquidity a

@@ -86,7 +86,12 @@ def test_ic_prep_workflow_builds_packet_from_dimension_justifications():
     assert len(out["dimensions"]) == 2
     assert any("Leadership" in item for item in out["strengths"])
     assert any("Talent" in item for item in out["risks"])
+    assert out["key_gaps"] == ["No strong evidence of 'retention risk' for next-level readiness"]
     assert out["diligence_questions"]
+    assert out["recommendation"] == "PROCEED WITH CAUTION - Moderate readiness, but diligence gaps remain"
+    assert out["total_evidence_count"] == 2
+    assert out["avg_evidence_strength"] == "moderate"
+    assert out["generated_at"]
 
 
 def test_analyst_notes_collector_builds_dimension_note():
@@ -125,3 +130,45 @@ def test_analyst_notes_collector_builds_dimension_note():
     assert out["note_title"].startswith("Acme Holdings - Technology Stack")
     assert out["confidence_label"] == "high"
     assert out["evidence_snapshot"][0]["evidence_id"] == "chunk-9"
+
+
+def test_analyst_notes_collector_submission_methods_index_notes():
+    captured = []
+
+    collector = object.__new__(AnalystNotesCollector)
+    collector.vector_store = SimpleNamespace(
+        upsert=lambda chunks: captured.extend(chunks) or len(chunks)
+    )
+
+    interview_id = collector.submit_interview(
+        company_id="company-1",
+        interviewee="Jane Doe",
+        interviewee_title="CTO",
+        transcript="Leadership described a governed data platform and clear operating cadence.",
+        assessor="Analyst A",
+        dimensions_discussed=["leadership", "data infrastructure"],
+    )
+    dd_id = collector.submit_dd_finding(
+        company_id="company-1",
+        title="Model governance gap",
+        finding="Policy ownership is unclear and monitoring remains manual.",
+        dimension="ai governance",
+        severity="high",
+        assessor="Analyst B",
+    )
+    dataroom_id = collector.submit_data_room_summary(
+        company_id="company-1",
+        document_name="AI Strategy Deck",
+        summary="The deck shows funded platform investments and named executive sponsors.",
+        dimension="leadership",
+        assessor="Analyst C",
+    )
+
+    assert interview_id.startswith("interview_")
+    assert dd_id.startswith("dd_")
+    assert dataroom_id.startswith("dataroom_")
+    assert len(captured) == 3
+    assert captured[0].metadata["source_type"] == "interview_transcript"
+    assert captured[0].metadata["dimension"] == "leadership"
+    assert captured[1].metadata["severity"] == "high"
+    assert captured[2].metadata["document_name"] == "AI Strategy Deck"

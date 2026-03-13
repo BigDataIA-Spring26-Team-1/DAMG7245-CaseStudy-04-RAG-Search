@@ -1,0 +1,35 @@
+{
+  "as_of_date": "2026-03-13",
+  "breakdown": {
+    "jobs": {
+      "avg_score": 13.938235294117646,
+      "count": 17
+    },
+    "news": {
+      "avg_score": 37.22222222222222,
+      "count": 18
+    },
+    "patents": {
+      "avg_score": 45.68571428571429,
+      "count": 14
+    },
+    "tech": {
+      "avg_score": 10.0,
+      "count": 1
+    }
+  },
+  "company_id": "1fe32432-e260-489f-aeae-438b76cfd376",
+  "composite_score": 22.6,
+  "notes": [
+    "avg_score sourced from external_signals.metadata.score",
+    "composite is weighted sum normalized if some signal types missing"
+  ],
+  "signal_count": 50,
+  "ticker": "WMT",
+  "weights": {
+    "jobs": 0.35,
+    "news": 0.15,
+    "patents": 0.2,
+    "tech": 0.3
+  }
+}

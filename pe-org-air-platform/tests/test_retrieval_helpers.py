@@ -5,9 +5,10 @@ from types import SimpleNamespace
 import pytest
 
 from app.services.retrieval.bm25_store import BM25Store, BM25Hit
-from app.services.retrieval.dimension_mapper import map_dimension
+from app.services.retrieval.dimension_mapper import DimensionMapper, map_dimension
 from app.services.retrieval.hybrid import HybridRetriever, rrf_fuse
 from app.services.retrieval.hyde import HyDEGenerator
+from app.services.search.vector_store import DocumentChunk
 from app.services.search.vector_store import SearchHit
 
 
@@ -104,6 +105,37 @@ def test_hybrid_retriever_builds_compound_chroma_filters():
     }
 
 
+def test_hybrid_retriever_indexes_simple_dict_documents():
+    seen = {}
+    retriever = object.__new__(HybridRetriever)
+
+    def _upsert(chunks):
+        seen["chunks"] = chunks
+        return len(chunks)
+
+    retriever.vector_store = SimpleNamespace(upsert=_upsert)
+
+    out = retriever.index_documents(
+        [
+            {
+                "doc_id": "doc-1",
+                "content": "Board oversight and governance review cadence are documented.",
+                "metadata": {"company_id": "company-1", "dimension": "ai_governance"},
+            },
+            DocumentChunk(
+                id="doc-2",
+                text="Cloud platform automation and MLOps tooling are in place.",
+                metadata={"company_id": "company-1", "dimension": "technology_stack"},
+            ),
+        ]
+    )
+
+    assert out == 2
+    assert len(seen["chunks"]) == 2
+    assert seen["chunks"][0].id == "doc-1"
+    assert seen["chunks"][1].id == "doc-2"
+
+
 def test_dimension_mapper_uses_signal_mapping_keyword_and_default_fallbacks():
     assert map_dimension(source_type="sec_filing", signal_category="jobs") == "talent_skills"
     assert (
@@ -115,3 +147,14 @@ def test_dimension_mapper_uses_signal_mapping_keyword_and_default_fallbacks():
         == "ai_governance"
     )
     assert map_dimension(source_type="unknown", signal_category=None, chunk_text="plain unrelated text") == "technology_stack"
+
+
+def test_dimension_mapper_facade_returns_public_dimension_names():
+    mapper = DimensionMapper()
+
+    weights = mapper.get_dimension_weights("technology_hiring")
+    primary = mapper.get_primary_dimension("technology_hiring")
+
+    assert "talent" in weights
+    assert "talent_skills" not in weights
+    assert primary == "talent"

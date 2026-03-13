@@ -1,0 +1,440 @@
+Item 1. Business.
+Overview
+JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.
+JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, r
+
+--- CHUNK ---
+
+Item 1A. Risk Factors. 
+The following discussion sets forth the material risk factors that could affect JPMorganChase’s financial condition and operations. Readers should not consider any descriptions of these factors to be a complete set of all potential risks that could affect the Firm. Any of the risk factors discussed below could by itself, or combined with other factors, materially and adversely affect JPMorganChase’s business, results of operations, financial condition, capital position, liquidity, competitive position or reputation, including by materially increasing expenses or decreasing revenues, which could result in material losses or a decrease in earnings.
+Summary
+The principal risk factors include:
+•
+Legal and Regulatory 
+risks, including the impact of extensive supervision and regulation, as well as changes to or in the application, interpretation or enforcement of applicable law or executive branch actions, on JPMorganChase’s business and operations; the ways in which differences in regulatory implementation in different jurisdictions or with respect to certain competitors could negatively impact JPMorganChase’s business; the ways in which governmental policies that discourage or penalize business relationships with certain industries, or require specific business practices, could negatively affect JPMorganChase's businesses; the penalties and other repercussions that JPMorganChase could face when resolving litigation or investigations by governmental authori
+
+--- CHUNK ---
+
+Other U.S. locations
+Columbus/Westerville, Ohio
+3.3 
+Chicago, Illinois
+2.8 
+Dallas/Plano/Fort Worth, Texas
+2.5 
+Wilmington/Newark, Delaware
+2.1 
+Houston, Texas
+1.5 
+Jersey City, New Jersey
+1.5 
+Phoenix/Tempe, Arizona
+1.3 
+All other U.S. locations
+33.4 
+Total United States
+57.5
+
+Europe, the Middle East and Africa (“EMEA”)
+25 Bank Street, London, U.K.
+1.4 
+All other U.K. locations
+2.1 
+All other EMEA locations
+1.6 
+Total EMEA
+5.1
+
+Asia-Pacific, Latin America and Canada
+India
+6.6 
+Philippines
+1.7 
+All other locations
+3.3 
+Total Asia-Pacific, Latin America and Canada
+11.6
+
+Total
+74.2
+
+(a)
+At December 31, 2025, the Firm owned or leased 5,083 branches in 48 states and Washington D.C.
+(b)
+Includes a 1.1 million square foot office building owned by the Firm that is vacant and undergoing a significant remodeling.
+The premises and facilities occupied by JPMorganChase are collectively used across all of the Firm’s business segments and for corporate purposes. JPMorganChase continues to evaluate its current and projected space requirements and may determine from time to time that certain of its properties (including the premises and facilities noted above) are no longer necessary for its operations. There is no assurance that the Firm will be able to dispose of any such excess properties, premises or facilities, or that it will not incur costs in connection with such dispositions. Such disposition costs may be material to the Firm’s results of operations in a given period. Refer to the C
+
+--- CHUNK ---
+
+Item 7A. Quantitative and Qualitative Disclosures About Market Risk.
+Refer to the Market Risk Management section of Management’s discussion and analysis on pages 133-142 for a discussion of quantitative and qualitative disclosures about market risk.
+33
+Parts II and III
+Item 8. Financial Statements and Supplementary Data.
+The Consolidated Financial Statements, together with the Notes thereto and the report thereon dated February 13, 2026, of PricewaterhouseCoopers LLP, the Firm’s independent registered public accounting firm (PCAOB ID 
+238
+), appear on pages 162–314.
+The “Glossary of Terms and Acronyms’’ is included on pages 320–327.
+Item 9. Changes in and Disagreements With Accountants on Accounting and Financial Disclosure.
+None.
+Item 9A. Controls and Procedures.
+The internal control framework promulgated by the Committee of Sponsoring Organizations of the Treadway Commission (“COSO”), “Internal Control — Integrated Framework” (“COSO 2013”), provides guidance for designing, implementing and conducting internal control and assessing its effectiveness. The Firm used the COSO 2013 framework to assess the effectiveness of the Firm’s internal control over financial reporting as of December 31, 2025. Refer to “Management’s report on internal control over financial reporting” on page 161.
+As of the end of the period covered by this report, an evaluation was carried out under the supervision and with the participation of the Firm’s management, including its Chairman and Chief Execut
+
+--- CHUNK ---
+
+$
+177,556 
+(g)
+$
+158,104 
+Total noninterest expense
+95,640
+
+91,797 
+(g)
+87,172 
+Pre-provision profit
+(a)
+86,807
+
+85,759 
+70,932 
+Provision for credit losses
+14,212
+
+(e)
+10,678 
+9,320 
+Income before income tax expense
+72,595
+
+75,081 
+61,612 
+Income tax expense
+15,547
+
+16,610 
+12,060 
+Net income
+$
+57,048
+
+$
+58,471 
+$
+49,552 
+Earnings per share data
+Net income: Basic
+$
+20.05
+
+$
+19.79 
+$
+16.25 
+                   Diluted
+20.02
+
+19.75 
+16.23 
+Average shares: Basic
+2,776.5
+
+2,873.9 
+2,938.6 
+                   Diluted
+2,781.5
+
+2,879.0 
+2,943.1 
+Market and per common share data
+Market capitalization
+868,793
+
+670,618 
+489,320 
+Common shares at period-end
+2,696.2
+
+2,797.6 
+2,876.6 
+Book value per share
+126.99
+
+116.07 
+104.45 
+Tangible book value per share (“TBVPS”)
+(a)
+107.56
+
+97.30 
+86.08 
+Cash dividends declared per share
+5.80
+
+4.80 
+4.10 
+Selected ratios and metrics
+Return on common equity (“ROE”)
+17
+
+%
+18 
+%
+17 
+%
+Return on tangible common equity (“ROTCE”)
+(a)
+20
+
+22 
+21 
+Return on assets (“ROA”)
+1.29
+
+1.43 
+1.30 
+Overhead ratio
+52
+
+52 
+55 
+Loans-to-deposits ratio
+58
+
+56 
+55 
+Firm Liquidity coverage ratio (“LCR”) (average)
+(b)
+111
+
+113 
+113 
+JPMorgan Chase Bank, N.A. LCR (average)
+(b)
+115
+
+124 
+129 
+Common equity Tier 1 (“CET1”) capital ratio – Standardized
+(c)(d)
+14.6
+
+(f)
+15.7 
+15.0 
+Tier 1 capital ratio – Standardized
+(c)(d)
+15.5
+
+(f)
+16.8 
+16.6 
+Total capital ratio – Standardized
+(c)(d)
+17.4
+
+(f)
+18.5 
+18.5 
+Tier 1 leverage ratio
+(b)(c)
+6.9
+
+7.2 
+7.2 
+Supplementary leverage ra
+
+--- CHUNK ---
+
+8,638 
+6,209 
+Net charge-off rate
+0.74
+
+%
+0.68 
+%
+0.52 
+%
+(a)
+Pre-provision profit, TBVPS and ROTCE are each non-GAAP financial measures. Tangible common equity (“TCE”) is also a non-GAAP financial measure. Refer to Explanation and Reconciliation of the Firm’s Use of Non-GAAP Financial Measures on pages 59–61 for a discussion of these measures.
+(b)
+For the years ended December 31, 2025, 2024 and 2023, the percentage represents average ratios for the three months ended December 31, 2025, 2024 and 2023.
+(c)
+As of January 1, 2025, the benefit from the Current Expected Credit Losses (“CECL”) capital transition provision had been fully phased out. For the years ended December 31, 2024 and 2023, the ratios reflected the CECL capital transition provisions. Refer to Note 27 for additional information.
+(d)
+As of December 31, 2025, the Advanced risk-based ratios became more binding on the Firm than the Standardized risk-based ratios. Refer to Capital Risk Management on pages 89–99 for additional information.
+(e)
+Includes a provision for lending-related commitments of $2.2 billion related to the Apple Card transaction. Refer to Executive Overview on page 47 for additional information.
+(f)
+Includes a decrease of approximately 25 basis points under the Standardized approach related to the Apple Card transaction. Refer to Capital Risk Management on pages 89–99 for additional information.
+(g)
+Total net revenue included a $7.9 billion net gain related to Visa shares, and total noninterest ex
+
+--- CHUNK ---
+
+S&P Financials Index
+100.00 
+134.87 
+120.66 
+135.32 
+176.67 
+203.21
+
+S&P 500 Index
+100.00 
+128.68 
+105.37 
+133.07 
+166.37 
+196.12
+
+December 31,
+(in dollars)
+JPMorgan Chase & Co./2025 Form 10-K
+45
+Management’s discussion and analysis
+The following is Management’s discussion and analysis of the financial condition and results of operations (“MD&A”) of JPMorganChase for the year ended December 31, 2025. The MD&A is included in both JPMorganChase’s Annual Report for the year ended December 31, 2025 (“Annual Report”) and its Annual Report on Form 10-K for the year ended December 31, 2025 (“2025 Form 10-K” or “Form 10-K”) filed with the Securities and Exchange Commission (“SEC”). Refer to the Glossary of terms and acronyms on pages 320–327 for definitions of terms and acronyms used throughout the Annual Report and the 2025 Form 10-K. 
+This Form 10-K contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These forward-looking statements are based on the current beliefs and expectations of JPMorganChase’s management, speak only as of the date of this Form 10-K and are subject to significant risks and uncertainties. Refer to Forward-looking Statements on page 160 and Part 1, Item 1A: Risk Factors in this Form 10-K on pages 9–31 for a discussion of certain of those risks and uncertainties and the factors that could cause JPMorganChase’s actual results to differ materially because of those risks and uncertainties. There is no assu
+
+--- CHUNK ---
+
+S&P 500 Index
+100.00 
+128.68 
+105.37 
+133.07 
+166.37 
+196.12
+
+December 31,
+(in dollars)
+JPMorgan Chase & Co./2025 Form 10-K
+45
+Management’s discussion and analysis
+The following is Management’s discussion and analysis of the financial condition and results of operations (“MD&A”) of JPMorganChase for the year ended December 31, 2025. The MD&A is included in both JPMorganChase’s Annual Report for the year ended December 31, 2025 (“Annual Report”) and its Annual Report on Form 10-K for the year ended December 31, 2025 (“2025 Form 10-K” or “Form 10-K”) filed with the Securities and Exchange Commission (“SEC”). Refer to the Glossary of terms and acronyms on pages 320–327 for definitions of terms and acronyms used throughout the Annual Report and the 2025 Form 10-K. 
+This Form 10-K contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These forward-looking statements are based on the current beliefs and expectations of JPMorganChase’s management, speak only as of the date of this Form 10-K and are subject to significant risks and uncertainties. Refer to Forward-looking Statements on page 160 and Part 1, Item 1A: Risk Factors in this Form 10-K on pages 9–31 for a discussion of certain of those risks and uncertainties and the factors that could cause JPMorganChase’s actual results to differ materially because of those risks and uncertainties. There is no assurance that actual results will be in line with any outlook informatio
+
+--- CHUNK ---
+
+December 31,
+(in dollars)
+JPMorgan Chase & Co./2025 Form 10-K
+45
+Management’s discussion and analysis
+The following is Management’s discussion and analysis of the financial condition and results of operations (“MD&A”) of JPMorganChase for the year ended December 31, 2025. The MD&A is included in both JPMorganChase’s Annual Report for the year ended December 31, 2025 (“Annual Report”) and its Annual Report on Form 10-K for the year ended December 31, 2025 (“2025 Form 10-K” or “Form 10-K”) filed with the Securities and Exchange Commission (“SEC”). Refer to the Glossary of terms and acronyms on pages 320–327 for definitions of terms and acronyms used throughout the Annual Report and the 2025 Form 10-K. 
+This Form 10-K contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These forward-looking statements are based on the current beliefs and expectations of JPMorganChase’s management, speak only as of the date of this Form 10-K and are subject to significant risks and uncertainties. Refer to Forward-looking Statements on page 160 and Part 1, Item 1A: Risk Factors in this Form 10-K on pages 9–31 for a discussion of certain of those risks and uncertainties and the factors that could cause JPMorganChase’s actual results to differ materially because of those risks and uncertainties. There is no assurance that actual results will be in line with any outlook information set forth herein, and the Firm does not undertake to update 
+
+--- CHUNK ---
+
+$
+84,973 
+2%
+Net interest income
+95,443
+
+92,583 
+3
+Total net revenue
+182,447
+
+177,556 
+3
+Total noninterest expense
+95,640
+
+91,797 
+4
+Pre-provision profit
+86,807
+
+85,759 
+1
+Provision for credit losses
+14,212
+
+10,678 
+33
+Net income
+57,048
+
+58,471 
+(2)
+Diluted earnings per share
+20.02
+
+19.75 
+1
+Selected ratios and metrics
+Return on common equity
+17
+
+%
+18 
+%
+Return on tangible common equity
+20
+
+22 
+Book value per share
+$
+126.99
+
+$
+116.07 
+9
+Tangible book value per share
+107.56
+
+97.3 
+11
+Capital ratios - Standardized
+(a)(b)
+CET1 capital
+14.6
+
+%
+15.7 
+%
+Tier 1 capital
+15.5
+
+16.8 
+Total capital
+17.4
+
+18.5 
+Memo:
+NII excluding Markets
+(c)
+$
+92,591
+
+$
+92,419 
+—
+NIR excluding Markets
+(c)
+57,208
+
+58,167 
+(2)
+Markets
+(d)
+35,782
+
+30,007 
+19
+Total net revenue - managed basis
+$
+185,581
+
+$
+180,593 
+3%
+(a)    As of January 1, 2025, the benefit from the CECL capital transition provision had been fully phased out. For the year ended December 31, 2024, the ratios reflected the CECL capital transition provisions. Refer to Note 27 for additional information. 
+(b)    As of December 31, 2025, the Advanced risk-based ratios became more binding on the Firm than the Standardized risk-based ratios. Refer to Capital Risk Management on pages 89–99 for additional information.
+(c)    NII and NIR refer to net interest income and noninterest revenue, respectively. 
+(d)    Markets consists of CIB's Fixed Income Markets and Equity Markets businesses.The Firm assesses the performance of its Markets business on a
