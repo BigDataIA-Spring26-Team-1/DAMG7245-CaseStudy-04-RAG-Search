@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from app.pipelines.sec_edgar import FilingRef, SecEdgarClient, safe_filename, store_raw_filing
 
 
@@ -68,9 +70,22 @@ def test_list_recent_filings_filters_forms_and_limits_per_form():
         client.close()
 
 
-def test_safe_filename_and_store_raw_filing(tmp_path, monkeypatch):
+def test_safe_filename_and_store_raw_filing(monkeypatch):
     from app.pipelines import sec_edgar
     monkeypatch.setattr(sec_edgar, "is_s3_configured", lambda: False)
+    writes: dict[str, object] = {}
+
+    def fake_mkdir(self, parents=False, exist_ok=False):
+        writes["dir"] = self
+        return None
+
+    def fake_write_bytes(self, payload):
+        writes["path"] = self
+        writes["payload"] = payload
+        return len(payload)
+
+    monkeypatch.setattr(Path, "mkdir", fake_mkdir)
+    monkeypatch.setattr(Path, "write_bytes", fake_write_bytes)
 
     filing = FilingRef(
         ticker="CAT",
@@ -82,9 +97,9 @@ def test_safe_filename_and_store_raw_filing(tmp_path, monkeypatch):
         filing_dir_url="https://example.com",
     )
 
-    out_path = store_raw_filing(tmp_path, filing, b"hello")
-    assert out_path.exists()
-    assert out_path.read_bytes() == b"hello"
+    out_path = store_raw_filing(Path("sandbox-root"), filing, b"hello")
+    assert writes["payload"] == b"hello"
+    assert writes["path"] == out_path
     assert "<" not in out_path.name
     assert "?" not in out_path.name
     assert safe_filename("a:b/c") == "a_b_c"

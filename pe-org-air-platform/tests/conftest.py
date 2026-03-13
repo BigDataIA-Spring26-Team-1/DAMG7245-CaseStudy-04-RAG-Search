@@ -128,7 +128,12 @@ def fake_sf(monkeypatch):
     monkeypatch.setattr("app.routers.collection.get_snowflake_connection", lambda: conn)
     monkeypatch.setattr("app.routers.signals.get_snowflake_connection", lambda: conn)
     monkeypatch.setattr("app.routers.signal_summaries.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.routers.scoring.get_snowflake_connection", lambda: conn)
     monkeypatch.setattr("app.services.evidence_store.get_snowflake_connection", lambda: conn)
     monkeypatch.setattr("app.services.signal_store.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.services.scoring_service.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.services.integration.company_client.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.services.integration.evidence_client.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.services.integration.scoring_client.get_snowflake_connection", lambda: conn)
     return cursor
   
