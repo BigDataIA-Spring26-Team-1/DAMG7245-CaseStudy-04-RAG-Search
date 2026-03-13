@@ -9,6 +9,7 @@ class AssessmentType(StrEnum):
     due_diligence = "due_diligence"
     quarterly = "quarterly"
     exit_prep = "exit_prep"
+    cs3_auto = "cs3_auto"
 
 class AssessmentStatus(StrEnum):
     draft = "draft"
