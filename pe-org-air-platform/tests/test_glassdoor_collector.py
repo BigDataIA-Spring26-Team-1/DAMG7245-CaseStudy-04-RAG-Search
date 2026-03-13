@@ -2,33 +2,15 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 
 from app.pipelines.glassdoor_collector import GlassdoorCultureCollector, GlassdoorReview
 
+FIXTURE_ROOT = Path(__file__).resolve().parent / "fixtures"
 
-def test_fetch_reviews_reads_local_file_when_api_not_configured(tmp_path):
-    data_dir = tmp_path / "glassdoor"
-    data_dir.mkdir(parents=True, exist_ok=True)
-    (data_dir / "nvda.json").write_text(
-        json.dumps(
-            [
-                {
-                    "review_id": "r1",
-                    "rating": 4.5,
-                    "title": "Great place",
-                    "pros": "Innovative teams",
-                    "cons": "Fast pace",
-                    "advice_to_management": "Keep investing in AI",
-                    "is_current_employee": True,
-                    "job_title": "ML Engineer",
-                    "review_date": "2025-08-01T00:00:00+00:00",
-                }
-            ]
-        ),
-        encoding="utf-8",
-    )
 
-    collector = GlassdoorCultureCollector(rapidapi_key="", data_root=tmp_path)
+def test_fetch_reviews_reads_local_file_when_api_not_configured():
+    collector = GlassdoorCultureCollector(rapidapi_key="", data_root=FIXTURE_ROOT)
     out = collector.fetch_reviews("NVDA", limit=10)
     assert len(out) == 1
     assert out[0].review_id == "r1"
@@ -82,14 +64,8 @@ def test_company_id_map_from_env(monkeypatch):
     assert collector._configured_company_id("jpm") == "12345"
 
 
-def test_company_id_map_from_file(tmp_path):
-    glassdoor_dir = tmp_path / "glassdoor"
-    glassdoor_dir.mkdir(parents=True, exist_ok=True)
-    (glassdoor_dir / "company_ids.json").write_text(
-        json.dumps({"WMT": "999", "GE": "777"}),
-        encoding="utf-8",
-    )
-    collector = GlassdoorCultureCollector(rapidapi_key="dummy", data_root=tmp_path)
+def test_company_id_map_from_file():
+    collector = GlassdoorCultureCollector(rapidapi_key="dummy", data_root=FIXTURE_ROOT)
     assert collector._configured_company_id("WMT") == "999"
     assert collector._configured_company_id("GE") == "777"
 
