@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 import re
 
 from app.services.integration.scoring_client import ScoringClient
+from app.services.llm.router import LiteLLMRouter, TaskType
 from app.services.retrieval.hybrid import HybridRetriever
 
 
@@ -23,6 +24,7 @@ class CitedEvidence:
     title: Optional[str] = None
     published_at: Optional[str] = None
     chunk_index: Optional[int] = None
+    fiscal_year: Optional[int] = None
 
 
 @dataclass
@@ -95,6 +97,7 @@ class JustificationGenerator:
     def __init__(self) -> None:
         self.retriever = HybridRetriever()
         self.scoring_client = ScoringClient()
+        self.router = LiteLLMRouter()
 
     def generate(
         self,
@@ -112,6 +115,9 @@ class JustificationGenerator:
 
         rubric_keywords = self._get_rubric_keywords(dimension)
         score_context = self._get_score_context(company_id=company_id, dimension=dimension)
+        rubric = self._get_rubric(dimension=dimension, level=score_context.get("level"))
+        if rubric.get("keywords"):
+            rubric_keywords = list(rubric["keywords"])
 
         query = self._build_query(
             dimension=dimension,
@@ -138,9 +144,18 @@ class JustificationGenerator:
         score = self._resolve_score(score_context=score_context, cited=cited, dimension=dimension)
         level = self._resolve_level(score_context=score_context, score=score)
         level_name = self.LEVEL_NAMES[level]
+        if not rubric:
+            rubric = self._get_rubric(dimension=dimension, level=level)
+            if rubric.get("keywords"):
+                rubric_keywords = list(rubric["keywords"])
 
         confidence_interval = self._build_confidence_interval(score_context=score_context, score=score)
-        rubric_criteria = self._build_rubric_criteria(dimension=dimension, level=level, score_context=score_context)
+        rubric_criteria = self._build_rubric_criteria(
+            dimension=dimension,
+            level=level,
+            score_context=score_context,
+            rubric=rubric,
+        )
         gaps = self._identify_gaps(dimension=dimension, level=level, evidence=cited)
         strength = self._assess_strength(cited)
         summary = self._build_summary(
@@ -177,13 +192,45 @@ class JustificationGenerator:
         payload["query_used"] = query
         payload["evidence_count"] = len(cited)
         payload["generation_mode"] = "cs3_context_grounded"
+        payload["rubric_source"] = "cs3_rubric" if rubric else "heuristic_keywords"
         return payload
 
+    def generate_justification(
+        self,
+        company_id: str,
+        dimension: Any,
+        question: Optional[str] = None,
+        top_k: int = 5,
+        min_confidence: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        normalized_dimension = getattr(dimension, "value", dimension)
+        return self.generate(
+            company_id=company_id,
+            dimension=str(normalized_dimension),
+            question=question,
+            top_k=top_k,
+            min_confidence=min_confidence,
+        )
+
     def _normalize_dimension(self, dimension: str) -> str:
-        return (dimension or "").strip().lower().replace(" ", "_")
+        value = getattr(dimension, "value", dimension)
+        return str(value or "").strip().lower().replace(" ", "_")
 
     def _get_rubric_keywords(self, dimension: str) -> List[str]:
         return self.DIMENSION_KEYWORDS.get(dimension, []).copy()
+
+    def _get_rubric(self, dimension: str, level: Optional[int]) -> Dict[str, Any]:
+        get_rubric = getattr(self.scoring_client, "get_rubric", None)
+        if not callable(get_rubric):
+            return {}
+        try:
+            rubrics = get_rubric(dimension, level=level)
+        except Exception:
+            return {}
+        if not rubrics:
+            return {}
+        rubric = rubrics[0]
+        return rubric if isinstance(rubric, dict) else {}
 
     def _get_score_context(self, company_id: str, dimension: str) -> Dict[str, Any]:
         try:
@@ -231,6 +278,12 @@ class JustificationGenerator:
             relevance_score = float(getattr(hit, "score", 0.0) or 0.0)
             confidence = self._coerce_confidence(metadata.get("confidence"))
             source_type = metadata.get("source_type") or metadata.get("doc_type") or "unknown"
+            fiscal_year = metadata.get("fiscal_year")
+            if fiscal_year is not None:
+                try:
+                    fiscal_year = int(fiscal_year)
+                except (TypeError, ValueError):
+                    fiscal_year = None
 
             if matched_keywords or relevance_score >= 0.45:
                 cited.append(
@@ -245,6 +298,7 @@ class JustificationGenerator:
                         title=metadata.get("title"),
                         published_at=metadata.get("published_at"),
                         chunk_index=metadata.get("chunk_index"),
+                        fiscal_year=fiscal_year,
                     )
                 )
 
@@ -316,6 +370,14 @@ class JustificationGenerator:
         return self._score_to_level(score)
 
     def _build_confidence_interval(self, score_context: Dict[str, Any], score: float) -> List[float]:
+        explicit = score_context.get("confidence_interval")
+        if (
+            isinstance(explicit, (list, tuple))
+            and len(explicit) == 2
+            and all(isinstance(x, (int, float)) for x in explicit)
+        ):
+            return [round(float(explicit[0]), 2), round(float(explicit[1]), 2)]
+
         overall_score = score_context.get("overall_score")
         if isinstance(overall_score, (int, float)):
             return [
@@ -329,7 +391,11 @@ class JustificationGenerator:
         dimension: str,
         level: int,
         score_context: Dict[str, Any],
+        rubric: Optional[Dict[str, Any]] = None,
     ) -> str:
+        if rubric and rubric.get("criteria_text"):
+            return str(rubric["criteria_text"])
+
         dimension_text = dimension.replace("_", " ")
         base_keywords = self.DIMENSION_KEYWORDS.get(dimension, [])
         keywords_preview = ", ".join(base_keywords[:5])
@@ -371,6 +437,9 @@ class JustificationGenerator:
                 present.add(kw.lower())
 
         expected = self.DIMENSION_KEYWORDS.get(dimension, [])
+        next_level_rubric = self._get_rubric(dimension=dimension, level=min(5, level + 1))
+        if next_level_rubric.get("keywords"):
+            expected = list(next_level_rubric["keywords"])
         missing = [kw for kw in expected if kw.lower() not in present]
 
         gaps = [f"No strong evidence of '{kw}' for next-level readiness" for kw in missing[:5]]
@@ -389,6 +458,59 @@ class JustificationGenerator:
         if avg_conf >= 0.55 and avg_matches >= 1 and avg_relevance >= 0.50:
             return "moderate"
         return "weak"
+
+    def _llm_summary(
+        self,
+        company_id: str,
+        dimension_text: str,
+        score: float,
+        level: int,
+        level_name: str,
+        rubric_criteria: str,
+        cited: List[CitedEvidence],
+        gaps: List[str],
+        evidence_strength: str,
+    ) -> Optional[str]:
+        router = getattr(self, "router", None)
+        if router is None:
+            return None
+
+        evidence_lines: List[str] = []
+        for evidence in cited[:5]:
+            fy = evidence.fiscal_year
+            if fy is None and evidence.published_at:
+                try:
+                    fy = int(str(evidence.published_at)[:4])
+                except Exception:
+                    fy = None
+            citation = f"[{evidence.source_type}, FY {fy}]" if fy else f"[{evidence.source_type}]"
+            snippet = (evidence.content or "").replace("\n", " ").strip()
+            evidence_lines.append(f"{citation} {snippet[:220]}")
+
+        prompt = (
+            f"Company: {company_id}\n"
+            f"Dimension: {dimension_text}\n"
+            f"Score: {score}/100 (Level {level} - {level_name})\n"
+            f"Evidence strength: {evidence_strength}\n"
+            f"Rubric: {rubric_criteria}\n"
+            f"Supporting evidence:\n- " + "\n- ".join(evidence_lines or ["No evidence retrieved"]) + "\n"
+            f"Gaps:\n- " + "\n- ".join(gaps[:5] or ["No explicit gaps identified"]) + "\n\n"
+            "Write a concise 150-200 word IC-ready justification. Cite sources inline using the provided brackets."
+        )
+
+        try:
+            response = router.complete(
+                task_type=TaskType.JUSTIFICATION,
+                user_prompt=prompt,
+                system_prompt="You are a PE analyst writing evidence-backed score justifications.",
+                temperature=0.2,
+                max_tokens=260,
+            )
+        except Exception:
+            return None
+
+        text = (response.text or "").strip()
+        return text or None
 
     def _build_summary(
         self,
@@ -420,9 +542,30 @@ class JustificationGenerator:
                 f"The current rubric expectation is: {rubric_criteria}"
             )
 
+        llm_summary = self._llm_summary(
+            company_id=company_id,
+            dimension_text=dimension_text,
+            score=score,
+            level=level,
+            level_name=level_name,
+            rubric_criteria=rubric_criteria,
+            cited=cited,
+            gaps=gaps,
+            evidence_strength=evidence_strength,
+        )
+        if llm_summary:
+            return llm_summary
+
         evidence_lines: List[str] = []
         for e in cited[:3]:
-            source_label = e.title or e.source_type or "source"
+            fy = e.fiscal_year
+            if fy is None and e.published_at:
+                try:
+                    fy = int(str(e.published_at)[:4])
+                except Exception:
+                    fy = None
+            citation = f"[{e.source_type}, FY {fy}]" if fy else f"[{e.source_type}]"
+            source_label = f"{citation} {e.title or e.source_type or 'source'}"
             snippet = (e.content or "").replace("\n", " ").strip()
             snippet = snippet[:180] + ("..." if len(snippet) > 180 else "")
             evidence_lines.append(f"{source_label}: {snippet}")

@@ -3,38 +3,35 @@ from __future__ import annotations
 import argparse
 from typing import Any, Dict, List
 
-from app.services.integration.evidence_client import EvidenceClient
-from app.services.retrieval.dimension_mapper import map_dimension
+from app.services.integration.cs1_client import CS1Client
+from app.services.integration.cs2_client import CS2Client, CS2Evidence
+from app.services.result_artifacts import write_json_artifact
+from app.services.retrieval.dimension_mapper import DimensionMapper
 from app.services.search.vector_store import DocumentChunk, VectorStore
 
 
-def build_chunk_id(document_id: str, chunk_id: str) -> str:
-    # Stable + globally unique ID for Chroma
-    return f"{document_id}:{chunk_id}"
-
-
-def row_to_docchunk(row) -> DocumentChunk:
-    dimension = map_dimension(row.source_type, row.signal_category, row.chunk_text)
+def evidence_to_docchunk(evidence: CS2Evidence, mapper: DimensionMapper) -> DocumentChunk:
+    dimension = mapper.get_primary_dimension(
+        signal_category=evidence.signal_category.value,
+        source_type=evidence.source_type.value,
+        public_names=False,
+    )
 
     metadata: Dict[str, Any] = {
-        "company_id": row.company_id,
-        "document_id": row.document_id,
-        "chunk_id": row.chunk_id,
-        "chunk_index": row.chunk_index,
+        "company_id": evidence.company_id,
         "dimension": dimension,
-        "source_type": row.source_type,
-        "signal_category": row.signal_category,
-        "confidence": row.confidence if row.confidence is not None else 0.0,
-        "source_url": row.source_url,
-        "fiscal_year": row.fiscal_year,
-        "title": row.title,
-        "doc_type": row.doc_type,
-        "published_at": row.published_at,
+        "source_type": evidence.source_type.value,
+        "signal_category": evidence.signal_category.value,
+        "confidence": evidence.confidence if evidence.confidence is not None else 0.0,
+        "source_url": evidence.source_url,
+        "fiscal_year": evidence.fiscal_year,
+        "title": evidence.title,
+        "published_at": evidence.extracted_at.isoformat(),
     }
 
     return DocumentChunk(
-        id=build_chunk_id(row.document_id, row.chunk_id),
-        text=row.chunk_text,
+        id=evidence.evidence_id,
+        text=evidence.content,
         metadata=metadata,
     )
 
@@ -49,22 +46,55 @@ def main() -> None:
     args = ap.parse_args()
 
     store = VectorStore()
-    client = EvidenceClient(schema=args.schema)
+    client = CS2Client()
+    companies = CS1Client()
+    mapper = DimensionMapper()
 
     if args.reindex:
         deleted = store.delete_by_filter({"company_id": args.company_id})
         print(f"Deleted {deleted} existing vectors for company_id={args.company_id}")
 
-    total = 0
-    for batch in client.iter_chunks_for_company(
+    evidence = client.get_evidence(
         company_id=args.company_id,
-        batch_size=args.batch_size,
         min_confidence=args.min_confidence,
-    ):
-        chunks: List[DocumentChunk] = [row_to_docchunk(r) for r in batch if (r.chunk_text or "").strip()]
+    )
+    source_type_counts: Dict[str, int] = {}
+    for item in evidence:
+        source_type_counts[item.source_type.value] = source_type_counts.get(item.source_type.value, 0) + 1
+
+    total = 0
+    for start in range(0, len(evidence), args.batch_size):
+        batch = evidence[start : start + args.batch_size]
+        chunks: List[DocumentChunk] = [
+            evidence_to_docchunk(item, mapper)
+            for item in batch
+            if (item.content or "").strip()
+        ]
         upserted = store.upsert(chunks)
+        client.mark_indexed([chunk.id for chunk in chunks])
         total += upserted
         print(f"Upserted {upserted} chunks (running total={total})")
+
+    ticker = None
+    try:
+        ticker = companies.get_company(args.company_id).ticker
+    except Exception:
+        ticker = None
+
+    write_json_artifact(
+        ticker=(ticker or args.company_id),
+        category="retrieval",
+        filename="latest_index_summary.json",
+        payload={
+            "company_id": args.company_id,
+            "ticker": ticker,
+            "indexed_chunks": total,
+            "evidence_count": len(evidence),
+            "source_type_counts": source_type_counts,
+            "min_confidence": args.min_confidence,
+            "reindex": bool(args.reindex),
+        },
+    )
 
     print(f"Done. Indexed total chunks={total} for company_id={args.company_id}")
 

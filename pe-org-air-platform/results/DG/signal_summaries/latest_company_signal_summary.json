@@ -1,0 +1,31 @@
+{
+  "as_of_date": "2026-03-13",
+  "breakdown": {
+    "jobs": {
+      "avg_score": 0.0,
+      "count": 8
+    },
+    "news": {
+      "avg_score": 34.375,
+      "count": 8
+    },
+    "patents": {
+      "avg_score": 29.396666666666665,
+      "count": 6
+    }
+  },
+  "company_id": "dd017852-8634-45f9-9742-90543d2e18ef",
+  "composite_score": 15.77,
+  "notes": [
+    "avg_score sourced from external_signals.metadata.score",
+    "composite is weighted sum normalized if some signal types missing"
+  ],
+  "signal_count": 22,
+  "ticker": "DG",
+  "weights": {
+    "jobs": 0.35,
+    "news": 0.15,
+    "patents": 0.2,
+    "tech": 0.3
+  }
+}

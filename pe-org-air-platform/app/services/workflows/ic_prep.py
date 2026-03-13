@@ -30,8 +30,13 @@ class ICPrepPacket:
     score_band: Optional[str]
     dimensions: List[ICDimensionPacket]
     strengths: List[str]
+    key_gaps: List[str]
     risks: List[str]
     diligence_questions: List[str]
+    recommendation: str
+    generated_at: str
+    total_evidence_count: int
+    avg_evidence_strength: str
     generated_by: str
 
 
@@ -94,6 +99,9 @@ class ICPrepWorkflow:
         selected_dimensions = self._resolve_dimensions(scorecard, dimensions)
 
         dimension_packets: List[ICDimensionPacket] = []
+        key_gaps: List[str] = []
+        total_evidence_count = 0
+        strength_values: List[int] = []
         for dimension in selected_dimensions:
             justification = self.generator.generate(
                 company_id=company_id,
@@ -102,6 +110,11 @@ class ICPrepWorkflow:
                 top_k=top_k,
                 min_confidence=min_confidence,
             )
+            supporting_evidence = list(justification.get("supporting_evidence", []))
+            total_evidence_count += len(supporting_evidence)
+            strength_values.append(self._strength_value(str(justification.get("evidence_strength", "weak"))))
+            if justification.get("gaps_identified"):
+                key_gaps.append(str(justification["gaps_identified"][0]))
 
             dimension_packets.append(
                 ICDimensionPacket(
@@ -111,7 +124,7 @@ class ICPrepWorkflow:
                     level_name=str(justification["level_name"]),
                     evidence_strength=str(justification["evidence_strength"]),
                     summary=str(justification["generated_summary"]),
-                    top_evidence=self._trim_evidence(justification.get("supporting_evidence", [])),
+                    top_evidence=self._trim_evidence(supporting_evidence),
                     gaps_identified=list(justification.get("gaps_identified", [])),
                 )
             )
@@ -124,6 +137,12 @@ class ICPrepWorkflow:
         strengths = self._derive_strengths(dimension_packets)
         risks = self._derive_risks(dimension_packets)
         diligence_questions = self._derive_diligence_questions(dimension_packets)
+        avg_evidence_strength = self._avg_strength_label(strength_values)
+        recommendation = self._derive_recommendation(
+            overall_score=overall_score,
+            strengths=strengths,
+            risks=risks,
+        )
 
         packet = ICPrepPacket(
             company_id=company_id,
@@ -134,8 +153,13 @@ class ICPrepWorkflow:
             score_band=score_band,
             dimensions=dimension_packets,
             strengths=strengths,
+            key_gaps=key_gaps[:6],
             risks=risks,
             diligence_questions=diligence_questions,
+            recommendation=recommendation,
+            generated_at=self._generated_at(),
+            total_evidence_count=total_evidence_count,
+            avg_evidence_strength=avg_evidence_strength,
             generated_by="deterministic_ic_prep_workflow",
         )
 
@@ -190,6 +214,39 @@ class ICPrepWorkflow:
                 }
             )
         return trimmed
+
+    def _strength_value(self, label: str) -> int:
+        mapping = {"strong": 3, "moderate": 2, "weak": 1}
+        return mapping.get(label.strip().lower(), 1)
+
+    def _avg_strength_label(self, values: List[int]) -> str:
+        if not values:
+            return "weak"
+        avg = sum(values) / len(values)
+        if avg >= 2.5:
+            return "strong"
+        if avg >= 1.5:
+            return "moderate"
+        return "weak"
+
+    def _derive_recommendation(
+        self,
+        overall_score: Optional[float],
+        strengths: List[str],
+        risks: List[str],
+    ) -> str:
+        if overall_score is None:
+            return "FURTHER DILIGENCE - No consolidated score available"
+        if overall_score >= 70 and len(strengths) >= 2 and len(risks) <= 2:
+            return "PROCEED - Strong AI readiness with a credible evidence base"
+        if overall_score >= 50:
+            return "PROCEED WITH CAUTION - Moderate readiness, but diligence gaps remain"
+        return "FURTHER DILIGENCE - Material capability gaps or weak evidence"
+
+    def _generated_at(self) -> str:
+        from datetime import datetime, timezone
+
+        return datetime.now(timezone.utc).isoformat()
 
     def _extract_overall_score(
         self,

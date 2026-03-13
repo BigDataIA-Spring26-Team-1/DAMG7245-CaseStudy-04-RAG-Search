@@ -34,6 +34,7 @@ def search(
     top_k: int = Query(5, ge=1, le=20),
     company_id: Optional[str] = Query(None),
     dimension: Optional[str] = Query(None),
+    source_type: Optional[str] = Query(None, description="Optional source type or comma-separated source types"),
     min_confidence: Optional[float] = Query(None, ge=0.0, le=1.0),
     use_hyde: bool = Query(True, description="Enable HyDE query expansion for hybrid/bm25 search"),
 ) -> Dict[str, Any]:
@@ -44,6 +45,11 @@ def search(
     - bm25: BM25-only (requires company_id)
     """
     mode = (mode or "semantic").strip().lower()
+    source_types = [
+        item.strip()
+        for item in str(source_type or "").split(",")
+        if item.strip()
+    ]
 
     # ---------------------------
     # Hybrid / BM25 path
@@ -57,6 +63,7 @@ def search(
                 "filters": {
                     "company_id": company_id,
                     "dimension": dimension,
+                    "source_type": source_type,
                     "min_confidence": min_confidence,
                     "use_hyde": use_hyde,
                 },
@@ -69,6 +76,7 @@ def search(
             top_k=top_k,
             company_id=company_id,
             dimension=dimension,
+            source_types=source_types,
             min_confidence=min_confidence,
             use_hyde=use_hyde,
         )
@@ -83,6 +91,7 @@ def search(
             "filters": {
                 "company_id": company_id,
                 "dimension": dimension,
+                "source_type": source_type,
                 "min_confidence": min_confidence,
                 "use_hyde": use_hyde,
             },
@@ -108,6 +117,10 @@ def search(
         filter_clauses.append({"company_id": company_id})
     if dimension:
         filter_clauses.append({"dimension": dimension})
+    if len(source_types) == 1:
+        filter_clauses.append({"source_type": source_types[0]})
+    elif len(source_types) > 1:
+        filter_clauses.append({"$or": [{"source_type": item} for item in source_types]})
     if min_confidence is not None:
         filter_clauses.append({"confidence": {"$gte": float(min_confidence)}})
 
@@ -126,6 +139,7 @@ def search(
         "filters": {
             "company_id": company_id,
             "dimension": dimension,
+            "source_type": source_type,
             "min_confidence": min_confidence,
             "use_hyde": False,
         },

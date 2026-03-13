@@ -11,6 +11,7 @@ from app.scoring_engine.portfolio_validation import (
     all_portfolio_scores_in_range,
     validate_portfolio_score_ranges,
 )
+from app.services.result_artifacts import write_json_artifact
 from app.services.snowflake import get_snowflake_connection
 
 
@@ -52,6 +53,25 @@ def main() -> int:
             score = "missing" if c.score is None else f"{c.score:.2f}"
             status = "PASS" if c.in_range else "FAIL"
             print(f"{ticker}: {score} expected=[{c.lower_bound:.2f}, {c.upper_bound:.2f}] {status}")
+
+        write_json_artifact(
+            ticker="portfolio",
+            category="validation",
+            filename="latest_portfolio_validation.json",
+            payload={
+                "ok": ok,
+                "scores": scores,
+                "checks": {
+                    ticker: {
+                        "score": item.score,
+                        "lower_bound": item.lower_bound,
+                        "upper_bound": item.upper_bound,
+                        "in_range": item.in_range,
+                    }
+                    for ticker, item in checks.items()
+                },
+            },
+        )
 
         return 0 if ok else 1
     finally:

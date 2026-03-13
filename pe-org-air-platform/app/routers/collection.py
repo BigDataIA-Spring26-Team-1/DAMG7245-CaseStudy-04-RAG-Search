@@ -16,6 +16,7 @@ from app.pipelines.external_signals import ExternalSignalCollector, sha256_text
 from app.pipelines.sec_edgar import SecEdgarClient, store_raw_filing
 from app.services.evidence_store import ChunkRow, DocumentRow, DocumentStatus, EvidenceStore
 from app.services.redis_cache import cache_delete_pattern, cache_get_json, cache_set_json
+from app.services.result_artifacts import write_json_artifact, write_text_artifact
 from app.services.signal_store import SignalStore
 from app.services.snowflake import get_snowflake_connection
  
@@ -105,6 +106,24 @@ def _invalidate_cs2_cache() -> None:
     cache_delete_pattern("chunks:*")
     cache_delete_pattern("signals:*")
     cache_delete_pattern("signal_summaries:list:*")
+
+
+def _mirror_collection_text(ticker: str, category: str, filename: str, text: str) -> None:
+    write_text_artifact(
+        ticker=ticker,
+        category=category,
+        filename=filename,
+        text=(text or "")[:20000],
+    )
+
+
+def _mirror_collection_json(ticker: str, category: str, filename: str, payload: dict[str, Any]) -> None:
+    write_json_artifact(
+        ticker=ticker,
+        category=category,
+        filename=filename,
+        payload=payload,
+    )
  
  
 def _parse_requested_tickers(companies: str) -> list[str]:
@@ -216,6 +235,16 @@ def run_collect_evidence(task_id: str, companies: list[str]) -> None:
                             continue
  
                         chunks = chunk_document(parsed)
+                        base_name = f"{filing.form}_{filing.filing_date}_{filing.accession}"
+                        body_text = parsed.sections.get("Item 1A") or parsed.full_text[:20000]
+                        chunks_text = "\n\n--- CHUNK ---\n\n".join([chunk.content[:1500] for chunk in chunks[:10]])
+                        _mirror_collection_text(ticker, "evidence/processed", f"{base_name}.txt", body_text)
+                        _mirror_collection_text(
+                            ticker,
+                            "evidence/processed",
+                            f"{base_name}_chunks.txt",
+                            chunks_text,
+                        )
                         store.insert_document(
                             DocumentRow(
                                 id=doc_id,
@@ -312,6 +341,7 @@ def run_collect_signals(task_id: str, companies: list[str]) -> None:
  
                 jobs_q = f"{name} {ticker} hiring jobs"
                 jobs_url, jobs_rss = collector.google_jobs_rss(jobs_q)
+                _mirror_collection_text(ticker, "signals", "jobs_rss.txt", jobs_rss)
                 if jobs_rss:
                     jobs_hash = sha256_text(f"jobs_rss|{ticker}|{jobs_rss}")
                     if not store.signal_exists_by_hash(jobs_hash):
@@ -330,6 +360,7 @@ def run_collect_signals(task_id: str, companies: list[str]) -> None:
  
                 news_q = f"{name} {ticker}"
                 news_url, news_rss = collector.google_news_rss(news_q)
+                _mirror_collection_text(ticker, "signals", "news_rss.txt", news_rss)
                 if news_rss:
                     news_hash = sha256_text(f"news_rss|{ticker}|{news_rss}")
                     if not store.signal_exists_by_hash(news_hash):
@@ -345,6 +376,19 @@ def run_collect_signals(task_id: str, companies: list[str]) -> None:
                             content_hash=news_hash,
                             metadata={"query": news_q, "note": "rss stored (truncated)"},
                         )
+                _mirror_collection_json(
+                    ticker,
+                    "signals",
+                    "collection_summary.json",
+                    {
+                        "ticker": ticker,
+                        "company_id": company_id,
+                        "jobs_url": jobs_url,
+                        "news_url": news_url,
+                        "jobs_rss_present": bool(jobs_rss),
+                        "news_rss_present": bool(news_rss),
+                    },
+                )
             except Exception as exc:
                 ticker_errors.append({"ticker": ticker, "error": str(exc)[:500]})
                 continue

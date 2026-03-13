@@ -23,6 +23,7 @@ from app.scoring_engine.sector_config import get_company_sector, load_sector_pro
 from app.scoring_engine.synergy import compute_formula_synergy, compute_synergy, load_synergy_rules
 from app.scoring_engine.talent_concentration import TalentConcentrationCalculator, talent_risk_adjustment
 from app.scoring_engine.vr_model import DimensionInput, compute_vr_score, fetch_dimension_inputs
+from app.services.result_artifacts import write_json_artifact
 from app.services.snowflake import get_snowflake_connection
  
  
@@ -102,6 +103,57 @@ def _get_company_ticker(cur, company_id: str) -> str | None:
     if not row or not row[0]:
         return None
     return str(row[0]).upper()
+
+
+def _export_scoring_artifacts(
+    *,
+    ticker: str,
+    company_id: str,
+    assessment_id: str,
+    run_id: str,
+    sector: str,
+    version: str,
+    dimension_results: list,
+    breakdown_json: dict,
+    composite_score: float,
+    score_band: str,
+) -> None:
+    if not ticker:
+        return
+
+    payload = {
+        "ticker": ticker,
+        "company_id": company_id,
+        "assessment_id": assessment_id,
+        "scoring_run_id": run_id,
+        "sector": sector,
+        "version": version,
+        "composite_score": composite_score,
+        "score_band": score_band,
+        "dimension_scores": [
+            {
+                "dimension": item.dimension,
+                "score": item.score,
+                "confidence": item.confidence,
+                "evidence_count": item.evidence_count,
+            }
+            for item in dimension_results
+        ],
+        "breakdown": breakdown_json,
+    }
+
+    write_json_artifact(
+        ticker=ticker,
+        category="scoring",
+        filename=f"org_air_score_{run_id}.json",
+        payload=payload,
+    )
+    write_json_artifact(
+        ticker=ticker,
+        category="scoring",
+        filename="latest_org_air_score.json",
+        payload=payload,
+    )
  
  
 def get_latest_assessment_id(cur, company_id: str) -> str:
@@ -552,6 +604,18 @@ def score_one_company(cur, *, company_id: str, version: str, run_id: str) -> Non
         {"target_table": "org_air_scores"},
         {"status": "upserted", "composite_score": comp.composite_score, "score_band": comp.score_band},
     )
+    _export_scoring_artifacts(
+        ticker=ticker,
+        company_id=company_id,
+        assessment_id=assessment_id,
+        run_id=run_id,
+        sector=sector,
+        version=version,
+        dimension_results=dim_out.results,
+        breakdown_json=breakdown_json,
+        composite_score=comp.composite_score,
+        score_band=comp.score_band,
+    )
  
  
 def get_company_ids(cur, tickers: list[str] | None = None) -> list[str]:
@@ -609,6 +673,20 @@ def main() -> int:
             score_one_company(cur, company_id=cid, version=args.version, run_id=run_id)
         update_scoring_run_status(cur, run_id, "success")
         conn.commit()
+        write_json_artifact(
+            ticker="portfolio",
+            category="scoring",
+            filename=f"scoring_run_{run_id}.json",
+            payload={
+                "run_id": run_id,
+                "company_ids": company_ids,
+                "tickers": tickers,
+                "version": args.version,
+                "model_version": args.model_version,
+                "status": "success",
+                "generated_at_utc": _now_ts(),
+            },
+        )
         print("Scoring run completed")
         print(f"run_id: {run_id}")
         return 0

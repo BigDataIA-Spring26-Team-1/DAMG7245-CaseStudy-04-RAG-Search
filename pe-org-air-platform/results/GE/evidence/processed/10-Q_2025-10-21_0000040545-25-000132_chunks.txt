@@ -1,0 +1,469 @@
+ge-20250930
+http://fasb.org/us-gaap/2025#OtherAssetsCurrent
+http://fasb.org/us-gaap/2025#OtherAssetsCurrent
+http://www.ge.com/20250930#PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization
+http://www.ge.com/20250930#PropertyPlantAndEquipmentAndOperatingLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization
+http://fasb.org/us-gaap/2025#OtherLiabilitiesCurrent
+http://fasb.org/us-gaap/2025#OtherLiabilitiesCurrent
+http://fasb.org/us-gaap/2025#OtherLiabilitiesNoncurrent
+http://fasb.org/us-gaap/2025#OtherLiabilitiesNoncurrent
+http://fasb.org/us-gaap/2025#AccountsPayableCurrent
+http://fasb.org/us-gaap/2025#AccountsPayableCurrent
+0.25
+http://fasb.org/us-gaap/2025#LongTermDebtAndCapitalLeaseObligations
+http://fasb.org/us-gaap/2025#LongTermDebtAndCapitalLeaseObligations
+false
+0000040545
+December 31
+Q3
+2025
+xbrli:shares
+iso4217:USD
+iso4217:USD
+xbrli:shares
+xbrli:pure
+ge:loan
+ge:category
+ge:segment
+0000040545
+2025-01-01
+2025-09-30
+0000040545
+us-gaap:CommonStockMember
+2025-01-01
+2025-09-30
+0000040545
+ge:A1.875NotesDue2027Member
+2025-01-01
+2025-09-30
+0000040545
+ge:A1.500NotesDue2029Member
+2025-01-01
+2025-09-30
+0000040545
+ge:A7.5GuaranteedSubordinatedNotesDue2035Member
+2025-01-01
+2025-09-30
+0000040545
+ge:A2.125NotesDue2037Member
+2025-01-01
+2025-09-30
+0000040545
+2025-09-30
+0000040545
+us-gaap:ProductMember
+2025-07-01
+2025-09-30
+0000040545
+us-gaap:ProductMember
+2024-07-01
+2024-09-30
+0000040545
+us-gaap:ProductMember
+2025-01-01
+2025-09-30
+0
+
+--- CHUNK ---
+
+QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934
+For the quarterly period ended 
+September 30, 2025
+OR
+☐
+
+TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934
+For the transition period from ____ to ____
+Commission file number 
+001-00035
+GENERAL ELECTRIC COMPANY
+(Exact name of registrant as specified in its charter)
+New York
+14-0689340
+(State or other jurisdiction of incorporation or organization)
+(I.R.S. Employer Identification No.)
+1 Neumann Way
+Evendale
+OH
+45215
+(Address of principal executive offices)
+(Zip Code)
+(Registrant’s telephone number, including area code)
+
+(
+617
+) 
+443-3000
+Securities registered pursuant to Section 12(b) of the Act:
+Title of each class
+Trading Symbol(s)
+Name of each exchange on which registered
+Common stock, par value $0.01 per share
+GE
+New York Stock Exchange
+1.875% Notes due 2027
+GE 27E
+New York Stock Exchange
+1.500% Notes due 2029
+GE 29
+New York Stock Exchange
+7 1/2% Guaranteed Subordinated Notes due 2035
+GE /35
+New York Stock Exchange
+2.125% Notes due 2037
+GE 37
+New York Stock Exchange
+Indicate by check mark whether the registrant (1) has filed all reports required to be filed by Section 13 or 15(d) of the Securities Exchange Act of 1934 during the preceding 12 months (or for such shorter period that the registrant was required to file such reports), and (2) has been subject to such filing requirements for the past 90 days. 
+Yes
+
+þ
+
+No 
+¨
+Indicate by check mark whether 
+
+--- CHUNK ---
+
+þ
+
+No 
+¨
+Indicate by check mark whether the registrant is a large accelerated filer, an accelerated filer, a non-accelerated filer, a smaller reporting company or an emerging growth company. See the definitions of “large accelerated filer,” “accelerated filer,” “smaller reporting company,” and "emerging growth company" in Rule 12b-2 of the Exchange Act. (Check one):
+Large accelerated filer
+☑
+Accelerated filer 
+☐
+Non-accelerated filer 
+☐
+Smaller reporting company 
+☐
+Emerging growth company 
+☐
+If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act
+. 
+¨
+Indicate by check mark whether the registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act). Yes 
+☐
+ No 
+☑
+There were 
+1,054,813,911
+ shares of common stock with a par value of $0.01 per share outstanding at September 30, 2025. 
+TABLE OF CONTENTS
+Page
+Forward-Looking Statements
+3
+About GE
+ Aerospace
+4
+Management’s Discussion and Analysis of Financial Condition and Results of Operations (MD&A)
+4
+Consolidated Results
+4
+Segment Operations
+5
+Corporate
+ & Other
+7
+Other Consolidated Information
+8
+Capital Resources and Liquidity
+9
+Critical Accounting Estimates
+11
+Other Items
+11
+Non-GAAP Financial Measures
+12
+Controls and Procedures
+14
+Other Financial Data
+14
+Financial Statements and Notes
+15
+Statement of 
+Operations
+15
+Statem
+
+--- CHUNK ---
+
+No 
+¨
+Indicate by check mark whether the registrant is a large accelerated filer, an accelerated filer, a non-accelerated filer, a smaller reporting company or an emerging growth company. See the definitions of “large accelerated filer,” “accelerated filer,” “smaller reporting company,” and "emerging growth company" in Rule 12b-2 of the Exchange Act. (Check one):
+Large accelerated filer
+☑
+Accelerated filer 
+☐
+Non-accelerated filer 
+☐
+Smaller reporting company 
+☐
+Emerging growth company 
+☐
+If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act
+. 
+¨
+Indicate by check mark whether the registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act). Yes 
+☐
+ No 
+☑
+There were 
+1,054,813,911
+ shares of common stock with a par value of $0.01 per share outstanding at September 30, 2025. 
+TABLE OF CONTENTS
+Page
+Forward-Looking Statements
+3
+About GE
+ Aerospace
+4
+Management’s Discussion and Analysis of Financial Condition and Results of Operations (MD&A)
+4
+Consolidated Results
+4
+Segment Operations
+5
+Corporate
+ & Other
+7
+Other Consolidated Information
+8
+Capital Resources and Liquidity
+9
+Critical Accounting Estimates
+11
+Other Items
+11
+Non-GAAP Financial Measures
+12
+Controls and Procedures
+14
+Other Financial Data
+14
+Financial Statements and Notes
+15
+Statement of 
+Operations
+15
+Statement
+
+--- CHUNK ---
+
+FORWARD-LOOKING STATEMENTS. 
+Our public communications and filings we make with the U.S. Securities and Exchange Commission (SEC) may contain statements related to future, not past, events. These forward-looking statements often address our expected future business and financial performance and financial condition, and often contain words such as "expect," "anticipate," "intend," "plan," "believe," "seek," "see," "will," "would," "estimate," "forecast," "target," "preliminary," "range" or similar expressions. Forward-looking statements by their nature address matters that are, to different degrees, uncertain, such as statements about the impacts of macroeconomic and market conditions and volatility on our business operations, financial results and financial position; conditions affecting the aerospace and defense industry, including our customers and suppliers; our expected financial performance, including cash flows, revenue, margins, net income and earnings per share; planned and potential transactions; our credit ratings and outlooks; our funding and liquidity; our cost structures and plans to reduce costs; restructuring, impairment or other financial charges; or tax rates. 
+For us, particular areas where risks or uncertainties could cause our actual results to be materially different than those expressed in our forward-looking statements include: 
+•
+changes in macroeconomic and market conditions and market volatility (including risks related to recession, inflation, suppl
+
+--- CHUNK ---
+
+General Electric Company operates as GE Aerospace (GE Aerospace or the Company). GE Aerospace is a global aerospace leader with the industry's largest and growing commercial propulsion fleet. The Company’s installed base of approximately 49,000 commercial and 29,000 military engines, including parked aircraft in addition to fleet in service, supports its aftermarket services business, representing approximately 70% of revenue. Through FLIGHT DECK, the Company's proprietary lean operating model, GE Aerospace is accelerating its lean progress, prioritizing safety, quality, delivery and cost, to drive focused execution and bridge strategy to results. We are focused on delivering against our strategic priorities of today (ramping services and equipment), tomorrow (expanding capacity and capabilities) and the future (inventing the future of flight). Our global team is building on more than a century of innovation and learning, as we invent the future of flight, lift people up and bring them home safely. 
+GE Aerospace’s Internet address at www.geaerospace.com and Investor Relations website at www.geaerospace.com/investor-relations, as well as GE Aerospace’s LinkedIn and other social media accounts, contain a significant amount of information about GE Aerospace, including financial and other information for investors. GE Aerospace encourages investors to visit these websites from time to time, as information is updated and new information is posted.
+MANAGEMENT’S DISCUSSION AND ANALY
+
+--- CHUNK ---
+
+REVENUE
+Three months ended September 30
+Nine months ended September 30
+2025
+2024
+2025
+2024
+Equipment revenue
+$
+3,163 
+$
+2,448 
+$
+8,659 
+$
+7,044 
+Services revenue
+8,143 
+6,495 
+21,798 
+18,198 
+Insurance revenue
+875 
+899 
+2,681 
+2,649 
+Total revenue
+$
+12,181 
+$
+9,842 
+$
+33,138 
+$
+27,890 
+4 
+2025 3Q FORM 10-Q
+For the three months ended September 30, 2025
+, total revenue increased $2.3 billion, or 24%, compared to the three months ended September 30, 2024. Equipment revenue increased, driven by increased engine deliveries and improved pricing, partially offset by engine mix. Services revenue increased, due to increased internal shop visit and spare parts volume, higher shop visit workscopes and improved pricing.
+For the nine months ended September 30, 2025
+, total revenue increased $5.2 billion, or 19%, compared to the nine months ended September 30, 2024. Equipment revenue increased, driven by increased engine deliveries and improved pricing. Services revenue increased, due to increased internal shop visit and spare parts volume, higher shop visit workscopes and improved pricing.
+NET INCOME (LOSS) AND EARNINGS (LOSS) PER SHARE (EPS)
+Three months ended September 30
+Nine months ended September 30
+(Per-share in dollars and diluted)
+2025
+2024
+2025
+2024
+Net income (loss) from continuing operations attributable to common shareholders
+$
+2,174 
+$
+1,705 
+$
+6,149 
+$
+4,766 
+Continuing EPS
+$
+2.04 
+$
+1.56 
+$
+5.73 
+$
+4.34 
+For the three months ended September 30, 2025
+, net income from contin
+
+--- CHUNK ---
+
+or 26%, and profit was up $0.2 billion,
+
+or 75%, compared to the three months ended September 30, 2024. 
+D&S revenue increased primarily due to increased engine deliveries, aircraft systems product growth and price. P&AT revenue increased primarily due to volume and price.
+Profit increased primarily due to higher volume in Defense and Avio, customer mix, price and lower losses in our Colibrium Additive business, partially offset by incremental investments to support next-generation projects and inflation in our supply chain.
+For the nine months ended September 30, 2025, revenue was up $0.8 billion, or 11%, and profit was up $0.2 billion, or 27%, compared to the nine months ended September 30, 2024. 
+D&S revenue increased primarily due to increased engine deliveries and aircraft systems product growth and price. P&AT revenue increased primarily due to volume and price.
+Profit increased primarily due to higher volume in Defense and Avio, aircraft systems product growth, customer mix, price, productivity and lower losses in our Colibrium Additive business. This increase was partially offset by incremental investments to support next-generation products and inflation in our supply chain.
+RPO
+September 30, 2025
+December 31, 2024
+Equipment
+$
+12,133 
+$
+11,046 
+Services
+6,956 
+6,944 
+Total RPO
+$
+19,089 
+$
+17,991 
+As of September 30, 2025
+, RPO increased $1.1 billion, or 6%, from December 31, 2024, primarily due to increases in equipment from orders outpacing revenue recognized.
+CORPO
+
+--- CHUNK ---
+
+or 75%, compared to the three months ended September 30, 2024. 
+D&S revenue increased primarily due to increased engine deliveries, aircraft systems product growth and price. P&AT revenue increased primarily due to volume and price.
+Profit increased primarily due to higher volume in Defense and Avio, customer mix, price and lower losses in our Colibrium Additive business, partially offset by incremental investments to support next-generation projects and inflation in our supply chain.
+For the nine months ended September 30, 2025, revenue was up $0.8 billion, or 11%, and profit was up $0.2 billion, or 27%, compared to the nine months ended September 30, 2024. 
+D&S revenue increased primarily due to increased engine deliveries and aircraft systems product growth and price. P&AT revenue increased primarily due to volume and price.
+Profit increased primarily due to higher volume in Defense and Avio, aircraft systems product growth, customer mix, price, productivity and lower losses in our Colibrium Additive business. This increase was partially offset by incremental investments to support next-generation products and inflation in our supply chain.
+RPO
+September 30, 2025
+December 31, 2024
+Equipment
+$
+12,133 
+$
+11,046 
+Services
+6,956 
+6,944 
+Total RPO
+$
+19,089 
+$
+17,991 
+As of September 30, 2025
+, RPO increased $1.1 billion, or 6%, from December 31, 2024, primarily due to increases in equipment from orders outpacing revenue recognized.
+CORPORATE & OTHER.
+
+--- CHUNK ---
+
+Corporate & Other revenue include our run-off insurance operations revenue and the elimination of intersegment activities. Corporate & Other operating profit includes Corporate functions and operations costs, certain costs of our principal retirement plans, significant, higher-cost restructuring programs, separation costs, profit (loss) of our run-off insurance operations, U.S. tax equity profit (loss), transition services agreements, environmental health and safety (EHS) impacts and other costs, as well as certain amounts that are not included in operating segment results because they are excluded from measurement of their operating performance for internal and external purposes.
+2025 3Q FORM 10-Q 
+7
+REVENUE AND OPERATING PROFIT (COST)
+Three months ended September 30
+Nine months ended September 30
+2025
+2024
+2025
+2024
+Insurance revenue (Note 12)
+$
+875 
+$
+899 
+$
+2,681 
+$
+2,649 
+Eliminations and other
+(403)
+(303)
+(1,105)
+(945)
+Corporate & Other revenue
+$
+473 
+$
+596 
+$
+1,576 
+$
+1,704 
+Gains (losses) on purchases and sales of business interests
+$
+3 
+$
+356 
+$
+3 
+$
+375 
+Gains (losses) on retained and sold ownership interests and other equity securities (Note 18)
+8 
+357 
+18 
+598 
+Restructuring and other charges (Note 19)(a)
+(22)
+(378)
+(49)
+(525)
+Separation costs (Note 19)
+(53)
+(74)
+(150)
+(408)
+Insurance profit (loss) (Note 12)
+361 
+171 
+714 
+541 
+U.S. tax equity profit (loss)
+(52)
+(52)
+(157)
+(130)
+Goodwill impairments (Note 7)
+— 
+(251)
+— 
+(251)
+Adjusted Corporate & Other operating c

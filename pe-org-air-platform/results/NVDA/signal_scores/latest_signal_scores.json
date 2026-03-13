@@ -1,0 +1,21 @@
+{
+  "signal_scores": {
+    "jobs": {
+      "avg_score": 1.28,
+      "signal_count": 8
+    },
+    "news": {
+      "avg_score": 38.75,
+      "signal_count": 8
+    },
+    "patents": {
+      "avg_score": 44.8,
+      "signal_count": 6
+    },
+    "tech": {
+      "avg_score": 18.0,
+      "signal_count": 5
+    }
+  },
+  "ticker": "NVDA"
+}

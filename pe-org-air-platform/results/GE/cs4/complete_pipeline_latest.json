@@ -1,0 +1,187 @@
+{
+  "assessment": {
+    "assessment_date": "2026-03-13 12:03:08.598000",
+    "company_id": "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+    "confidence_interval": [
+      47.77,
+      57.77
+    ],
+    "hr_score": null,
+    "org_air_score": 52.77,
+    "position_factor": 0.00539,
+    "synergy_score": 24.75,
+    "talent_concentration": 0.0,
+    "vr_score": 46.28
+  },
+  "company": {
+    "company_id": "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+    "employee_count": null,
+    "fiscal_year_end": null,
+    "market_cap_percentile": 0.5,
+    "name": "General Electric Company",
+    "revenue_millions": null,
+    "sector": "industrials",
+    "sub_sector": "Manufacturing",
+    "ticker": "GE"
+  },
+  "dimension_score": {
+    "confidence_interval": [
+      66.2,
+      83.8
+    ],
+    "dimension": "data_infrastructure",
+    "evidence_count": 108,
+    "last_updated": "2026-03-13 12:03:08.598000",
+    "level": 4,
+    "level_name": "Good",
+    "score": 75.0
+  },
+  "evidence_summary": {
+    "deleted_before_reindex": 0,
+    "fetched": 63,
+    "indexed": 63
+  },
+  "ic_packet": {
+    "avg_evidence_strength": "weak",
+    "company_id": "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+    "company_profile": {
+      "created_at": "2026-02-19 20:52:00.217000",
+      "id": "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+      "industry_id": "550e8400-e29b-41d4-a716-446655440001",
+      "is_deleted": false,
+      "name": "General Electric Company",
+      "position_factor": 0.0,
+      "ticker": "GE",
+      "updated_at": "2026-03-13 11:58:14.675000"
+    },
+    "diligence_questions": [
+      "What concrete evidence can management provide to address the gap in data infrastructure: No strong evidence of 'snowflake' for next-level readiness?"
+    ],
+    "dimensions": [
+      {
+        "dimension": "data_infrastructure",
+        "evidence_strength": "weak",
+        "gaps_identified": [
+          "No strong evidence of 'snowflake' for next-level readiness",
+          "No strong evidence of 'databricks' for next-level readiness",
+          "No strong evidence of 'real-time' for next-level readiness",
+          "No strong evidence of 'api-first' for next-level readiness"
+        ],
+        "level": 4,
+        "level_name": "Good",
+        "score": 75.0,
+        "summary": "99590187-11d8-4e51-92c8-dc1e0eeb598c is assessed at 75.0/100 for Data Infrastructure (Level 4 - Good). The evidence base is weak.  Company-level context: overall_score=52.77, score_band=Progressing. The current level is supported by retrieved signals aligned to the rubric, including: [sec_10k_item_1, FY 2025] 10-Q: Corporate & Other revenue include our run-off insurance operations revenue and the elimination of intersegment activities. Corporate & Other operating profit includes Corporate fun... | [unknown] unknown: FORWARD-LOOKING STATEMENTS.  Our public communications and filings we make with the U.S. Securities and Exchange Commission (SEC) may contain statements related to future, not past.... Rubric interpretation: Data Infrastructure Level 4 (Good) expects keyword evidence such as aws, azure, warehouse, etl and a quantitative threshold of at least 0.70. Key gaps to reach the next level: No strong evidence of 'snowflake' for next-level readiness; No strong evidence of 'databricks' for next-level readiness; No strong evidence of 'real-time' for next-level readiness",
+        "top_evidence": [
+          {
+            "confidence": 0.9,
+            "content": "Corporate & Other revenue include our run-off insurance operations revenue and the elimination of intersegment activities. Corporate & Other operating profit includes Corporate functions and operations costs, certain costs of our principal retirement",
+            "evidence_id": "fb7dba30-afaa-422d-b669-1c74ad7258ce:c1484d0d-c3d8-4d83-86e6-eeefbfeff5e1",
+            "matched_keywords": [
+              "aws"
+            ],
+            "relevance_score": 0.0156,
+            "source_type": "sec_10k_item_1",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054525000132/ge-20250930.htm",
+            "title": "10-Q"
+          },
+          {
+            "confidence": 0.5,
+            "content": "FORWARD-LOOKING STATEMENTS. \nOur public communications and filings we make with the U.S. Securities and Exchange Commission (SEC) may contain statements related to future, not past, events. These forward-looking statements often address our expected ",
+            "evidence_id": "fb7dba30-afaa-422d-b669-1c74ad7258ce:5a69a972-d13f-4e04-83dd-56b940094e5f:0",
+            "matched_keywords": [
+              "aws"
+            ],
+            "relevance_score": 0.0156,
+            "source_type": "unknown",
+            "source_url": null,
+            "title": null
+          }
+        ]
+      }
+    ],
+    "generated_at": "2026-03-13T19:13:09.780734+00:00",
+    "generated_by": "deterministic_ic_prep_workflow",
+    "key_gaps": [
+      "No strong evidence of 'snowflake' for next-level readiness"
+    ],
+    "overall_level": 3,
+    "overall_level_name": "Adequate",
+    "overall_score": 52.77,
+    "recommendation": "PROCEED WITH CAUTION - Moderate readiness, but diligence gaps remain",
+    "risks": [
+      "Data Infrastructure shows execution risk: No strong evidence of 'snowflake' for next-level readiness"
+    ],
+    "score_band": "Progressing",
+    "strengths": [],
+    "total_evidence_count": 2
+  },
+  "justification": {
+    "company_id": "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+    "confidence_interval": [
+      66.2,
+      83.8
+    ],
+    "dimension": "data_infrastructure",
+    "evidence_count": 0,
+    "evidence_strength": "weak",
+    "gaps_identified": [
+      "No strong evidence of 'snowflake' for next-level readiness",
+      "No strong evidence of 'databricks' for next-level readiness",
+      "No strong evidence of 'real-time' for next-level readiness",
+      "No strong evidence of 'api-first' for next-level readiness"
+    ],
+    "generated_summary": "99590187-11d8-4e51-92c8-dc1e0eeb598c is assessed at 75.0/100 for Data Infrastructure (Level 4 - Good). No strong supporting evidence was retrieved, so this justification should be treated as weak and provisional.  Company-level context: overall_score=52.77, score_band=Progressing. The current rubric expectation is: Data Infrastructure Level 4 (Good) expects keyword evidence such as aws, azure, warehouse, etl and a quantitative threshold of at least 0.70.",
+    "generation_mode": "cs3_context_grounded",
+    "level": 4,
+    "level_name": "Good",
+    "query_used": "Why did General Electric Company score 75.0 on data infrastructure? data infrastructure aws azure warehouse etl current score 75.0 level Good",
+    "rubric_criteria": "Data Infrastructure Level 4 (Good) expects keyword evidence such as aws, azure, warehouse, etl and a quantitative threshold of at least 0.70.",
+    "rubric_keywords": [
+      "aws",
+      "azure",
+      "warehouse",
+      "etl"
+    ],
+    "rubric_source": "cs3_rubric",
+    "score": 75.0,
+    "score_context": {
+      "company_id": "99590187-11d8-4e51-92c8-dc1e0eeb598c",
+      "confidence": 0.4,
+      "confidence_interval": [
+        66.2,
+        83.8
+      ],
+      "dimension": "data_infrastructure",
+      "evidence_count": 108,
+      "level": 4,
+      "level_name": "Good",
+      "overall_score": 52.77,
+      "raw_score": 75.0,
+      "score_band": "Progressing",
+      "score_dimension": "data_infrastructure",
+      "scored_at": "2026-03-13 12:03:08.598000",
+      "sector_weight": 0.16,
+      "weighted_score": 4.8
+    },
+    "supporting_evidence": []
+  },
+  "rubric": [
+    {
+      "criteria_text": "Data Infrastructure Level 4 (Good) expects keyword evidence such as aws, azure, warehouse, etl and a quantitative threshold of at least 0.70.",
+      "dimension": "data_infrastructure",
+      "keywords": [
+        "aws",
+        "azure",
+        "warehouse",
+        "etl"
+      ],
+      "level": 4,
+      "quantitative_thresholds": {
+        "min_keyword_matches": 2,
+        "score_max": 79,
+        "score_min": 60,
+        "threshold": 0.7
+      }
+    }
+  ]
+}

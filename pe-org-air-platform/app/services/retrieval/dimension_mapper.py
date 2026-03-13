@@ -35,6 +35,12 @@ SOURCE_ALIASES = {
     "10k": "sec_filing",
     "10_q": "sec_filing",
 }
+
+INTERNAL_TO_PUBLIC_DIMENSION = {
+    "talent_skills": "talent",
+    "leadership_vision": "leadership",
+    "culture_change": "culture",
+}
  
  
 def _normalize(value: str) -> str:
@@ -107,5 +113,76 @@ def map_dimension(source_type: str, signal_category: Optional[str] = None, chunk
  
     if signal_key == "sec_filing":
         return "leadership_vision"
- 
+
     return DEFAULT_DIMENSION
+
+
+class DimensionMapper:
+    """
+    Spec-aligned dimension mapper facade.
+
+    The underlying scoring engine uses internal dimension labels like
+    `talent_skills`; this class exposes the assignment-facing labels by default.
+    """
+
+    def _render_dimension(self, dimension: str, public_names: bool = True) -> str:
+        if not public_names:
+            return dimension
+        return INTERNAL_TO_PUBLIC_DIMENSION.get(dimension, dimension)
+
+    def get_signal_key(self, signal_category: Optional[str], source_type: Optional[str] = None) -> Optional[str]:
+        return _canonical_signal_key(signal_category or "") or _canonical_signal_key(source_type or "")
+
+    def get_dimension_weights(
+        self,
+        signal_category: Optional[str],
+        source_type: Optional[str] = None,
+        public_names: bool = True,
+    ) -> Dict[str, float]:
+        signal_key = self.get_signal_key(signal_category, source_type)
+        if not signal_key:
+            return {self._render_dimension(DEFAULT_DIMENSION, public_names=public_names): 1.0}
+
+        profile = SOURCE_PROFILES.get(signal_key)
+        if not profile:
+            return {self._render_dimension(DEFAULT_DIMENSION, public_names=public_names): 1.0}
+
+        weights = {
+            self._render_dimension(dim, public_names=public_names): float(weight)
+            for dim, weight in profile.dim_weights.items()
+            if dim in DIMENSIONS and float(weight) > 0.0
+        }
+        if not weights:
+            return {self._render_dimension(DEFAULT_DIMENSION, public_names=public_names): 1.0}
+        return weights
+
+    def get_primary_dimension(
+        self,
+        signal_category: Optional[str],
+        source_type: Optional[str] = None,
+        public_names: bool = True,
+    ) -> str:
+        weights = self.get_dimension_weights(
+            signal_category=signal_category,
+            source_type=source_type,
+            public_names=public_names,
+        )
+        return max(weights.items(), key=lambda kv: kv[1])[0]
+
+    def get_all_dimensions_for_evidence(
+        self,
+        signal_category: Optional[str],
+        source_type: Optional[str] = None,
+        min_weight: float = 0.1,
+        public_names: bool = True,
+    ) -> Dict[str, float]:
+        weights = self.get_dimension_weights(
+            signal_category=signal_category,
+            source_type=source_type,
+            public_names=public_names,
+        )
+        return {
+            dimension: weight
+            for dimension, weight in weights.items()
+            if float(weight) >= float(min_weight)
+        }

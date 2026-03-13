@@ -1,0 +1,55 @@
+{
+  "checks": {
+    "DG": {
+      "in_range": true,
+      "lower_bound": 34.0,
+      "score": 43.29,
+      "upper_bound": 45.0
+    },
+    "GE": {
+      "in_range": true,
+      "lower_bound": 45.0,
+      "score": 52.77,
+      "upper_bound": 55.0
+    },
+    "JPM": {
+      "in_range": true,
+      "lower_bound": 66.0,
+      "score": 74.5,
+      "upper_bound": 76.0
+    },
+    "NVDA": {
+      "in_range": true,
+      "lower_bound": 84.0,
+      "score": 88.02,
+      "upper_bound": 94.0
+    },
+    "WMT": {
+      "in_range": true,
+      "lower_bound": 55.0,
+      "score": 63.13,
+      "upper_bound": 66.0
+    }
+  },
+  "ok": true,
+  "scores": {
+    "ACME": 39.76,
+    "ADP": 77.31,
+    "BOA": 40.44,
+    "C": 76.58,
+    "CAT": 82.19,
+    "DE": 79.36,
+    "DG": 43.29,
+    "GE": 52.77,
+    "GS": 81.83,
+    "HCA": 78.09,
+    "JPM": 74.5,
+    "NVDA": 88.02,
+    "PAYX": 79.38,
+    "TC40444": 39.53,
+    "TC94914": 39.53,
+    "TGT": 76.67,
+    "UNH": 80.37,
+    "WMT": 63.13
+  }
+}

@@ -6,6 +6,7 @@ from typing import List, Optional, Tuple
 
 from rank_bm25 import BM25Okapi
 
+from app.services.integration.cs2_client import CS2Client
 from app.services.integration.evidence_client import EvidenceClient
 
 _WORD_RE = re.compile(r"[A-Za-z0-9]+")
@@ -37,6 +38,7 @@ class BM25Store:
 
     def __init__(self, schema: Optional[str] = None) -> None:
         self.client = EvidenceClient(schema=schema)
+        self.cs2_client = CS2Client()
 
     def search(
         self,
@@ -61,26 +63,39 @@ class BM25Store:
         texts: List[str] = []
         meta: List[Tuple[str, str, int, str]] = []  # (doc_id, chunk_id, chunk_index, text)
 
-        seen = 0
-        for batch in self.client.iter_chunks_for_company(
-            company_id=company_id,
-            batch_size=batch_size,
-            min_confidence=min_confidence,
-        ):
-            for r in batch:
-                if not (r.chunk_text or "").strip():
+        evidence_getter = getattr(getattr(self, "cs2_client", None), "get_evidence", None)
+        if callable(evidence_getter):
+            evidence = evidence_getter(
+                company_id=company_id,
+                min_confidence=min_confidence or 0.0,
+            )
+            for item in evidence[:max_chunks]:
+                if not (item.content or "").strip():
                     continue
-
-                # dimension not stored in Snowflake by default; keep no-op for now
                 _ = dimension
+                texts.append(item.content)
+                meta.append((item.evidence_id, "0", 0, item.content))
+        else:
+            seen = 0
+            for batch in self.client.iter_chunks_for_company(
+                company_id=company_id,
+                batch_size=batch_size,
+                min_confidence=min_confidence,
+            ):
+                for r in batch:
+                    if not (r.chunk_text or "").strip():
+                        continue
 
-                texts.append(r.chunk_text)
-                meta.append((r.document_id, r.chunk_id, r.chunk_index, r.chunk_text))
-                seen += 1
+                    # dimension not stored in Snowflake by default; keep no-op for now
+                    _ = dimension
+
+                    texts.append(r.chunk_text)
+                    meta.append((r.document_id, r.chunk_id, r.chunk_index, r.chunk_text))
+                    seen += 1
+                    if seen >= max_chunks:
+                        break
                 if seen >= max_chunks:
                     break
-            if seen >= max_chunks:
-                break
 
         if not texts:
             return []

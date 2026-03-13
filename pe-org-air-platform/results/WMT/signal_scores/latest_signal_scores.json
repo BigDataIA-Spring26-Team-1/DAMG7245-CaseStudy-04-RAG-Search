@@ -1,0 +1,21 @@
+{
+  "signal_scores": {
+    "jobs": {
+      "avg_score": 13.94,
+      "signal_count": 17
+    },
+    "news": {
+      "avg_score": 37.22,
+      "signal_count": 18
+    },
+    "patents": {
+      "avg_score": 45.69,
+      "signal_count": 14
+    },
+    "tech": {
+      "avg_score": 10.0,
+      "signal_count": 1
+    }
+  },
+  "ticker": "WMT"
+}

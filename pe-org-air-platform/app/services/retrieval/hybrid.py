@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Sequence
 
 from app.services.integration.evidence_client import EvidenceClient
 from app.services.retrieval.bm25_store import BM25Hit, BM25Store
 from app.services.retrieval.hyde import HyDEGenerator
-from app.services.search.vector_store import SearchHit, VectorStore
+from app.services.search.vector_store import DocumentChunk, SearchHit, VectorStore
 
 
 @dataclass(frozen=True)
@@ -79,11 +79,43 @@ class HybridRetriever:
         self.evidence = EvidenceClient(schema=schema)
         self.hyde = HyDEGenerator()
 
+    def index_documents(self, docs: Sequence[Any]) -> int:
+        """
+        Accept either DocumentChunk objects or simple dict payloads and upsert them
+        into the semantic store. This keeps the exercise and indexing flows close to
+        the assignment's public interface.
+        """
+        chunks: List[DocumentChunk] = []
+        for doc in docs:
+            if isinstance(doc, DocumentChunk):
+                chunks.append(doc)
+                continue
+
+            if not isinstance(doc, dict):
+                continue
+
+            doc_id = str(doc.get("doc_id") or doc.get("id") or "").strip()
+            content = str(doc.get("content") or doc.get("text") or "").strip()
+            metadata = doc.get("metadata") or {}
+            if not doc_id or not content or not isinstance(metadata, dict):
+                continue
+
+            chunks.append(
+                DocumentChunk(
+                    id=doc_id,
+                    text=content,
+                    metadata=dict(metadata),
+                )
+            )
+
+        return self.vector_store.upsert(chunks)
+
     def _build_chroma_where(
         self,
         company_id: Optional[str] = None,
         dimension: Optional[str] = None,
         min_confidence: Optional[float] = None,
+        source_types: Optional[List[str]] = None,
     ) -> Optional[Dict[str, Any]]:
         filters: List[Dict[str, Any]] = []
 
@@ -95,6 +127,16 @@ class HybridRetriever:
 
         if min_confidence is not None:
             filters.append({"confidence": {"$gte": float(min_confidence)}})
+
+        normalized_source_types = [
+            str(source_type).strip()
+            for source_type in (source_types or [])
+            if str(source_type).strip()
+        ]
+        if len(normalized_source_types) == 1:
+            filters.append({"source_type": normalized_source_types[0]})
+        elif len(normalized_source_types) > 1:
+            filters.append({"$or": [{"source_type": source_type} for source_type in normalized_source_types]})
 
         if not filters:
             return None
@@ -111,6 +153,7 @@ class HybridRetriever:
         company_id: Optional[str] = None,
         dimension: Optional[str] = None,
         min_confidence: Optional[float] = None,
+        source_types: Optional[List[str]] = None,
         semantic_k: int = 10,
         bm25_k: int = 10,
         use_hyde: bool = True,
@@ -128,6 +171,7 @@ class HybridRetriever:
             company_id=company_id,
             dimension=dimension,
             min_confidence=min_confidence,
+            source_types=source_types,
         )
 
         semantic_hits = self.vector_store.query(
@@ -175,5 +219,17 @@ class HybridRetriever:
                     )
                 )
             fused = enriched
+
+        normalized_source_types = {
+            str(source_type).strip()
+            for source_type in (source_types or [])
+            if str(source_type).strip()
+        }
+        if normalized_source_types:
+            fused = [
+                hit
+                for hit in fused
+                if str(hit.metadata.get("source_type", "")).strip() in normalized_source_types
+            ][:top_k]
 
         return fused

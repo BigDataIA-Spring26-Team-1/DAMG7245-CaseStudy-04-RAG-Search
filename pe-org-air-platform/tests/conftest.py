@@ -64,6 +64,12 @@ def mock_redis(monkeypatch):
     monkeypatch.setattr("app.routers.scoring.cache_set_json", _set_json)
     monkeypatch.setattr("app.routers.scoring.cache_delete", _delete)
     monkeypatch.setattr("app.routers.scoring.cache_delete_pattern", _delete_pattern)
+    monkeypatch.setattr("app.services.integration.company_client.cache_get_json", _get_json)
+    monkeypatch.setattr("app.services.integration.company_client.cache_set_json", _set_json)
+    monkeypatch.setattr("app.services.integration.scoring_client.cache_get_json", _get_json)
+    monkeypatch.setattr("app.services.integration.scoring_client.cache_set_json", _set_json)
+    monkeypatch.setattr("app.services.integration.cs2_client.cache_get_json", _get_json)
+    monkeypatch.setattr("app.services.integration.cs2_client.cache_set_json", _set_json)
  
  
 # -----------------------------
@@ -135,5 +141,7 @@ def fake_sf(monkeypatch):
     monkeypatch.setattr("app.services.integration.company_client.get_snowflake_connection", lambda: conn)
     monkeypatch.setattr("app.services.integration.evidence_client.get_snowflake_connection", lambda: conn)
     monkeypatch.setattr("app.services.integration.scoring_client.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.services.integration.cs1_client.get_snowflake_connection", lambda: conn)
+    monkeypatch.setattr("app.services.integration.cs2_client.get_snowflake_connection", lambda: conn)
     return cursor
   

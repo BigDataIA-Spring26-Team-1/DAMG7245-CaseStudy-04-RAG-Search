@@ -1,0 +1,17 @@
+{
+  "signal_scores": {
+    "jobs": {
+      "avg_score": 13.5,
+      "signal_count": 16
+    },
+    "news": {
+      "avg_score": 38.24,
+      "signal_count": 17
+    },
+    "patents": {
+      "avg_score": 53.49,
+      "signal_count": 13
+    }
+  },
+  "ticker": "JPM"
+}

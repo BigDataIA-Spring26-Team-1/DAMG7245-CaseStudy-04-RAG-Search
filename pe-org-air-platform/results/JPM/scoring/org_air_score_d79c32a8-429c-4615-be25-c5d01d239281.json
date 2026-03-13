@@ -1,0 +1,230 @@
+{
+  "assessment_id": "2586bf67-af31-4619-9c2b-d18f59c47077",
+  "breakdown": {
+    "composite": {
+      "alpha": 0.6,
+      "beta": 0.12,
+      "composite_score": 74.5,
+      "score_band": "Advanced"
+    },
+    "generated_at_utc": "2026-03-13T19:03:43+00:00",
+    "hr": {
+      "hr_base": 80.0,
+      "hr_score": 85.47122
+    },
+    "position_factor": {
+      "market_cap_blend_weight": 0.85,
+      "market_cap_percentile": 0.7124999999999999,
+      "market_cap_percentile_seed": 0.5,
+      "position_factor": 0.455935,
+      "position_factor_blend_weight": 0.65,
+      "position_factor_formula": 0.3741
+    },
+    "sector": "Financial",
+    "sem": {
+      "global_fit": {},
+      "lower": 69.5,
+      "method_used": "fallback_constant_band",
+      "model_fit_index": {},
+      "standard_error": 5.0,
+      "upper": 79.5
+    },
+    "synergy": {
+      "alignment": 0.8653436292200414,
+      "base_term": 61.544050191548585,
+      "formula_synergy_score": 53.25675174965504,
+      "hits": [
+        {
+          "activated": true,
+          "dim_a": "leadership_vision",
+          "dim_b": "use_case_portfolio",
+          "magnitude": 2.5,
+          "reason": "both >= 60.0",
+          "threshold": 60.0,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "ai_governance",
+          "dim_b": "culture_change",
+          "magnitude": 3.0,
+          "reason": "needs both >= 60.0 (a=100.0, b=50.0)",
+          "threshold": 60.0,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "talent_skills",
+          "dim_b": "use_case_portfolio",
+          "magnitude": 2.5,
+          "reason": "needs both >= 60.0 (a=50.0, b=100.0)",
+          "threshold": 60.0,
+          "type": "positive"
+        },
+        {
+          "activated": false,
+          "dim_a": "use_case_portfolio",
+          "dim_b": "ai_governance",
+          "magnitude": -3.0,
+          "reason": "needs a >= 60.0 & b < 60.0 (a=100.0, b=100.0)",
+          "threshold": 60.0,
+          "type": "negative"
+        },
+        {
+          "activated": true,
+          "dim_a": "data_infrastructure",
+          "dim_b": "technology_stack",
+          "magnitude": 3.0,
+          "reason": "both >= 60.0",
+          "threshold": 60.0,
+          "type": "positive"
+        }
+      ],
+      "rule_synergy_bonus": 5.5,
+      "timing_factor": 1.0
+    },
+    "talent_concentration": {
+      "job_analysis": {
+        "entry_ai_jobs": 0,
+        "mid_ai_jobs": 16,
+        "senior_ai_jobs": 0,
+        "total_ai_jobs": 16,
+        "unique_skills_count": 0
+      },
+      "talent_risk_adjustment": 1.0,
+      "tc": 0.24058000000000002,
+      "tc_blend_weight": 0.35,
+      "tc_measured": 0.2732
+    },
+    "version": "v1.0",
+    "vr": {
+      "cv": 0.2603778219616477,
+      "cv_penalty_factor": 0.9349055445095881,
+      "dimension_breakdown": [
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "technology_stack",
+          "evidence_count": 65.0,
+          "raw_score": 90.0,
+          "sector_weight": 0.14,
+          "weighted_conf": 0.05600000000000001,
+          "weighted_score": 5.040000000000001
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "culture_change",
+          "evidence_count": 63.0,
+          "raw_score": 50.0,
+          "sector_weight": 0.14,
+          "weighted_conf": 0.05600000000000001,
+          "weighted_score": 2.8000000000000003
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "talent_skills",
+          "evidence_count": 18.0,
+          "raw_score": 50.0,
+          "sector_weight": 0.12,
+          "weighted_conf": 0.048,
+          "weighted_score": 2.4
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "data_infrastructure",
+          "evidence_count": 182.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.16,
+          "weighted_conf": 0.064,
+          "weighted_score": 6.4
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "leadership_vision",
+          "evidence_count": 145.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.12,
+          "weighted_conf": 0.048,
+          "weighted_score": 4.8
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "use_case_portfolio",
+          "evidence_count": 147.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.12,
+          "weighted_conf": 0.048,
+          "weighted_score": 4.8
+        },
+        {
+          "confidence": 0.4,
+          "confidence_used": 0.4,
+          "dimension": "ai_governance",
+          "evidence_count": 72.0,
+          "raw_score": 100.0,
+          "sector_weight": 0.2,
+          "weighted_conf": 0.08000000000000002,
+          "weighted_score": 8.000000000000002
+        }
+      ],
+      "vr_adjusted": 72.00558292200414,
+      "vr_raw": 85.6
+    }
+  },
+  "company_id": "a1f76037-e575-477a-9c08-1a26fd34df09",
+  "composite_score": 74.5,
+  "dimension_scores": [
+    {
+      "confidence": 0.4,
+      "dimension": "data_infrastructure",
+      "evidence_count": 182,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "ai_governance",
+      "evidence_count": 72,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "technology_stack",
+      "evidence_count": 65,
+      "score": 90.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "talent_skills",
+      "evidence_count": 18,
+      "score": 50.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "leadership_vision",
+      "evidence_count": 145,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "use_case_portfolio",
+      "evidence_count": 147,
+      "score": 100.0
+    },
+    {
+      "confidence": 0.4,
+      "dimension": "culture_change",
+      "evidence_count": 63,
+      "score": 50.0
+    }
+  ],
+  "score_band": "Advanced",
+  "scoring_run_id": "d79c32a8-429c-4615-be25-c5d01d239281",
+  "sector": "Financial",
+  "ticker": "JPM",
+  "version": "v1.0"
+}

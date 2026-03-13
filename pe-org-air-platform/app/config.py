@@ -41,6 +41,13 @@ class Settings(BaseSettings):
     aws_secret_access_key: str | None = None
     s3_bucket_name: str | None = None
 
+    # Result artifact export
+    results_dir: str = "results"
+    results_s3_prefix: str = "results"
+    results_portfolio_tickers: str = "NVDA,JPM,WMT,GE,DG"
+    results_local_copy_enabled: bool = True
+    results_upload_to_s3: bool = True
+
     # SEC / EDGAR
     sec_user_agent: str = "PE-OrgAIR (Northeastern) yourname@northeastern.edu"
 

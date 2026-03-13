@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
+from app.services.llm.router import LiteLLMRouter, TaskType
+
 
 @dataclass
 class HyDEResult:
@@ -78,6 +80,9 @@ class HyDEGenerator:
         ],
     }
 
+    def __init__(self, router: Optional[LiteLLMRouter] = None) -> None:
+        self.router = router or LiteLLMRouter()
+
     def generate(
         self,
         query: str,
@@ -91,7 +96,14 @@ class HyDEGenerator:
         normalized_dimension = self._normalize_dimension(dimension)
         dimension_hints = self.DIMENSION_HINTS.get(normalized_dimension, [])
 
-        hypothetical_document = self._build_hypothetical_document(
+        llm_document = self._llm_hypothetical_document(
+            query=normalized_query,
+            dimension=normalized_dimension,
+            company_id=company_id,
+            dimension_hints=dimension_hints,
+        )
+
+        hypothetical_document = llm_document or self._build_hypothetical_document(
             query=normalized_query,
             dimension=normalized_dimension,
             company_id=company_id,
@@ -110,7 +122,7 @@ class HyDEGenerator:
             expanded_query=expanded_query,
             hypothetical_document=hypothetical_document,
             dimension=normalized_dimension,
-            mode="deterministic_hyde",
+            mode="llm_hyde" if llm_document else "deterministic_hyde",
         )
 
     def _normalize_dimension(self, dimension: Optional[str]) -> Optional[str]:
@@ -136,6 +148,35 @@ class HyDEGenerator:
             f"It answers the retrieval need behind the query: {query}. "
             f"It includes concrete signals, operational examples, and relevant supporting details."
         )
+
+    def _llm_hypothetical_document(
+        self,
+        query: str,
+        dimension: Optional[str],
+        company_id: Optional[str],
+        dimension_hints: List[str],
+    ) -> Optional[str]:
+        prompt = (
+            "Write a compact hypothetical evidence document for retrieval. "
+            "Focus on concrete signals, operational details, and likely supporting phrases.\n\n"
+            f"Company: {company_id or 'target company'}\n"
+            f"Dimension: {dimension or 'general'}\n"
+            f"Query: {query}\n"
+            f"Helpful hints: {', '.join(dimension_hints[:5]) or 'none'}"
+        )
+        try:
+            response = self.router.complete(
+                task_type=TaskType.HYDE,
+                user_prompt=prompt,
+                system_prompt="Return only the hypothetical retrieval document text.",
+                temperature=0.2,
+                max_tokens=220,
+            )
+        except Exception:
+            return None
+
+        text = (response.text or "").strip()
+        return text or None
 
     def _build_expanded_query(
         self,

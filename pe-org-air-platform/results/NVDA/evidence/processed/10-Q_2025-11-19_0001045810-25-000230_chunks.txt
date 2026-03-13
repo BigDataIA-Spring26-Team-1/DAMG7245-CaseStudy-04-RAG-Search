@@ -1,0 +1,52 @@
+Item 1A. Risk Factors
+Other than the risk factors listed below, there have been no material changes from the risk factors previously described under Item 1A of our Annual Report on Form 10-K for the fiscal year ended January 26, 2025 and Item 1A of our Quarterly Reports on Form 10-Q for the fiscal quarters ended April 27, 2025 and July 27, 2025.
+Purchasing or owning NVIDIA common stock involves investment risks including, but not limited to, the risks described in Item 1A of our Annual Report on Form 10-K for the fiscal year ended January 26, 2025, and Item 1A of our Quarterly 
+33
+Reports on Form 10-Q for the fiscal quarters ended April 27, 2025 and July 27, 2025, and below. Any one of those risks could harm our business, financial condition and results of operations or reputation, which could cause our stock price to decline. Additional risks, trends and uncertainties not presently known to us or that we currently believe are immaterial may also harm our business, financial condition, results of operations or reputation.
+Long manufacturing lead times and uncertain supply and capacity availability, combined with a failure to estimate customer demand accurately, has led and could lead to mismatches between supply and demand.
+We have long manufacturing lead times and build finished products and maintain inventory in advance of anticipated demand. In periods of shortages impacting the semiconductor industry and/or limited supply or capacity in our supply chain, the lead times fo
+
+--- CHUNK ---
+
+NVIDIA Corporation 
+By:  
+ /s/ Colette M. Kress
+
+Colette M. Kress
+
+Executive Vice President and Chief Financial Officer (Duly Authorized Officer and Principal Financial Officer)
+44
+
+--- CHUNK ---
+
+Item 7, “Management’s Discussion and Analysis of Financial Condition and Results of Operations - Liquidity and Capital Resources” in our Annual Report on Form 10-K for the fiscal year ended January 26, 2025 for a description of our contractual obligations. For a description of our long-term debt, purchase obligations, and operating lease obligations, refer to Notes 10, 11, and 14 of the Notes to Condensed Consolidated Financial Statements in Part I, Item 1 of this Quarterly Report on Form 10-Q, respectively.
+Climate Change
+To date, there has been no material impact to our results of operations associated with global sustainability regulations, compliance, costs from sourcing renewable energy or climate-related business trends. 
+Adoption of New and Recently Issued Accounting Pronouncements
+There has been no adoption of any new and recently issued accounting pronouncements.
+Item 3. Quantitative and Qualitative Disclosures about Market Risk
+Investment and Interest Rate Risk
+Financial market risks related to investment and interest rate risk are described in Part II, Item 7A, “Quantitative and Qualitative Disclosures About Market Risk” in our Annual Report on Form 10-K for the fiscal year ended January 26, 2025. Our marketable equity securities consist of publicly-held equity securities, while our non-marketable equity securities are investments in privately-held companies.
+32
+Publicly-held equity securities are subject to market price volatility. A hypothetical 10% decrease in o
+
+--- CHUNK ---
+
+Item 7A, “Quantitative and Qualitative Disclosures About Market Risk” in our Annual Report on Form 10-K for the fiscal year ended January 26, 2025. As of October 26, 2025, there have been no material changes to the foreign exchange rate risks described as of January 26, 2025.
+Item 4. Controls and Procedures
+Controls and Procedures
+Disclosure Controls and Procedures
+Based on their evaluation as of October 26, 2025, our management, including our Chief Executive Officer and Chief Financial Officer, has concluded that our disclosure controls and procedures (as defined in Rule 13a-15(e) under the Exchange Act) were effective to provide reasonable assurance that the information we are required to disclose in reports that we file or submit under the Exchange Act is recorded, processed, summarized and reported within the time periods specified in the SEC rules and forms, and that such information is accumulated and communicated to our management, including our Chief Executive Officer and our Chief Financial Officer, as appropriate, to allow timely decisions regarding required disclosures.
+Changes in Internal Control Over Financial Reporting
+There have been no changes in our internal control over financial reporting during the third quarter of fiscal year 2026 that have materially affected, or are reasonably likely to materially affect, our internal control over financial reporting. We are continuing a phased upgrade of our enterprise resource planning, or ERP, system to update our ex
+
+--- CHUNK ---
+
+NVIDIA Corporation 
+By:  
+ /s/ Colette M. Kress
+
+Colette M. Kress
+
+Executive Vice President and Chief Financial Officer (Duly Authorized Officer and Principal Financial Officer)
+44
