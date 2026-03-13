@@ -6,6 +6,8 @@ This repository contains the CS4 retrieval, search, and justification layer for 
 
 - Streamlit UI: `https://pe-org-ai-readiness-engine.streamlit.app/`
 - Cloud Run API: `https://org-air-api-334893558229.us-central1.run.app/`
+- Google Docs Codelab Source: `https://docs.google.com/document/d/1Xoq178zU-TOHQaW0H52uZ5Zor_219jSeOUuR5PVdjsE/edit?tab=t.0`
+- Google Codelabs Preview: `https://codelabs-preview.appspot.com/?file_id=1Xoq178zU-TOHQaW0H52uZ5Zor_219jSeOUuR5PVdjsE`
 
 ## Deliverables Covered
 
