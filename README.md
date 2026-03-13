@@ -2,6 +2,11 @@
 
 This repository contains the CS4 retrieval, search, and justification layer for the PE OrgAIR platform. The implementation connects the existing company, evidence, and scoring data stores to a grounded RAG workflow for score justification, IC prep, and analyst-note indexing.
 
+## Deployment URLs
+
+- Streamlit UI: `https://pe-org-ai-readiness-engine.streamlit.app/`
+- Cloud Run API: `https://org-air-api-334893558229.us-central1.run.app/`
+
 ## Deliverables Covered
 
 - CS1 company client facade: `pe-org-air-platform/app/services/integration/cs1_client.py`
