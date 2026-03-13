@@ -40,8 +40,9 @@ def _row_to_company_out(row: tuple[Any, ...]) -> CompanyOut:
     )
  
  
-def _companies_list_cache_key(page: int, page_size: int) -> str:
-    return f"companies:list:page:{page}:size:{page_size}"
+def _companies_list_cache_key(page: int, page_size: int, query: str | None = None) -> str:
+    normalized = (query or "").strip().lower()
+    return f"companies:list:page:{page}:size:{page_size}:q:{normalized}"
  
  
 @router.post("", response_model=CompanyOut, status_code=201)
@@ -114,40 +115,74 @@ def create_company(payload: CompanyCreate) -> CompanyOut:
 def list_companies(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
+    q: str | None = Query(None, description="Optional company name or ticker search"),
 ) -> Page[CompanyOut]:
-    cache_key = _companies_list_cache_key(page, page_size)
+    cache_key = _companies_list_cache_key(page, page_size, q)
     cached = cache_get_json(cache_key)
     if cached is not None:
         return Page[CompanyOut](**cached)
- 
+
     offset = (page - 1) * page_size
- 
+    search = (q or "").strip()
+    like_value = f"%{search}%"
+
     conn = get_snowflake_connection()
     cur = conn.cursor()
- 
+
     try:
         # total count
-        cur.execute(
-            """
-            SELECT COUNT(*)
-            FROM companies
-            WHERE is_deleted = FALSE
-            """
-        )
+        if search:
+            cur.execute(
+                """
+                SELECT COUNT(*)
+                FROM companies
+                WHERE is_deleted = FALSE
+                  AND (
+                    UPPER(COALESCE(ticker, '')) LIKE UPPER(%s)
+                    OR UPPER(COALESCE(name, '')) LIKE UPPER(%s)
+                  )
+                """,
+                (like_value, like_value),
+            )
+        else:
+            cur.execute(
+                """
+                SELECT COUNT(*)
+                FROM companies
+                WHERE is_deleted = FALSE
+                """
+            )
         total = cur.fetchone()[0]
- 
+
         # paged data
-        cur.execute(
-            """
-            SELECT id, name, ticker, industry_id, position_factor,
-                   is_deleted, created_at, updated_at
-            FROM companies
-            WHERE is_deleted = FALSE
-            ORDER BY created_at DESC
-            LIMIT %s OFFSET %s
-            """,
-            (page_size, offset),
-        )
+        if search:
+            cur.execute(
+                """
+                SELECT id, name, ticker, industry_id, position_factor,
+                       is_deleted, created_at, updated_at
+                FROM companies
+                WHERE is_deleted = FALSE
+                  AND (
+                    UPPER(COALESCE(ticker, '')) LIKE UPPER(%s)
+                    OR UPPER(COALESCE(name, '')) LIKE UPPER(%s)
+                  )
+                ORDER BY created_at DESC
+                LIMIT %s OFFSET %s
+                """,
+                (like_value, like_value, page_size, offset),
+            )
+        else:
+            cur.execute(
+                """
+                SELECT id, name, ticker, industry_id, position_factor,
+                       is_deleted, created_at, updated_at
+                FROM companies
+                WHERE is_deleted = FALSE
+                ORDER BY created_at DESC
+                LIMIT %s OFFSET %s
+                """,
+                (page_size, offset),
+            )
  
         rows = cur.fetchall()
         items = [_row_to_company_out(r) for r in rows]

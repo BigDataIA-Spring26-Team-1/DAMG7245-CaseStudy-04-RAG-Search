@@ -111,6 +111,7 @@ class CS1Client:
             raise ValueError("identifier is required")
 
         normalized = identifier.strip()
+        like_value = f"%{normalized}%"
         conn = get_snowflake_connection()
         cur = conn.cursor()
         try:
@@ -120,11 +121,15 @@ class CS1Client:
                 FROM companies c
                 LEFT JOIN industries i ON c.industry_id = i.id
                 WHERE c.is_deleted = FALSE
-                  AND (c.id = %s OR c.ticker = %s)
+                  AND (
+                    c.id = %s
+                    OR c.ticker = %s
+                    OR UPPER(COALESCE(c.name, '')) LIKE UPPER(%s)
+                  )
                 ORDER BY c.created_at DESC
                 LIMIT 1
                 """,
-                (normalized, normalized.upper()),
+                (normalized, normalized.upper(), like_value),
             )
             row = cur.fetchone()
             if row is None:
