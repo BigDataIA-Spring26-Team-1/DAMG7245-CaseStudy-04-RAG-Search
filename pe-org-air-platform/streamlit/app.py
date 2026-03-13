@@ -6,6 +6,7 @@ import os
 import shlex
 import subprocess
 import sys
+import importlib.util
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
@@ -13,19 +14,23 @@ from typing import Any
 import requests
 import streamlit as st
 
-# Ensure shared modules are imported from the repo root, not from this script's module name.
+# Load shared UI helpers directly from the backend app directory. The Streamlit
+# entrypoint is also named `app.py`, so importing `app.*` can collide with the
+# script module name in Streamlit Cloud.
 STREAMLIT_DIR = Path(__file__).resolve().parent
 APP_ROOT_DIR = STREAMLIT_DIR.parents[0]
-if str(APP_ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(APP_ROOT_DIR))
+UI_PRESENTERS_PATH = APP_ROOT_DIR / "app" / "ui_presenters.py"
+ui_presenters_spec = importlib.util.spec_from_file_location("orgair_ui_presenters", UI_PRESENTERS_PATH)
+if ui_presenters_spec is None or ui_presenters_spec.loader is None:
+    raise ImportError(f"Unable to load UI presenters from {UI_PRESENTERS_PATH}")
+ui_presenters = importlib.util.module_from_spec(ui_presenters_spec)
+ui_presenters_spec.loader.exec_module(ui_presenters)
 
-from app.ui_presenters import (
-    compact_recommendation,
-    display_evidence_count,
-    extract_orgair_score,
-    humanize_source_type,
-    sanitize_generated_summary,
-)
+compact_recommendation = ui_presenters.compact_recommendation
+display_evidence_count = ui_presenters.display_evidence_count
+extract_orgair_score = ui_presenters.extract_orgair_score
+humanize_source_type = ui_presenters.humanize_source_type
+sanitize_generated_summary = ui_presenters.sanitize_generated_summary
 
 # ============================================================
 # Config
